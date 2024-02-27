@@ -1,76 +1,23 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { Text, Img, Heading, Button, Input } from "../../components";
+import Navbar from "components/shared/Navbar";
+import HomeSection from "./components/HomeSection";
 
 export default function LandingPagePage() {
   return (
     <>
       <Helmet>
-        <title>blog-app</title>
+        <title>BlogPodium</title>
         <meta name="description" content="Web site created using create-react-app" />
       </Helmet>
+
+      <Navbar />
+
       <div className="flex flex-col items-center justify-start w-full gap-[95px] bg-white-A700">
-        <header className="flex flex-row justify-between items-center w-full p-6 bg-white-A700">
-          <div className="flex flex-row justify-between items-center w-[55%] ml-[139px]">
-            <Img src="images/img_group_150.svg" alt="image" className="h-6" />
-            <div className="flex flex-row justify-between items-center w-[53%]">
-              <div className="flex flex-col items-center justify-start w-[13%] gap-0.5">
-                <Heading as="h6" className="!text-indigo-900_01 tracking-[0.12px] text-center">
-                  Home
-                </Heading>
-                <div className="h-px w-full bg-indigo-900_01" />
-              </div>
-              <Heading as="h6" className="!text-indigo-200_01 tracking-[0.12px] text-center">
-                Podcast
-              </Heading>
-              <Heading as="h6" className="!text-indigo-200_01 tracking-[0.12px] text-center">
-                Blog
-              </Heading>
-              <Heading as="h6" className="!text-indigo-200_01 tracking-[0.12px] text-center">
-                About
-              </Heading>
-              <Heading as="h6" className="!text-indigo-200_01 tracking-[0.12px] text-center">
-                Contact
-              </Heading>
-            </div>
-          </div>
-          <Img src="images/img_search.svg" alt="search_one" className="h-[30px] w-[30px] mr-[139px]" />
-        </header>
         <div className="flex flex-col items-center justify-start w-full gap-[159px] max-w-[1111px]">
-          <div className="flex flex-row justify-center w-[93%]">
-            <div className="flex flex-col items-center justify-start w-full">
-              <div className="flex flex-row justify-start items-start w-full gap-[43px]">
-                <Img src="images/img_brand_1.svg" alt="brandone_one" className="h-[61px] w-[61px] mt-[66px]" />
-                <div className="flex flex-col items-center justify-start w-4/5 mb-9 gap-[30px]">
-                  <Heading size="3xl" as="h1" className="!font-merriweather text-center">
-                    Share via writing and podcasts, hope you enjoy
-                  </Heading>
-                  <Text size="lg" as="p" className="w-[78%] !text-gray-600 text-center leading-[35px]">
-                    Increase your knowledge by reading new things and I will share whatever I know for you, as long as I
-                    enjoy it
-                  </Text>
-                </div>
-                <Img src="images/img_blog_1.svg" alt="blogone_one" className="h-[61px] w-[61px] mt-[205px]" />
-              </div>
-              <div className="flex flex-row justify-start w-[51%] mt-[-4px] gap-[25px]">
-                <Button
-                  color="indigo_900_01"
-                  size="4xl"
-                  className="!text-white-A700 tracking-[0.12px] shadow-sm min-w-[221px] rounded-[35px]"
-                >
-                  Read More
-                </Button>
-                <Button
-                  color="indigo_200"
-                  size="4xl"
-                  variant="outline"
-                  className="tracking-[0.12px] min-w-[271px] rounded-[35px]"
-                >
-                  Listen to Podcasts
-                </Button>
-              </div>
-            </div>
-          </div>
+          <HomeSection />
+         
           <div className="flex flex-col items-center justify-start w-full gap-[100px]">
             <div className="flex flex-col items-center justify-start w-full gap-[17px]">
               <div className="flex flex-row justify-between items-center w-full">
