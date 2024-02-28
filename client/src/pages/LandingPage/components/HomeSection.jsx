@@ -3,40 +3,32 @@ import { Button, Img, Text } from "components"
 const HomeSection = () => {
   return (
     <>
-        <div className="flex flex-row justify-center w-[93%]">
-        <div className="flex flex-col items-center justify-start w-full">
-            <div className="flex flex-row justify-start items-start w-full gap-[43px]">
-            <Img src="images/img_brand_1.svg" alt="brandone_one" className="h-[61px] w-[61px] mt-[66px]" />
-            <div className="flex flex-col items-center justify-start w-4/5 mb-9 gap-[30px]">
+    
+    <div className="flex flex-col justify-center my-5">
+        <div className="container flex gap-32 justify-evenly">
+            <Img src="images/img_brand_1.svg" alt="brandone_one" />
+            <Img src="images/img_blog_1.svg" alt="blogone_one"  />
+        </div>
+
+        <div className="px-10 flex flex-col justify-center align-center mx-auto">
+            <div className="flex justify-center ">
                 <p className="text-center text-[48px] fw-bold text-gray-600_01">
-                Social Media for Blogs and podcasts, hope you enjoy 
+                    Social Media for <span className="text-gray-600">Blogs</span> and <span className="text-blue_gray-600">Podcasts</span>
                 </p>
-                <Text size="lg" as="p" className="w-[78%] !text-gray-600 text-center leading-[35px]">
-                Increase your knowledge by reading new things and listening new things. 
-                Share your voice & thoughts to the world.
-                </Text>
             </div>
-            <Img src="images/img_blog_1.svg" alt="blogone_one" className="h-[61px] w-[61px] mt-[205px]" />
-            </div>
-            <div className="flex flex-row justify-start w-[51%] mt-[-4px] gap-[25px]">
-            <Button
-                color="indigo_900_01"
-                size="4xl"
-                className="!text-white-A700 tracking-[0.12px] shadow-sm min-w-[221px] rounded-[35px]"
-            >
-                Login
-            </Button>
-            <Button
-                color="indigo_200"
-                size="4xl"
-                variant="outline"
-                className="tracking-[0.12px] min-w-[271px] rounded-[35px]"
-            >
-                Create Account
-            </Button>
+            
+            <div className="flex justify-center">
+                <p className=" fs-4 text-center leading-[35px] my-4 w-[60%]">
+                    Increase your knowledge by reading new things and listening new things. 
+                    Share your voice & thoughts to the world.
+                </p>
             </div>
         </div>
+        <div className="flex flex-row gap-2 justify-center">
+            <button className="btn btn-lg btn-dark rounded-pill px-8 py-2">Login</button>
+            <button className="btn btn-lg btn-outline-secondary rounded-pill">Create Account</button>
         </div>
+    </div>
     </>
   )
 }

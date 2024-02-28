@@ -3,7 +3,7 @@ import { IoIosSearch } from "react-icons/io";
 
 const Navbar = ({}) => {
     return (
-        <nav class="navbar my-2">
+        <nav class="navbar my-2 py-3">
             <div class="container">
                             
                 {/* Icon */}
