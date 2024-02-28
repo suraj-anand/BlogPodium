@@ -4,7 +4,7 @@ const HomeSection = () => {
   return (
     <>
     
-    <div className="flex flex-col justify-center my-5">
+    <div className="flex flex-col justify-center min-h-[85vh]">
         <div className="container flex gap-32 justify-evenly">
             <Img src="images/img_brand_1.svg" alt="brandone_one" />
             <Img src="images/img_blog_1.svg" alt="blogone_one"  />
