@@ -1,7 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { Text, Heading, Img, Button } from "../../components";
-import Footer from "../../components/Footer";
+import Footer from "../../components/generic/Footer";
 
 export default function BlogDetailsPage() {
   return (

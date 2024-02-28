@@ -1,7 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { Button, TextArea, Input, Text, Img, Heading } from "../../components";
-import Footer from "../../components/Footer";
+import Footer from "../../components/generic/Footer";
 
 export default function ContactUsPage() {
   return (

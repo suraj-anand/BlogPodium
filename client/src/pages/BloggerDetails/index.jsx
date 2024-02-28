@@ -2,7 +2,7 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import { Text, Heading, Button, Img } from "../../components";
 import BloggerDetailsPagination from "../../components/BloggerDetailsPagination";
-import Footer from "../../components/Footer";
+import Footer from "../../components/generic/Footer";
 
 export default function BloggerDetailsPage() {
   return (
