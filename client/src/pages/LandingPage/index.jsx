@@ -2,7 +2,9 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import { Text, Img, Heading, Button, Input } from "../../components";
 import Navbar from "components/shared/Navbar";
-import HomeSection from "./components/HomeSection";
+import Feature from "./components/Feature";
+import LatestPodcasts from "./components/LatestPodcasts";
+import TrendingBlogs from "./components/TrendingBlogs";
 
 export default function LandingPagePage() {
   return (
@@ -13,196 +15,19 @@ export default function LandingPagePage() {
       </Helmet>
 
       <Navbar />
+      <Feature />
+      <LatestPodcasts />
+      <TrendingBlogs />
 
       <div className="flex flex-col items-center justify-start w-full gap-[95px] bg-white-A700">
         <div className="flex flex-col items-center justify-start w-full gap-[159px] max-w-[1111px]">
-          <HomeSection />
          
           <div className="flex flex-col items-center justify-start w-full gap-[100px]">
-            <div className="flex flex-col items-center justify-start w-full gap-[17px]">
-              <div className="flex flex-row justify-between items-center w-full">
-                <div className="flex flex-row justify-start items-center w-[39%] gap-[18px]">
-                  <Button color="gray_300" size="7xl" className="w-[76px]">
-                    <Img src="images/img_podcast_1.svg" />
-                  </Button>
-                  <div className="flex flex-col items-start justify-start w-[79%] gap-2">
-                    <Heading size="xl" as="h2" className="ml-0.5 !font-merriweather text-center !font-black">
-                      Latest Podcasts{" "}
-                    </Heading>
-                    <Text size="lg" as="p" className="!text-gray-600 tracking-[0.12px] text-center">
-                      Get started on latest episodes
-                    </Text>
-                  </div>
-                </div>
-                <a href="#">
-                  <Heading size="xs" as="h3" className="!text-indigo-900 tracking-[0.12px]">
-                    See all podcasts
-                  </Heading>
-                </a>
-              </div>
-              <div className="flex flex-row w-full gap-[22px]">
-                <div className="flex flex-col items-center justify-center w-[24%] gap-[15px] p-[13px] bg-white-A700 shadow-md rounded-[5px]">
-                  <div className="h-[207px] w-full mt-[7px] relative">
-                    <Img
-                      src="images/img_rectangle_9.png"
-                      alt="image"
-                      className="justify-center h-[207px] w-full left-0 bottom-0 right-0 top-0 m-auto object-cover absolute rounded-[5px]"
-                    />
-                    <Button color="gray_600_01" className="w-[72px] top-[30%] right-0 left-0 m-auto absolute">
-                      <Img src="images/img_play.svg" />
-                    </Button>
-                  </div>
-                  <div className="flex flex-col items-start justify-start w-full mb-[5px] gap-2.5">
-                    <Heading size="s" as="h4" className="!font-merriweather">
-                      The secrets of writing a good book
-                    </Heading>
-                    <Text size="xs" as="p">
-                      By LaosPodcast
-                    </Text>
-                  </div>
-                </div>
-                <div className="flex flex-col items-center justify-center w-[24%] gap-[15px] p-[13px] bg-white-A700 shadow-md rounded-[5px]">
-                  <div className="h-[207px] w-full mt-[7px] relative">
-                    <Img
-                      src="images/img_rectangle_9_207x233.png"
-                      alt="image"
-                      className="justify-center h-[207px] w-full left-0 bottom-0 right-0 top-0 m-auto object-cover absolute rounded-[5px]"
-                    />
-                    <Button color="gray_600_01" className="w-[72px] top-[30%] right-0 left-0 m-auto absolute">
-                      <Img src="images/img_play.svg" />
-                    </Button>
-                  </div>
-                  <div className="flex flex-col items-start justify-start w-full mb-[5px] gap-2.5">
-                    <Heading size="s" as="h5" className="!font-merriweather">
-                      The secrets of writing a good book
-                    </Heading>
-                    <Text size="xs" as="p">
-                      By LaosPodcast
-                    </Text>
-                  </div>
-                </div>
-                <div className="flex flex-col items-center justify-center w-[24%] gap-[15px] p-[13px] bg-white-A700 shadow-md rounded-[5px]">
-                  <div className="h-[207px] w-full mt-[7px] relative">
-                    <Img
-                      src="images/img_rectangle_9_1.png"
-                      alt="image"
-                      className="justify-center h-[207px] w-full left-0 bottom-0 right-0 top-0 m-auto object-cover absolute rounded-[5px]"
-                    />
-                    <Button color="gray_600_01" className="w-[72px] top-[30%] right-0 left-0 m-auto absolute">
-                      <Img src="images/img_play.svg" />
-                    </Button>
-                  </div>
-                  <div className="flex flex-col items-start justify-start w-full mb-[5px] gap-2.5">
-                    <Heading size="s" as="h6" className="!font-merriweather">
-                      The secrets of writing a good book
-                    </Heading>
-                    <Text size="xs" as="p">
-                      By LaosPodcast
-                    </Text>
-                  </div>
-                </div>
-                <div className="flex flex-col items-center justify-center w-[24%] gap-[15px] p-[13px] bg-white-A700 shadow-md rounded-[5px]">
-                  <div className="h-[207px] w-full mt-[7px] relative">
-                    <Img
-                      src="images/img_rectangle_9_2.png"
-                      alt="image"
-                      className="justify-center h-[207px] w-full left-0 bottom-0 right-0 top-0 m-auto object-cover absolute rounded-[5px]"
-                    />
-                    <Button color="gray_600_01" className="w-[72px] top-[30%] right-0 left-0 m-auto absolute">
-                      <Img src="images/img_play.svg" />
-                    </Button>
-                  </div>
-                  <div className="flex flex-col items-start justify-start w-full mb-[5px] gap-2.5">
-                    <Heading size="s" as="h6" className="!font-merriweather">
-                      The secrets of writing a good book
-                    </Heading>
-                    <Text size="xs" as="p">
-                      By LaosPodcast
-                    </Text>
-                  </div>
-                </div>
-              </div>
-            </div>
+            
             <div className="flex flex-row justify-start items-start w-full gap-[29px]">
               <div className="flex flex-col items-end justify-start w-[66%] gap-[50px]">
                 <div className="flex flex-col w-full gap-[50px]">
-                  <div className="flex flex-col items-center justify-start w-full">
-                    <div className="flex flex-col items-start justify-start w-full">
-                      <div className="flex flex-row justify-between items-center w-full">
-                        <div className="flex flex-row justify-start items-center w-[34%] gap-3.5">
-                          <Img
-                            src="images/img_ellipse_5.png"
-                            alt="by_jhone"
-                            className="h-[70px] w-[70px] rounded-[50%]"
-                          />
-                          <div className="flex flex-col items-start justify-start w-[66%] gap-[3px]">
-                            <Heading as="h6" className="!text-blue_gray-600 text-center !font-semibold">
-                              By Jhone Leonardo
-                            </Heading>
-                            <Text size="xs" as="p" className="text-center">
-                              12 September, 2020
-                            </Text>
-                          </div>
-                        </div>
-                        <Text size="xs" as="p" className="text-center">
-                          <span className="text-blue_gray-600">Category </span>
-                          <span className="text-pink-300 font-merriweather text-lg font-black">Writing</span>
-                        </Text>
-                      </div>
-                      <Heading
-                        size="2xl"
-                        as="h1"
-                        className="mt-[30px] ml-0.5 tracking-[0.12px] !font-merriweather italic"
-                      >
-                        Consistent way of working to train yourself
-                      </Heading>
-                      <Img
-                        src="images/img_rectangle_11.png"
-                        alt="image"
-                        className="w-full mt-[29px] ml-0.5 object-cover rounded-[5px]"
-                      />
-                      <Text as="p" className="mt-[30px] ml-0.5 !text-blue_gray-900 leading-[30px]">
-                        We all know that every person has his or her own desire to work, but do you know that we can
-                        actually be consistent in making works if we want, now in this article I want to invite all of
-                        you to learn to be consistent in creating.
-                      </Text>
-                      <div className="flex flex-row justify-between w-[65%] mt-[19px]">
-                        <div className="flex flex-row justify-start items-center gap-2.5">
-                          <Button color="light_blue_50" size="xl" className="w-[55px] rounded-[27px]">
-                            <Img src="images/img_clock_1.svg" />
-                          </Button>
-                          <Text size="xs" as="p" className="!text-black-900 text-center">
-                            5 minutes ago
-                          </Text>
-                        </div>
-                        <div className="flex flex-row justify-start items-center gap-2.5">
-                          <Button color="lime_50" size="xl" className="w-[55px] rounded-[27px]">
-                            <Img src="images/img_like_1.svg" />
-                          </Button>
-                          <Text size="xs" as="p" className="!text-black-900 text-center">
-                            12 Like
-                          </Text>
-                        </div>
-                        <div className="flex flex-row justify-start items-center gap-2.5">
-                          <Button color="red_50" size="xl" className="w-[55px] rounded-[27px]">
-                            <Img src="images/img_send_1_1.svg" />
-                          </Button>
-                          <Text size="xs" as="p" className="!text-black-900 text-center">
-                            Share
-                          </Text>
-                        </div>
-                      </div>
-                      <Button
-                        color="indigo_900_01"
-                        size="5xl"
-                        shape="round"
-                        rightIcon={<Img src="images/img_arrowpointingtoright_1.svg" alt="arrow-pointing-to-right 1" />}
-                        className="mt-5 gap-[19px] tracking-[0.12px] font-bold min-w-[255px]"
-                      >
-                        Continue Reading
-                      </Button>
-                    </div>
-                  </div>
+                 
                   <div className="flex flex-col items-center justify-start w-full">
                     <div className="flex flex-col items-start justify-start w-full">
                       <div className="flex flex-row justify-between items-center w-full">
