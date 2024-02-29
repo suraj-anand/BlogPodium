@@ -4,14 +4,14 @@ const HomeSection = () => {
   return (
     <>
     
-    <div className="flex flex-col justify-center min-h-[85vh]">
+    <div className="flex flex-col justify-center min-h-[84vh]">
         <div className="container flex gap-32 justify-evenly">
             <Img src="images/img_brand_1.svg" alt="brandone_one" />
             <Img src="images/img_blog_1.svg" alt="blogone_one"  />
         </div>
 
         <div className="px-10 flex flex-col justify-center align-center mx-auto">
-            <div className="flex justify-center ">
+            <div className="flex justify-center">
                 <p className="text-center text-[48px] fw-bold text-gray-600_01">
                     Social Media for <span className="text-gray-600">Blogs</span> and <span className="text-blue_gray-600">Podcasts</span>
                 </p>
