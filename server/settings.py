@@ -29,6 +29,11 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+USER_APPS = [
+    "apps.api",
+    "apps.blog",
+    "apps.podcast"
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -37,7 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-]
+    "rest_framework",
+    "django_filters"
+] + USER_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
