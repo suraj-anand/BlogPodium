@@ -6,6 +6,14 @@ import "./styles/tailwind.css";
 import "./styles/index.css";
 import "./styles/font.css";
 
+// Axios config
+import axios from 'axios'
+const BASE_URL = import.meta.env?.VITE_BASE_URL;
+if(BASE_URL){
+    axios.defaults.baseURL = BASE_URL;
+}
+axios.defaults.withCredentials = true;
+
 const container = document.getElementById("root");
 const root = createRoot(container);
 

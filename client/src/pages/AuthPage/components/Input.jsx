@@ -2,6 +2,7 @@ const Input = ({
     id="",
     className="",
     type="",
+    value="",
     onChange = () => {}
 }) => {
   return (
@@ -17,6 +18,7 @@ const Input = ({
                 sm:text-sm sm:leading-6 ${className}`
             }
             type={type}
+            value={value}
             onChange={onChange}
             />
     </>
