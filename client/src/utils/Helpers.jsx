@@ -1,4 +1,4 @@
-export function Logout (e, setAuthStatus){
+export function Logout (setAuthStatus){
     if(setAuthStatus){
         setAuthStatus(false);
     }

@@ -9,7 +9,7 @@ import { AuthContext } from "context/AuthContext"
 const LoginPage = () => {
 
     const navigate = useNavigate();
-    const { authStatus, setAuthStatus } = useContext(AuthContext)
+    const { authStatus, setAuthStatus, setName } = useContext(AuthContext)
     
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -24,7 +24,7 @@ const LoginPage = () => {
     useEffect(() => {
         const isSuccess = data?.detail === "Success";
         if([200,201].includes(status_code) && isSuccess){
-            localStorage.setItem("name", data?.name);
+            setName(data?.name);
             setAuthStatus(true);
             navigate("/")
         }

@@ -1,6 +1,6 @@
 import { AuthContext } from 'context/AuthContext';
 import { useAxios } from 'hooks'
-import Home from 'pages/Home';
+import Home from 'pages/Unauthorized';
 import React, { useContext, useEffect } from 'react'
 import { Spinner } from 'react-bootstrap';
 import { Outlet } from 'react-router-dom';

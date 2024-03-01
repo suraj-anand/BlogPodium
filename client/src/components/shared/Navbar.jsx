@@ -1,17 +1,18 @@
 import { NavLink } from 'react-router-dom';
 import { IoIosSearch } from "react-icons/io";
-import { Logo } from 'components';
+import { Offcanvas } from 'components/shared/Offcanvas';
 
 const Navbar = ({}) => {
     return (
-        <nav class="navbar my-2 py-3">
-            <div class="container">
+        <nav className="navbar my-2 py-3">
+            <div className="container">
                             
                 {/* Icon */}
                 <div className="w-100 d-flex justify-content-center">
 
                     <div className='flex-item me-auto'>
-                        <Logo />
+                        <button type="button" data-bs-toggle="offcanvas" data-bs-target="#side-drawer"  className='text-2xl font-bold uppercase'>Blog Podium</button>
+                        <Offcanvas id="side-drawer" />
                     </div>
 
                     <div className="d-none d-lg-flex gap-5 flex-item nav-items">
