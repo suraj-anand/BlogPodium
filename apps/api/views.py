@@ -27,6 +27,9 @@ class RegisterAPI(APIView):
                     status=status.HTTP_400_BAD_REQUEST
                 )
             
+            if len(User.objects.filter(email=email)) != 0:
+                return Response({"detail": "Email already taken"}, status=status.HTTP_400_BAD_REQUEST)
+
             user_id = f"{uuid.uuid4()}"
             salt = bcrypt.gensalt(10)
             hash = bcrypt.hashpw(password.encode(), salt=salt).decode()
@@ -100,6 +103,13 @@ class LogoutAPI(APIView):
         return self.logout(request)
 
 
+# Auth Check Route
+class AuthCheckAPI(APIView):
+    @method_decorator(authenticated_resource)
+    def post(self, request):
+        return Response({"detail": "Authenticated"}, status=status.HTTP_202_ACCEPTED)
+
 class HeathCheck(APIView):
+    @method_decorator(authenticated_resource)
     def get(self, request):
         return Response({"message": "pong"})
