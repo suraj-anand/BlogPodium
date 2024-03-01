@@ -9,14 +9,18 @@ const PUT = "PUT"
 const DELETE = "DELETE"
 const METHODS = [GET, POST, PATCH, PUT, DELETE];
 
-const useAxios = ({url = "", method="GET", payload={}, headers={}}) => {
+const useAxios = ({url = "", method="GET", headers={}}) => {
     
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState(null);
     const [status_code, setStatusCode] = useState(null); 
   
-    async function fetchData(){
+    async function call(payload){
+        setData([])
+        setStatusCode(null);
+        setError(null);
+        setLoading(true);
         try {
             if (!METHODS.includes(method.toUpperCase())){
                 throw new Error("Invalid method")   
@@ -27,7 +31,7 @@ const useAxios = ({url = "", method="GET", payload={}, headers={}}) => {
                 response = await axios.get(url, {headers: headers});
             } 
             else if (method.toUpperCase() === POST) {
-                response = await axios.post(url, payload, {headers: headers});
+                response = await axios.post(url, {...payload}, {headers: headers});
             } 
             else if (method.toUpperCase() === PUT) {
                 response = await axios.put(url, payload, {headers: headers});
@@ -41,18 +45,15 @@ const useAxios = ({url = "", method="GET", payload={}, headers={}}) => {
             setData(response.data);
             setStatusCode(response.status);
         } catch (error) {
-            console.err(error);
+            console.error(error);
             setError(error)
         } finally {
             setLoading(false)
         }
     }
     
-    useEffect(() => {
-        fetchData();
-    }, [])
-    
     return {
+        call,
         data,
         status_code,
         loading,

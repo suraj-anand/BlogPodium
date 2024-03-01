@@ -1,18 +1,34 @@
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import { Logo } from "components"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useAxios } from "hooks"
 import Input from "./components/Input"
 import { Spinner } from 'react-bootstrap'
 
 const Register = () => {
     
+    const navigate = useNavigate();
+    
+    // States
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
+    
+    const {
+        data, loading, error, status_code, call
+    } = useAxios({
+        url: "/api/register/",
+        method: "POST"
+    })
 
+    
+    useEffect(() => {
+        if ([200, 201].includes(status_code)) {
+            navigate("/");
+        }
+    }, [status_code])
+
+    // Submit event handler
     async function handleRegister(event){
         event.preventDefault();
         const payload = {
@@ -20,13 +36,7 @@ const Register = () => {
             email,
             password
         }
-        const {data, loading, error, status_code} = useAxios({
-            url: "/api/register/",
-            payload: payload,
-            method: "POST"
-        })
-        setLoading(loading);
-        setError(error)
+        call(payload=payload)
     }
 
     return (
@@ -87,6 +97,9 @@ const Register = () => {
                 </div>
 
                 {/* Error */}
+                <p className="my-2 capitalize text-center text-red-700">
+                    {error?.response?.data?.detail}
+                </p>
 
                 <div>
                     <button type="submit" 
