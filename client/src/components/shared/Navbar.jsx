@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { IoIosSearch } from "react-icons/io";
+import { Logo } from 'components';
 
 const Navbar = ({}) => {
     return (
@@ -10,7 +11,7 @@ const Navbar = ({}) => {
                 <div className="w-100 d-flex justify-content-center">
 
                     <div className='flex-item me-auto'>
-                        <h1 className='text-2xl font-bold uppercase'>Blog Podium</h1>
+                        <Logo />
                     </div>
 
                     <div className="d-none d-lg-flex gap-5 flex-item nav-items">
