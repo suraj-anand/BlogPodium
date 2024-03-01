@@ -1,13 +1,16 @@
 import { NavLink, useNavigate } from "react-router-dom"
 import { Logo } from "components"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useAxios } from "hooks"
 import Input from "./components/Input"
 import { Spinner } from 'react-bootstrap'
+import { AuthContext } from "context/AuthContext"
 
 const Register = () => {
     
     const navigate = useNavigate();
+
+    const { authStatus, setAuthStatus } = useContext(AuthContext)
     
     // States
     const [name, setName] = useState("");
@@ -24,9 +27,17 @@ const Register = () => {
     
     useEffect(() => {
         if ([200, 201].includes(status_code)) {
+            localStorage.setItem("name", data?.name);
+            setAuthStatus(true);
             navigate("/");
         }
     }, [status_code])
+
+    useEffect(() => {
+        if(authStatus){
+            navigate("/")
+        }
+    }, [])
 
     // Submit event handler
     async function handleRegister(event){

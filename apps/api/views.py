@@ -45,7 +45,7 @@ class RegisterAPI(APIView):
             
             token = jwt.encode({"user_id": user_id}, JWT_SECRET, algorithm="HS256")
             request.session["token"] = token
-            return Response({"detail": "User Created"}, status=status.HTTP_201_CREATED)
+            return Response({"detail": "User Created", "name": name}, status=status.HTTP_201_CREATED)
         except Exception as err:
             logging.error(f"Failure on registering user..., Error: {err}")
             return Response(
@@ -72,6 +72,7 @@ class LoginAPI(APIView):
             
             user_data = qs.first()
             user_id = user_data.id
+            name = user_data.name
             hash = user_data.password
             
             valid = bcrypt.checkpw(password.encode(), hash.encode())
@@ -80,7 +81,7 @@ class LoginAPI(APIView):
             
             token = jwt.encode({"user_id": user_id}, JWT_SECRET, algorithm="HS256")
             request.session["token"] = token
-            return Response({"detail": "Success"}, status=status.HTTP_200_OK)
+            return Response({"detail": "Success", "name": name}, status=status.HTTP_200_OK)
         
         except Exception as err:
             logging.error(f"Failure on user sign in, Error: {err}")
