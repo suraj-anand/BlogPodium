@@ -18,11 +18,12 @@ from .utils import authenticated_resource
 class RegisterAPI(APIView):
     def post(self, request):
         try:
+            name = request.data.get("name")
             email = request.data.get("email")
             password = request.data.get("password")
-            if not email or not password:
+            if not name or not email or not password:
                 return Response(
-                    {"detail": "Email & Password is required"}, 
+                    {"detail": "Name, Email & Password is required"}, 
                     status=status.HTTP_400_BAD_REQUEST
                 )
             
@@ -31,6 +32,7 @@ class RegisterAPI(APIView):
             hash = bcrypt.hashpw(password.encode(), salt=salt).decode()
             data = {
                 "id": user_id,
+                "name": name,
                 "email": email,
                 "password": hash
             }
