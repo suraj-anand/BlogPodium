@@ -5,4 +5,17 @@ import { Button } from "./generic/Button";
 import { Input } from "./generic/Input";
 import { TextArea } from "./generic/TextArea";
 import { ProfileImage } from "./generic/ProfileImage";
-export { Text, Heading, Img, Button, Input, TextArea, ProfileImage };
+import { Logo } from "./mini/Logo";
+
+
+
+export { 
+    Text,
+    Heading,
+    Img,
+    Button,
+    Input,
+    TextArea,
+    ProfileImage,
+    Logo
+};

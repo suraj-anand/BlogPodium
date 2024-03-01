@@ -1,4 +1,5 @@
 import { Button, Img, Text } from "components"
+import { Link } from "react-router-dom"
 
 const HomeSection = () => {
   return (
@@ -25,8 +26,8 @@ const HomeSection = () => {
             </div>
         </div>
         <div className="flex flex-row gap-2 justify-center">
-            <button className="btn btn-lg btn-dark rounded-pill px-8 py-2">Login</button>
-            <button className="btn btn-lg btn-outline-secondary rounded-pill">Create Account</button>
+            <Link to="/login" className="btn btn-lg btn-dark rounded-pill px-8 py-2">Login</Link>
+            <Link to="/register" className="btn btn-lg btn-outline-secondary rounded-pill">Create Account</Link>
         </div>
     </div>
     </>
