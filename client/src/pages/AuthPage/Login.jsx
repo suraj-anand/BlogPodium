@@ -24,6 +24,7 @@ const LoginPage = () => {
     useEffect(() => {
         const isSuccess = data?.detail === "Success";
         if([200,201].includes(status_code) && isSuccess){
+            sessionStorage.setItem("name", data?.name);
             setName(data?.name);
             setAuthStatus(true);
             navigate("/")

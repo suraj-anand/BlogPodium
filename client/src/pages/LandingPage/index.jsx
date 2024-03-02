@@ -23,7 +23,7 @@ export default function LandingPagePage() {
       method: "POST"
   });
 
-  const { setAuthStatus, loading: authLoading } = useContext(AuthContext)
+  const { setAuthStatus } = useContext(AuthContext)
 
 
   useEffect(() => {

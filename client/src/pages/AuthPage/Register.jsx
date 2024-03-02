@@ -28,6 +28,7 @@ const Register = () => {
     useEffect(() => {
         if ([200, 201].includes(status_code)) {
             _setName(data?.name);
+            sessionStorage.setItem("name", data?.name);
             setAuthStatus(true);
             navigate("/");
         }

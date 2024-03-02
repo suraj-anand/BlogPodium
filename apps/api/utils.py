@@ -21,3 +21,12 @@ def authenticated_resource(func):
             logging.error(f"Exception on checking authenticated_resource, Error: {err}")
             return Response({"detail": "Invalid Token"}, status=status.HTTP_400_BAD_REQUEST)
     return wrapper
+
+def parse_user_session(request):
+    try:
+        token = request.session.get("token")
+        user_data = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
+        return user_data
+    except:
+        logging.error(f"Failed on decoding user session")
+        return {}

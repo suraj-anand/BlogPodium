@@ -16,7 +16,7 @@ import "styles/index.css"
 export const Offcanvas = ({id}) => {
     
     return (
-    <div className="offcanvas offcanvas-start text-black-900 bg-gray-300 !w-[25%] sm:!w-[100%] " tabindex="-1" id={id}>
+    <div className="offcanvas offcanvas-start text-black-900 bg-gray-300 !w-[25%] sm:!w-[100%] " tabIndex="-1" id={id}>
         
         <div className="offcanvas-header flex justify-between">
             <Logo data-bs-dismiss="offcanvas" />
