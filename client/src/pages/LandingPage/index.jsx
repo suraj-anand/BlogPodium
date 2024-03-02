@@ -9,6 +9,7 @@ import LoadMoreBlogs from "./components/LoadMoreBlogs";
 import Footer from "components/shared/Footer";
 import { useAxios } from "hooks";
 import { AuthContext } from "context/AuthContext";
+import { Spinner } from "react-bootstrap";
 
 export default function LandingPagePage() {
 
@@ -22,7 +23,7 @@ export default function LandingPagePage() {
       method: "POST"
   });
 
-  const { setAuthStatus } = useContext(AuthContext)
+  const { setAuthStatus, loading: authLoading } = useContext(AuthContext)
 
 
   useEffect(() => {
@@ -38,6 +39,14 @@ export default function LandingPagePage() {
   useEffect(() => {
       call()
   }, [])
+
+  if (loading) {
+    return (
+        <div className='flex items-center justify-center h-screen'>
+            <Spinner className='text-blue-600' />
+        </div>
+    )
+}
 
   return (
     <>

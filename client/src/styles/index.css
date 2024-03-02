@@ -42,3 +42,8 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
 }
+
+.btn.ofc-btn.active {
+  background-color: #6b6b6b;
+  color: #EEE;
+}

@@ -1,8 +1,9 @@
 import { NavLink } from 'react-router-dom';
 import { IoIosSearch } from "react-icons/io";
 import { Offcanvas } from 'components/shared/Offcanvas';
+import Back from 'components/mini/Back';
 
-const Navbar = ({}) => {
+const Navbar = ({ showOptions=true, type="search" }) => {
     return (
         <nav className="navbar my-2 py-3">
             <div className="container">
@@ -15,16 +16,28 @@ const Navbar = ({}) => {
                         <Offcanvas id="side-drawer" />
                     </div>
 
-                    <div className="d-none d-lg-flex gap-5 flex-item nav-items">
-                        <NavLink to="/" className="text-lg font-bold text-gray-600_01">Home</NavLink>
-                        <NavLink to="/podcast" className="text-lg font-bold text-gray-600_01">Podcast</NavLink>
-                        <NavLink to="/blog" className="text-lg font-bold text-gray-600_01">Blog</NavLink>
-                        <NavLink to="/about" className="text-lg font-bold text-gray-600_01">About</NavLink>
-                    </div>
+                    {
+                        showOptions &&
+                        <div className="d-none d-lg-flex gap-5 flex-item nav-items">
+                            <NavLink to="/" className="text-lg font-bold text-gray-600_01">Home</NavLink>
+                            <NavLink to="/podcast" className="text-lg font-bold text-gray-600_01">Podcast</NavLink>
+                            <NavLink to="/blog" className="text-lg font-bold text-gray-600_01">Blog</NavLink>
+                            <NavLink to="/about" className="text-lg font-bold text-gray-600_01">About</NavLink>
+                        </div>
+                    }
 
                     {/* Search */}
                     <div className="flex-item ms-auto">
-                        <button><IoIosSearch fontSize={36} /></button>
+                    {
+                        type === "search" &&
+                            <button><IoIosSearch fontSize={36} /></button>
+                        }
+
+                    {/* Back */}
+                    {
+                        type === "back" &&
+                            <Back />
+                    }
                     </div>
                 </div>
             </div>

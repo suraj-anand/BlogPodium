@@ -19,6 +19,9 @@ const ProtectRoutes = () => {
 
     const { authStatus ,setAuthStatus } = useContext(AuthContext)
 
+    useEffect(() => {
+        setAuthLoading(() => (loading))
+    }, [loading])
     
     useEffect(() => {
         const isAuth = data?.detail === "Authenticated" 

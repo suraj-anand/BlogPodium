@@ -10,6 +10,7 @@ import Protected from "pages/Protected";
 import ProtectRoutes from "utils/ProtectRoutes";
 import { AuthProvider } from "context/AuthContext";
 import Unauthorized from "pages/Unauthorized";
+import WriteBlog from "pages/blogs/WriteBlog";
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
           {/* Public Routes  */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+
+          {/* Test */}
+          <Route path="/write-blog" element={<WriteBlog />} />
           
           
           {/* Protected Routes */}

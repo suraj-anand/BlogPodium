@@ -1,9 +1,12 @@
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
-export const Logo = () => {
+export const Logo = ({...rest}) => {
+  
+  const navigate = useNavigate();
+  
   return (
-    <Link to="/">
-        <h1 className='text-2xl font-bold uppercase'>Blog Podium</h1>
-    </Link>
+    <button onClick={() => {navigate("/")}} {...rest}>
+      <h1 className='text-2xl font-bold uppercase'>Blog Podium</h1>
+    </button>
   )
 }

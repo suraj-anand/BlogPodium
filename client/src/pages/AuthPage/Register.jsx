@@ -47,7 +47,7 @@ const Register = () => {
             email,
             password
         }
-        call(payload=payload)
+        call(payload)
     }
 
     return (
