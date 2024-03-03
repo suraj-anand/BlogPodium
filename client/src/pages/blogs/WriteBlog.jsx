@@ -3,13 +3,16 @@ import Navbar from "components/shared/Navbar"
 import { Quill } from "./components/Quill"
 import { Offcanvas } from "components/shared/Offcanvas"
 import CoverImageUpload from "pages/blogs/components/CoverImageUpload"
-import PostBlog from "./components/PublishBlog";
+import PublishBlog from "./components/PublishBlog";
 import { BlogContextProvider } from "./context/BlogContext";
 import 'react-toastify/dist/ReactToastify.min.css';
 import TitleInput from './components/TitleInput';
+import { useState } from 'react';
 
 
 const WriteBlog = () => {
+
+  const [ file, setFile ] = useState(null);
 
   return (
     <>
@@ -18,9 +21,9 @@ const WriteBlog = () => {
     <Offcanvas />
       <div className="container">
             <TitleInput />
-            <CoverImageUpload />
+            <CoverImageUpload file={file} setFile={setFile} />
             <Quill />
-            <PostBlog />
+            <PublishBlog file={file} />
       </div>
       </BlogContextProvider>
       <ToastContainer />

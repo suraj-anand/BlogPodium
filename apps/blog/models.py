@@ -8,5 +8,5 @@ class Blog(models.Model):
     cover_image = models.TextField(blank=True, null=True)
     title = models.TextField(blank=False, null=False)
     content = models.TextField(null=True, blank=True)
-    likes = models.ManyToManyField(User, related_name="blog_likes")
+    likes = models.ManyToManyField(User, default=0, related_name="blog_likes")
     user_created = models.ForeignKey(User, on_delete=models.DO_NOTHING)

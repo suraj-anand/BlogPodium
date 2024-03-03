@@ -6,9 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import { BlogContext } from '../context/BlogContext';
 
-const CoverImageUpload = () => {
-
-    const { file, setFile } = useContext(BlogContext)
+const CoverImageUpload = ({file, setFile}) => {
 
     const onDrop = useCallback(acceptedFiles => {
         const _file = acceptedFiles.at(0);
@@ -33,7 +31,7 @@ const CoverImageUpload = () => {
         </button>
         <Img
             src={URL.createObjectURL(file)}
-            alt="image"npm 
+            alt="image" 
             className="rounded-xl justify-center h-[207px] w-full left-0 bottom-0 right-0 top-0 m-auto object-cover p-2"
             />
         </>

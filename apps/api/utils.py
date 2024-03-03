@@ -3,6 +3,7 @@ import logging
 from server.settings import JWT_SECRET
 from rest_framework.response import Response
 from rest_framework import status
+import traceback 
 
 def authenticated_resource(func):
     def wrapper(*args, **kwargs):
@@ -18,6 +19,7 @@ def authenticated_resource(func):
             else:
                 return Response({"detail": "Invalid Token"}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as err:
+            traceback.print_exception(err)
             logging.error(f"Exception on checking authenticated_resource, Error: {err}")
             return Response({"detail": "Invalid Token"}, status=status.HTTP_400_BAD_REQUEST)
     return wrapper
@@ -25,8 +27,14 @@ def authenticated_resource(func):
 def parse_user_session(request):
     try:
         token = request.session.get("token")
+        if not token:
+            raise Exception({"detail": "Token missing"})
         user_data = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
-        return user_data
-    except:
+        if isinstance(user_data, dict):
+            return user_data
+        else:
+            return {}
+    except Exception as err:
+        traceback.print_exception(err)
         logging.error(f"Failed on decoding user session")
         return {}

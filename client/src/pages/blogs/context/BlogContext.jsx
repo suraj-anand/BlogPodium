@@ -4,13 +4,11 @@ export const BlogContext = createContext()
 
 export const BlogContextProvider = ({children}) => {
     
-    const [ file, setFile ] = useState(null);
     const [ title, setTitle ] = useState("")
     const [ content, setContent ] = useState("");
     
     return (
         <BlogContext.Provider value={{
-            file, setFile,
             title, setTitle,
             content, setContent
         }}>
