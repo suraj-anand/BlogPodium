@@ -1,7 +1,21 @@
-import { Text } from "./Text";
-import { Heading } from "./Heading";
-import { Img } from "./Img";
-import { Button } from "./Button";
-import { Input } from "./Input";
-import { TextArea } from "./TextArea";
-export { Text, Heading, Img, Button, Input, TextArea };
+import { Text } from "./generic/Text";
+import { Heading } from "./generic/Heading";
+import { Img } from "./generic/Image";
+import { Button } from "./generic/Button";
+import { Input } from "./generic/Input";
+import { TextArea } from "./generic/TextArea";
+import { ProfileImage } from "./generic/ProfileImage";
+import { Logo } from "./mini/Logo";
+
+
+
+export { 
+    Text,
+    Heading,
+    Img,
+    Button,
+    Input,
+    TextArea,
+    ProfileImage,
+    Logo
+};
