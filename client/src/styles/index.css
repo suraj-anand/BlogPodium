@@ -36,3 +36,14 @@ body {
   width: 100%;
   height: 1px;
 }
+
+/* Webkit */
+.bg-clip-text {
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.btn.ofc-btn.active {
+  background-color: #6b6b6b;
+  color: #EEE;
+}

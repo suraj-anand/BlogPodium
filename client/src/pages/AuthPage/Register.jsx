@@ -1,9 +1,57 @@
-import { NavLink } from "react-router-dom"
-import Input from "./components/Input"
+import { NavLink, useNavigate } from "react-router-dom"
 import { Logo } from "components"
+import { useContext, useEffect, useState } from "react"
+import { useAxios } from "hooks"
+import Input from "./components/Input"
+import { Spinner } from 'react-bootstrap'
+import { AuthContext } from "context/AuthContext"
 
 const Register = () => {
-  return (
+    
+    const navigate = useNavigate();
+
+    const { authStatus, setAuthStatus, setName: _setName } = useContext(AuthContext)
+    
+    // States
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    
+    const {
+        data, loading, error, status_code, call
+    } = useAxios({
+        url: "/api/register/",
+        method: "POST"
+    })
+
+    
+    useEffect(() => {
+        if ([200, 201].includes(status_code)) {
+            _setName(data?.name);
+            sessionStorage.setItem("name", data?.name);
+            setAuthStatus(true);
+            navigate("/");
+        }
+    }, [status_code])
+
+    useEffect(() => {
+        if(authStatus){
+            navigate("/")
+        }
+    }, [])
+
+    // Submit event handler
+    async function handleRegister(event){
+        event.preventDefault();
+        const payload = {
+            name,
+            email,
+            password
+        }
+        call(payload)
+    }
+
+    return (
     <>
         <h1 className='text-2xl font-bold uppercase p-4'>
             <Logo />
@@ -11,24 +59,33 @@ const Register = () => {
         
         <div className="container flex min-h-full flex-col items-center justify-center px-2 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                <h2 className="mb-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                <h2 className="mb-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                     Create new account
                 </h2>
             </div>
 
             <div className="mt-2 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={handleRegister}>
                     <div>
-                        <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Your Full Name</label>
+                        <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">Your Full Name</label>
                         <div className="mt-2">
-                        <Input id="name" type="text" />
+                        <Input 
+                            id="name" 
+                            type="text" 
+                            value={name} 
+                            onChange={(e) => { setName(e.target.value) }} />
                         </div>
                     </div>
                     
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                         <div className="mt-2">
-                        <Input id="email" type="email" />
+                        <Input 
+                            id="email" 
+                            type="email"
+                            value={email}
+                            onChange={(e) => {setEmail(e.target.value)}}
+                            />
                         </div>
                     </div>
 
@@ -37,9 +94,24 @@ const Register = () => {
                         <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">Password</label>
                     </div>
                     <div className="mt-2">
-                        <Input id="email" type="password" />
+                        <Input 
+                            id="email" 
+                            type="password"
+                            value={password}
+                            onChange={(e) => {setPassword(e.target.value)}}
+                            />
                     </div>
                 </div>
+
+                {/* Spinner */}
+                <div className="flex justify-center">
+                    {loading && <Spinner className="text-slate-900" />}
+                </div>
+
+                {/* Error */}
+                <p className="my-2 capitalize text-center text-red-700">
+                    {error?.response?.data?.detail}
+                </p>
 
                 <div>
                     <button type="submit" 

@@ -6,16 +6,40 @@ import {
   Login,
   Register
 } from './pages'
+import Protected from "pages/Protected";
+import ProtectRoutes from "utils/ProtectRoutes";
+import { AuthProvider } from "context/AuthContext";
+import Unauthorized from "pages/Unauthorized";
+import WriteBlog from "pages/blogs/WriteBlog";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />        
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>      
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          
+          <Route path="/" element={<LandingPage />} />      
+
+
+          {/* Public Routes  */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+
+          {/* Test */}
+          <Route path="/write-blog" element={<WriteBlog />} />
+          
+          
+          {/* Protected Routes */}
+          <Route element={<ProtectRoutes />}>
+            <Route path="/secret" element={<Protected />} />
+          </Route>
+
+          {/* 404 - Page Not Found */}
+          <Route path="*" element={<Unauthorized />} />
+
+        </Routes>      
+      </Router>
+    </AuthProvider>
   );
 }
 

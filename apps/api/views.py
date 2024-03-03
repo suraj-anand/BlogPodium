@@ -27,6 +27,9 @@ class RegisterAPI(APIView):
                     status=status.HTTP_400_BAD_REQUEST
                 )
             
+            if len(User.objects.filter(email=email)) != 0:
+                return Response({"detail": "Email already taken"}, status=status.HTTP_400_BAD_REQUEST)
+
             user_id = f"{uuid.uuid4()}"
             salt = bcrypt.gensalt(10)
             hash = bcrypt.hashpw(password.encode(), salt=salt).decode()
@@ -42,7 +45,7 @@ class RegisterAPI(APIView):
             
             token = jwt.encode({"user_id": user_id}, JWT_SECRET, algorithm="HS256")
             request.session["token"] = token
-            return Response({"detail": "User Created"}, status=status.HTTP_201_CREATED)
+            return Response({"detail": "User Created", "name": name}, status=status.HTTP_201_CREATED)
         except Exception as err:
             logging.error(f"Failure on registering user..., Error: {err}")
             return Response(
@@ -69,6 +72,7 @@ class LoginAPI(APIView):
             
             user_data = qs.first()
             user_id = user_data.id
+            name = user_data.name
             hash = user_data.password
             
             valid = bcrypt.checkpw(password.encode(), hash.encode())
@@ -77,7 +81,7 @@ class LoginAPI(APIView):
             
             token = jwt.encode({"user_id": user_id}, JWT_SECRET, algorithm="HS256")
             request.session["token"] = token
-            return Response({"detail": "Success"}, status=status.HTTP_200_OK)
+            return Response({"detail": "Success", "name": name}, status=status.HTTP_200_OK)
         
         except Exception as err:
             logging.error(f"Failure on user sign in, Error: {err}")
@@ -100,6 +104,13 @@ class LogoutAPI(APIView):
         return self.logout(request)
 
 
+# Auth Check Route
+class AuthCheckAPI(APIView):
+    @method_decorator(authenticated_resource)
+    def post(self, request):
+        return Response({"detail": "Authenticated"}, status=status.HTTP_202_ACCEPTED)
+
 class HeathCheck(APIView):
+    @method_decorator(authenticated_resource)
     def get(self, request):
         return Response({"message": "pong"})
