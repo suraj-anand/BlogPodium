@@ -9,6 +9,7 @@ const BlogCard = ({
   profileImageSrc="",
   author="",
   title="",
+  content="",
   coverImage
 }) => {
 
@@ -59,7 +60,7 @@ const BlogCard = ({
 
       {/* Summary */}
       <p className="my-3 fw-medium ">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam voluptas explicabo, quis at provident natus vel commodi aliquam sapiente assumenda est voluptatibus iusto nam, ipsa alias odit asperiores hic totam.
+        <span dangerouslySetInnerHTML={{__html: content}}></span>
       </p>
     </>
   )

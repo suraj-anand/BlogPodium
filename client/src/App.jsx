@@ -11,6 +11,7 @@ import ProtectRoutes from "utils/ProtectRoutes";
 import { AuthProvider } from "context/AuthContext";
 import Unauthorized from "pages/Unauthorized";
 import WriteBlog from "pages/blogs/WriteBlog";
+import UserItems from "pages/UserItems/UserItems";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
 
           {/* Test */}
           <Route path="/write-blog" element={<WriteBlog />} />
+          <Route path="/your-items" element={<UserItems />} />
           
           
           {/* Protected Routes */}
