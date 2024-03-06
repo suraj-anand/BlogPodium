@@ -1,18 +1,92 @@
 import { Img, ProfileImage } from "components"
 import { useState } from "react";
-import { format, formatDistance, formatRelative, subDays } from 'date-fns'
+import { formatDistance } from 'date-fns'
 import { IoMdHeart } from "react-icons/io";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { FaShare } from "react-icons/fa";
+import { LiaChevronCircleUpSolid } from "react-icons/lia";
+import { LiaChevronCircleDownSolid } from "react-icons/lia";
+import { Accordion, Fade } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const BlogCard = ({
+  id="",
   profileImageSrc="",
   author="",
   title="",
   content="",
-  coverImage
+  coverImage,
+  createdOn="",
+  showLike=false,
+  showContent=false
 }) => {
 
+  const [ showBlogContent, setShowBlogContent ] = useState(false);
+
+  return (
+    <>
+      {/* Profile Image, Author, Posted Time  */}
+      <div className="flex gap-2 mt-4">
+        <ProfileImage imgSrc={profileImageSrc} />
+        <BlogHeader author={author} createdOn={createdOn} />
+        <div className="flex gap-3 ms-auto my-auto">
+          { showLike && <LikeBlog /> } {/* Like Button */}
+          { <ShareBlog id={id} />} {/* Share Button */}
+        </div>
+      </div>
+      
+      <BlogCoverImage coverImage={coverImage} /> {/* Cover Image */}
+
+      {/* Title */}
+      <div className={`flex items-center ${showContent ? "justify-between" : "justify-center"}`}>
+        
+        <BlogTitle id={id} title={title} />
+        
+        <button className="btn" onClick={() => {setShowBlogContent(show => (!show))}}>
+          { showBlogContent && <LiaChevronCircleUpSolid size={30} /> }
+          { !showBlogContent && <LiaChevronCircleDownSolid size={30} /> }
+        </button>
+      </div>
+
+      {/* Content */}
+      {
+        showBlogContent && <Content content={content} show={showBlogContent} />
+      }
+    </>
+  )
+}
+
+
+function BlogHeader({author, createdOn}){
+  return (
+    <div className="flex flex-col my-auto gap-1">
+      <h4 className="font-semibold">By {author}</h4>
+      <h5> { createdOn ? formatDistance(new Date(createdOn), new Date(), { addSuffix: true }) : "3 Days ago" } </h5>
+    </div>
+  )
+}
+
+function BlogCoverImage({coverImage}){
+  return (<div className="flex align-middle">
+    <Img
+        src={coverImage}
+        alt="image"
+        className="mt-[10px] object-cover rounded-[5px]"
+        style={{height: "250px", width: "100%"}}
+      />
+  </div>)
+}
+
+function BlogTitle({ id, title }){
+  return (
+    <div className={`text-gray-600_01 font-bold text-2xl font-merriweather italic mt-2`}> 
+      <Link to={`/blog/${id}`}>{title}</Link>
+    </div>
+  )
+}
+
+function LikeBlog(){
+  
   const [liked, setLiked] = useState(false);
 
   function handleLike(){
@@ -20,49 +94,35 @@ const BlogCard = ({
   }
 
   return (
-    <>
-      {/* Profile Image, Author, Posted Time  */}
-      <div className="flex gap-2 mt-4">
-      <ProfileImage imgSrc={profileImageSrc} />
-        <div className="flex flex-col my-auto gap-1">
-          <h4 className="font-semibold">By {author}</h4>
-          <h5>{formatDistance(subDays(new Date(), 3), new Date(), { addSuffix: true })}</h5>
-        </div>
+    <button onClick={handleLike}>
+      { liked ? <IoMdHeart size={36} className="text-red-500" /> : <IoMdHeartEmpty size={36} /> }
+    </button>
+  )
+}
 
-        <div className="flex gap-3 ms-auto my-auto">
-          {/* Like Button */}
-          <button onClick={handleLike}>
-            { liked ? <IoMdHeart size={36} className="text-red-500" /> : <IoMdHeartEmpty size={36} /> }
-          </button>
 
-          {/* Share Button */}
-          <button>
-            <FaShare size={26} />
-          </button>
-        </div>
+function ShareBlog({id}){
+  
+  const handleShare = async () => {
+    const blog_url = `${document.location.origin}/blog/${id}`
+    await navigator.share({
+      url: blog_url
+    });  
+  }
 
-      </div>
-      
-      {/* Cover Image */}
-      <div className="flex align-middle">
-        <Img
-            src={coverImage}
-            alt="image"
-            className="mt-[10px] object-cover rounded-[5px]"
-            style={{height: "250px", width: "100%"}}
-          />
-      </div>
+  return (
+    <button onClick={handleShare}> <FaShare size={26} /> </button>
+  )
+}
 
-      {/* Title */}
-      <h2 className="text-gray-600_01 font-bold text-2xl font-merriweather italic text-center mt-2">
-        {title}
-      </h2>
+function Content({content, show}){
 
-      {/* Summary */}
-      <p className="my-3 fw-medium ">
-        <span dangerouslySetInnerHTML={{__html: content}}></span>
-      </p>
-    </>
+  return (
+    <Fade in={show} appear={show} unmountOnExit={show}>
+        <p className="my-3 fw-medium ">
+          <span dangerouslySetInnerHTML={{__html: content}}></span>
+        </p>
+    </Fade>
   )
 }
 

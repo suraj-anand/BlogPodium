@@ -1,13 +1,17 @@
 import os
 import uuid
+import logging
 
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.utils.decorators import method_decorator
 from django.core.files.storage import FileSystemStorage
+from django.shortcuts import get_object_or_404
 
 from apps.api.utils import authenticated_resource, parse_user_session
 from apps.blog import COVER_IMAGE_PATH, COVER_IMAGE_STORE_PATH
+from .helper import blob_parser
 from .models import Blog
 from .serializers import BlogSerializer
 
@@ -45,7 +49,23 @@ class BlogAPI(APIView):
         return Response({"detail": "Published"}, status=201)
     
     
-    #@method_decorator(authenticated_resource)
+    def delete(self, request):
+        try:
+            user_data = parse_user_session(request)
+            user_id = user_data.get("user_id")
+            blog_id = request.query_params.get("blog_id")
+            blog = get_object_or_404(Blog, id=blog_id)
+            blog_data = BlogSerializer(blog).data
+            
+            if blog_data.get("user_created") != user_id:
+                return Response({"detail": "You're not the owner for this blog"}, status=status.HTTP_400_BAD_REQUEST)
+            
+            blog.delete()
+            return Response({"detail": "Blog Deleted"}, status=status.HTTP_204_NO_CONTENT)
+        
+        except Exception as err:
+            logging.error(f"Error on blog deletion: {err}")
+            return Response({"Error": f"{err}"})
 
 class UserBlogAPI(APIView):
     @method_decorator(authenticated_resource)
@@ -53,4 +73,4 @@ class UserBlogAPI(APIView):
         user_data = parse_user_session(request)
         queryset = Blog.objects.filter(user_created=user_data.get("user_id"))
         data = BlogSerializer(queryset, many=True).data
-        return Response(data)
+        return Response(blob_parser(blogs=data))
