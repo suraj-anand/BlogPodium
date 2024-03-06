@@ -8,7 +8,7 @@ export default function Footer({ ...props }) {
         <div className="flex flex-row justify-between items-center w-full">
           <div className="flex flex-col items-start justify-start w-[15%] gap-2">
             <div className="flex flex-row justify-start items-start gap-3.5">
-              <Img src="images/img_dashicons_welcome_write_blog.svg" alt="dashicons_one" className="h-6 w-6 mt-[3px]" />
+              <Img src="assets/img_dashicons_welcome_write_blog.svg" alt="dashicons_one" className="h-6 w-6 mt-[3px]" />
               <Heading
                 size="lg"
                 as="h4"
@@ -18,7 +18,7 @@ export default function Footer({ ...props }) {
               </Heading>
             </div>
             <div className="flex flex-row justify-start items-center gap-2.5">
-              <Img src="images/img_heart_3_1.svg" alt="heart3one_one" className="h-5 w-5" />
+              <Img src="assets/img_heart_3_1.svg" alt="heart3one_one" className="h-5 w-5" />
               <Text as="p" className="!text-white-A700 !font-medium">
                 Build with heart
               </Text>
@@ -46,9 +46,9 @@ export default function Footer({ ...props }) {
               Follow Me on
             </Heading>
             <div className="flex flex-row justify-between w-full">
-              <Img src="images/img_instagram_3_1.svg" alt="instagram3one" className="h-[25px] w-[25px]" />
-              <Img src="images/img_whatsapp_2_1.svg" alt="whatsapp2one" className="h-[25px] w-[25px]" />
-              <Img src="images/img_linkedin_2_1.svg" alt="linkedin2one" className="h-[25px] w-[25px]" />
+              <Img src="assets/img_instagram_3_1.svg" alt="instagram3one" className="h-[25px] w-[25px]" />
+              <Img src="assets/img_whatsapp_2_1.svg" alt="whatsapp2one" className="h-[25px] w-[25px]" />
+              <Img src="assets/img_linkedin_2_1.svg" alt="linkedin2one" className="h-[25px] w-[25px]" />
             </div>
           </div>
         </div>

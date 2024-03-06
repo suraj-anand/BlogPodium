@@ -1,7 +1,7 @@
 import { Img } from "./Image"
 
 export const ProfileImage = ({
-  imgSrc="images/img_ellipse_5.png", className
+  imgSrc="assets/img_ellipse_5.png", className
 }) => {
   return (
     <Img

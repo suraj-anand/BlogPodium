@@ -1,7 +1,7 @@
 import { Button, Img } from "components"
 
 const PodcastCard = ({
-    imgSrc="images/img_rectangle_9.png",
+    imgSrc="assets/img_rectangle_9.png",
     title="",
     author=""
 }) => {
@@ -13,12 +13,12 @@ const PodcastCard = ({
             {/* Image & Play Button */}
             <div className="h-[207px] w-full mt-[7px] relative">
                 <Img
-                    src="images/img_rectangle_9.png"
+                    src="assets/img_rectangle_9.png"
                     alt="image"
                     className="rounded-xl justify-center h-[207px] w-full left-0 bottom-0 right-0 top-0 m-auto object-cover absolute p-2"
                 />
                 <Button color="gray_600_01" className="w-[72px] top-[30%] right-0 left-0 m-auto absolute">
-                    <Img src="images/img_play.svg" />
+                    <Img src="assets/img_play.svg" />
                 </Button>
             </div>
 

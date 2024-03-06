@@ -18,17 +18,17 @@ const TrendingBlogs = () => {
         </div>
 
         <BlogCard 
-          profileImageSrc="images/img_ellipse_5.png"
+          profileImageSrc="assets/img_ellipse_5.png"
           author='Jayakumar N' 
           title='Consistent way of working to train yourself'
-          coverImage={"images/img_rectangle_11_390x728.png"}
+          coverImage={"assets/img_rectangle_11_390x728.png"}
           />
 
         <BlogCard 
-          profileImageSrc="images/img_ellipse_5.png"
+          profileImageSrc="assets/img_ellipse_5.png"
           author='Jayakumar N' 
           title='Consistent way of working to train yourself'
-          coverImage={"images/img_rectangle_11_390x728.png"}
+          coverImage={"assets/img_rectangle_11_390x728.png"}
           />
     </div>
   )
