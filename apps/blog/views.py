@@ -18,7 +18,14 @@ from .serializers import BlogSerializer
 # Create your views here.
 class BlogAPI(APIView):
     def get(self, request):
-        return Response()
+        try:
+            queryset = Blog.objects.all()
+            data = BlogSerializer(queryset, many=True).data
+            return Response(blob_parser(data))
+        except Exception as err:
+            logging.error(f"Error on fetching all the blogs")
+            return Response({"detail": "Failed on fetching blogs"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            
     
     @method_decorator(authenticated_resource)
     def post(self, request):
