@@ -1,17 +1,18 @@
+import os
 import uuid
 import logging
 import bcrypt
 import jwt
 
-from django.shortcuts import render
+from django.http.response import FileResponse
+from django.utils.decorators import method_decorator
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
 from .models import User
 from .serializers import UserSerializer
-from server.settings import JWT_SECRET
-from django.utils.decorators import method_decorator
+from server.settings import JWT_SECRET, BASE_DIR, MEDIA_ROOT
 from .utils import authenticated_resource
 
 # Register Route
@@ -104,12 +105,26 @@ class LogoutAPI(APIView):
         return self.logout(request)
 
 
+# Media Serve
+class MediaServeAPI(APIView):
+    def get(self, request, filename):
+        try:
+            file_path = os.path.join(BASE_DIR, MEDIA_ROOT, filename)
+            if not os.path.exists(file_path):
+                return Response({"detail": "File not found"}, status=status.HTTP_400_BAD_REQUEST)
+            return FileResponse(open(file_path, "rb"))
+        except Exception as err:
+            logging.error(f"Error on media serve: {err}")
+            return Response({"detail": "Unable to serve file"}, status=status.HTTP_400_BAD_REQUEST)
+
 # Auth Check Route
 class AuthCheckAPI(APIView):
     @method_decorator(authenticated_resource)
     def post(self, request):
         return Response({"detail": "Authenticated"}, status=status.HTTP_202_ACCEPTED)
 
+
+# Health Check ROute
 class HeathCheck(APIView):
     @method_decorator(authenticated_resource)
     def get(self, request):

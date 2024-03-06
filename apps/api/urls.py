@@ -6,6 +6,7 @@ urlpatterns = [
     path("login/", views.LoginAPI.as_view()),
     path("register/", views.RegisterAPI.as_view()),
     path("logout/", views.LogoutAPI.as_view()),
+    path("media/<str:filename>/", views.MediaServeAPI.as_view()),
     path("blog/", include("apps.blog.urls")),
     path("ping/", views.HeathCheck.as_view())
 ]
