@@ -43,14 +43,14 @@ const BlogCard = ({
         <BlogTitle id={id} title={title} />
         
         <button className="btn" onClick={() => {setShowBlogContent(show => (!show))}}>
-          { showBlogContent && <LiaChevronCircleUpSolid size={30} /> }
-          { !showBlogContent && <LiaChevronCircleDownSolid size={30} /> }
+          {showContent &&  showBlogContent && <LiaChevronCircleUpSolid size={30} /> }
+          {showContent &&  !showBlogContent && <LiaChevronCircleDownSolid size={30} /> }
         </button>
       </div>
 
       {/* Content */}
       {
-        showBlogContent && <Content content={content} show={showBlogContent} />
+        (showContent && showBlogContent) && <Content content={content} show={showBlogContent} />
       }
     </>
   )
