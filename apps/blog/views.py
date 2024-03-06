@@ -7,7 +7,7 @@ from django.utils.decorators import method_decorator
 from django.core.files.storage import FileSystemStorage
 
 from apps.api.utils import authenticated_resource, parse_user_session
-from apps.blog import COVER_IMAGE_DIR
+from apps.blog import COVER_IMAGE_PATH, COVER_IMAGE_STORE_PATH
 from .models import Blog
 from .serializers import BlogSerializer
 
@@ -19,21 +19,23 @@ class BlogAPI(APIView):
     @method_decorator(authenticated_resource)
     def post(self, request):
         user_data = parse_user_session(request)
+        id = f"{uuid.uuid4()}"
         user_id = user_data.get("user_id")
         content = request.data.get("content", "")
         title = request.data.get("title", "")
         cover_image = request.data.get("file")
         
-        cover_img_path = ""
+        cover_image_path = ""
         if cover_image:
-            fs = FileSystemStorage(location=os.path.join(COVER_IMAGE_DIR, f"{uuid.uuid4()}"))
+            fs = FileSystemStorage(location=os.path.join(COVER_IMAGE_STORE_PATH, id))
             filename = fs.save(cover_image.name, cover_image)
-            cover_img_path = os.path.join(COVER_IMAGE_DIR, f"{uuid.uuid4()}", filename)
+            cover_image_path = os.path.join(COVER_IMAGE_PATH, id, filename)
         
         data = {
+            "id": id,
             "title": title,
             "content": content,
-            "cover_image": cover_img_path,
+            "cover_image": cover_image_path,
             "user_created": user_id
         }
         serializer = BlogSerializer(data=data)

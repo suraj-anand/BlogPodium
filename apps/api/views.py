@@ -107,9 +107,12 @@ class LogoutAPI(APIView):
 
 # Media Serve
 class MediaServeAPI(APIView):
-    def get(self, request, filename):
+    def get(self, request):
         try:
-            file_path = os.path.join(BASE_DIR, MEDIA_ROOT, filename)
+            file = request.query_params.get("file")
+            if not file:
+                return Response({"detail": "file param is required"})
+            file_path = os.path.join(BASE_DIR, MEDIA_ROOT, file)
             if not os.path.exists(file_path):
                 return Response({"detail": "File not found"}, status=status.HTTP_400_BAD_REQUEST)
             return FileResponse(open(file_path, "rb"))

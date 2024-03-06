@@ -4,7 +4,7 @@ from apps.api.models import User
 
 
 class Blog(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    id = models.TextField(primary_key=True, default=uuid.uuid4)
     cover_image = models.TextField(blank=True, null=True)
     title = models.TextField(blank=False, null=False)
     content = models.TextField(null=True, blank=True)
