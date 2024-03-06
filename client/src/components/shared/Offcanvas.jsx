@@ -16,7 +16,7 @@ import "styles/index.css"
 export const Offcanvas = ({id}) => {
     
     return (
-    <div className="offcanvas offcanvas-start text-black-900 bg-gray-300 !w-[25%] sm:!w-[100%] " tabIndex="-1" id={id}>
+    <div className="offcanvas offcanvas-start text-black-900 bg-gray-300 !w-[25%] md:!w-[100%] " tabIndex="-1" id={id}>
         
         <div className="offcanvas-header flex justify-between">
             <Logo data-bs-dismiss="offcanvas" />
@@ -79,6 +79,7 @@ export const Option = ({
 
 export const LogoutBtn = () => {
     
+    const navigate = useNavigate();
     const { authStatus, setAuthStatus } = useContext(AuthContext);
 
     const { call } = useAxios({
@@ -87,8 +88,8 @@ export const LogoutBtn = () => {
     })
     
     function handleLogout(){
-        Logout(setAuthStatus)
-        call()
+        Logout(setAuthStatus, navigate);
+        call();
     }
 
     return (
