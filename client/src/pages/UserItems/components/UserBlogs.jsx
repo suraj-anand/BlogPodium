@@ -42,7 +42,7 @@ const UserBlogs = () => {
                 { loading && <Spinner /> }
                 {
                     data.map(blog => {
-                        const { id, content, cover_image, blog_owner, creation_time } = blog;
+                        const { id, content, cover_image, blog_owner, creation_time, profile } = blog;
                         return (
                             <BlogCard 
                                 id={id}
@@ -52,6 +52,7 @@ const UserBlogs = () => {
                                 coverImage={
                                     `${axios.defaults.baseURL}/api/media/?file=${cover_image}`
                                 }
+                                profileImageSrc={profile}
                                 createdOn={creation_time}
                                 showLike={true}
                                 showContent={true}

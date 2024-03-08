@@ -13,6 +13,7 @@ def blob_parser(blogs):
             "content": blog.get("content"),
             "likes": blog.get("likes"),
             "blog_owner": user.name,
+            "profile": user.profile,
         }
         data.append(record)
     return data

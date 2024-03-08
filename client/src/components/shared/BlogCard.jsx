@@ -8,6 +8,7 @@ import { LiaChevronCircleUpSolid } from "react-icons/lia";
 import { LiaChevronCircleDownSolid } from "react-icons/lia";
 import { Accordion, Fade } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const BlogCard = ({
   id="",
@@ -27,7 +28,7 @@ const BlogCard = ({
     <>
       {/* Profile Image, Author, Posted Time  */}
       <div className="flex gap-2 mt-4">
-        <ProfileImage imgSrc={profileImageSrc} />
+        <ProfileImage imgSrc={profileImageSrc ? `${axios.defaults.baseURL}/api/media/?file=${profileImageSrc}` : ""} />
         <BlogHeader author={author} createdOn={createdOn} />
         <div className="flex gap-3 ms-auto my-auto">
           { showLike && <LikeBlog /> } {/* Like Button */}
