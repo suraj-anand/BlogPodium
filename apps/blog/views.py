@@ -13,7 +13,7 @@ from django.shortcuts import get_object_or_404
 
 from apps.api.utils import authenticated_resource, parse_user_session
 from apps.blog import COVER_IMAGE_PATH, COVER_IMAGE_STORE_PATH
-from .helper import blob_parser
+from .helper import blob_parser, add_user_info_to_blog
 from .models import Blog
 from .serializers import BlogSerializer, SimpleBlogSerializer
 
@@ -76,10 +76,17 @@ class BlogAPI(APIView):
             logging.error(f"Error on blog deletion: {err}")
             return Response({"Error": f"{err}"})
 
+class SingleBlog(APIView):
+    def get(self, request, blog_id):
+        blog = get_object_or_404(Blog, id=blog_id)
+        data = BlogSerializer(blog).data
+        
+        return Response(add_user_info_to_blog(blog=data, user_id=data.get("user_created")))
+
 class UserBlogAPI(APIView):
     @method_decorator(authenticated_resource)
     def get(self, request):
         user_data = parse_user_session(request)
         queryset = Blog.objects.filter(user_created=user_data.get("user_id"))
-        data = BlogSerializer(queryset, many=True).data
+        data = BlogSerializer(queryset).data
         return Response(blob_parser(blogs=data))

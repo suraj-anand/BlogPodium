@@ -12,6 +12,7 @@ import { AuthProvider } from "context/AuthContext";
 import Unauthorized from "pages/Unauthorized";
 import WriteBlog from "pages/blogs/WriteBlog";
 import UserItems from "pages/UserItems/UserItems";
+import SingleBlog from "pages/SingleBlog";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           {/* Public Routes  */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/blog/:blogid" element={<SingleBlog />} />
 
           {/* Test */}
           <Route path="/write-blog" element={<WriteBlog />} />
