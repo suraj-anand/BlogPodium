@@ -1,5 +1,4 @@
 import { useEffect } from "react"
-import axios from 'axios'
 import { Button } from "components"
 import BlogCard from "components/shared/BlogCard"
 import { useAxios } from "hooks"
@@ -42,16 +41,15 @@ const UserBlogs = () => {
                 { loading && <Spinner /> }
                 {
                     data.map(blog => {
-                        const { id, content, cover_image, blog_owner, creation_time } = blog;
+                        const { id, content, cover_image, blog_owner, creation_time, profile } = blog;
                         return (
                             <BlogCard 
                                 id={id}
                                 title={blog?.title}
                                 author={blog_owner}
                                 content={content}
-                                coverImage={
-                                    `${axios.defaults.baseURL}/api/media/?file=${cover_image}`
-                                }
+                                coverImage={cover_image}
+                                profileImageSrc={profile}
                                 createdOn={creation_time}
                                 showLike={true}
                                 showContent={true}

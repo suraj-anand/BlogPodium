@@ -5,7 +5,6 @@ import Navbar from "components/shared/Navbar";
 import Feature from "./components/Feature";
 import LatestPodcasts from "./components/LatestPodcasts";
 import TrendingBlogs from "./components/TrendingBlogs";
-import LoadMoreBlogs from "./components/LoadMoreBlogs";
 import Footer from "components/shared/Footer";
 import { useAxios } from "hooks";
 import { AuthContext } from "context/AuthContext";
@@ -59,7 +58,6 @@ export default function LandingPagePage() {
       <Feature />
       <LatestPodcasts />
       <TrendingBlogs />
-      <LoadMoreBlogs />
       <Footer />
       
     </>

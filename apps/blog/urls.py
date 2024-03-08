@@ -3,5 +3,6 @@ from . import views
 
 urlpatterns = [
     path("", views.BlogAPI.as_view()),
-    path("user-blogs/", views.UserBlogAPI.as_view())
+    path("user-blogs/", views.UserBlogAPI.as_view()),
+    path("<str:blog_id>/", views.SingleBlog.as_view())
 ]
