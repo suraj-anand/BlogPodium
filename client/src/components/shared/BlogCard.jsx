@@ -6,7 +6,7 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { FaShare } from "react-icons/fa";
 import { LiaChevronCircleUpSolid } from "react-icons/lia";
 import { LiaChevronCircleDownSolid } from "react-icons/lia";
-import { Accordion, Fade } from "react-bootstrap";
+import { Fade } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -70,7 +70,7 @@ function BlogHeader({author, createdOn}){
 function BlogCoverImage({coverImage}){
   return (<div className="flex align-middle">
     <Img
-        src={coverImage}
+        src={coverImage ? `${axios.defaults.baseURL}/api/media/?file=${coverImage}` : ""}
         alt="image"
         className="mt-[10px] object-cover rounded-[5px]"
         style={{height: "250px", width: "100%"}}

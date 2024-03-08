@@ -1,5 +1,4 @@
 import { useEffect } from "react"
-import axios from 'axios'
 import { Button } from "components"
 import BlogCard from "components/shared/BlogCard"
 import { useAxios } from "hooks"
@@ -49,9 +48,7 @@ const UserBlogs = () => {
                                 title={blog?.title}
                                 author={blog_owner}
                                 content={content}
-                                coverImage={
-                                    `${axios.defaults.baseURL}/api/media/?file=${cover_image}`
-                                }
+                                coverImage={cover_image}
                                 profileImageSrc={profile}
                                 createdOn={creation_time}
                                 showLike={true}

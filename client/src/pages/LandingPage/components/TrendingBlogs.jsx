@@ -1,9 +1,41 @@
+import axios from 'axios';
 import { Button, Img } from 'components'
 import BlogCard from 'components/shared/BlogCard';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { Spinner } from 'react-bootstrap';
 import { RxPencil2 } from "react-icons/rx";
 
 const TrendingBlogs = () => {
+
+  const [ blogs, setBlogs ] = useState([]); 
+  const [ loadMore, setLoadMore ] = useState("");
+  const [ loading, setLoading ] = useState(false);
+
+  async function fetchBlogs(url="/api/blog/"){
+    setLoading(true);
+    try {
+      const response = await axios.get(url);
+      console.log(response.data?.results)
+      if (response.data?.results){
+        setBlogs(blogs => ([...blogs, ...response.data?.results]))
+      }
+      setLoadMore(response.data?.next);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function handleLoadMore(){
+    const url = loadMore.replace("http:", location.protocol);
+    fetchBlogs(url);
+  }
+
+  useEffect(() => {
+    fetchBlogs();
+  }, [])
+
   return (
     <div className='container my-16'>
         {/* Header  */}
@@ -17,19 +49,31 @@ const TrendingBlogs = () => {
             </div>
         </div>
 
-        <BlogCard 
-          profileImageSrc="assets/img_ellipse_5.png"
-          author='Jayakumar N' 
-          title='Consistent way of working to train yourself'
-          coverImage={"assets/img_rectangle_11_390x728.png"}
-          />
+      {
+        blogs.map( (blog) => {
+          console.log(blog)
+          const { id, creation_time, cover_image, title, blog_owner, profile } = blog;
+          return (<BlogCard 
+            id={id}
+            title={title}
+            createdOn={creation_time}
+            author={blog_owner}
+            profileImageSrc={profile}
+            coverImage={cover_image}
+            />)
+          })
+      }
 
-        <BlogCard 
-          profileImageSrc="assets/img_ellipse_5.png"
-          author='Jayakumar N' 
-          title='Consistent way of working to train yourself'
-          coverImage={"assets/img_rectangle_11_390x728.png"}
-          />
+      {
+        loading &&
+        <div className="flex items-center justify-center p-6">
+          <Spinner />
+        </div>
+      }
+
+      <div className='text-center my-3'>
+        { loadMore && <button className='btn btn-outline-info rounded-lg' onClick={handleLoadMore}>Load more</button> }
+      </div>
     </div>
   )
 }
