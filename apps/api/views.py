@@ -6,6 +6,7 @@ import jwt
 
 from django.http.response import FileResponse
 from django.utils.decorators import method_decorator
+from django.core.files.storage import FileSystemStorage
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -14,6 +15,7 @@ from .models import User
 from .serializers import UserSerializer
 from server.settings import JWT_SECRET, BASE_DIR, MEDIA_ROOT
 from .utils import authenticated_resource
+from . import PROFILE_IMAGE_STORE_PATH, PROFILE_IMAGE_PATH
 
 # Register Route
 class RegisterAPI(APIView):
@@ -22,6 +24,8 @@ class RegisterAPI(APIView):
             name = request.data.get("name")
             email = request.data.get("email")
             password = request.data.get("password")
+            profile = request.data.get("file")
+            
             if not name or not email or not password:
                 return Response(
                     {"detail": "Name, Email & Password is required"}, 
@@ -34,11 +38,20 @@ class RegisterAPI(APIView):
             user_id = f"{uuid.uuid4()}"
             salt = bcrypt.gensalt(10)
             hash = bcrypt.hashpw(password.encode(), salt=salt).decode()
+            
+            # Profile image store
+            profile_image_path = ""
+            if profile:
+                fs = FileSystemStorage(location=os.path.join(PROFILE_IMAGE_STORE_PATH, user_id))
+                filename = fs.save(profile.name, profile)
+                profile_image_path = os.path.join(PROFILE_IMAGE_PATH, user_id, filename)
+            
             data = {
                 "id": user_id,
                 "name": name,
                 "email": email,
-                "password": hash
+                "password": hash,
+                "profile": profile_image_path
             }
             serializer = UserSerializer(data=data)
             serializer.is_valid(raise_exception=True)

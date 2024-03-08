@@ -5,6 +5,8 @@ import { useAxios } from "hooks"
 import Input from "./components/Input"
 import { Spinner } from 'react-bootstrap'
 import { AuthContext } from "context/AuthContext"
+import CoverImageUpload from "pages/blogs/components/CoverImageUpload"
+import { ToastContainer } from 'react-toastify'
 
 const Register = () => {
     
@@ -16,12 +18,16 @@ const Register = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [file, setFile] = useState();
     
     const {
         data, loading, error, status_code, call
     } = useAxios({
         url: "/api/register/",
-        method: "POST"
+        method: "POST",
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
     })
 
     
@@ -46,7 +52,8 @@ const Register = () => {
         const payload = {
             name,
             email,
-            password
+            password,
+            file
         }
         call(payload)
     }
@@ -57,15 +64,15 @@ const Register = () => {
             <Logo />
         </h1>
         
-        <div className="container flex min-h-full flex-col items-center justify-center px-2 py-12 lg:px-8">
+        <div className="container flex min-h-full flex-col items-center justify-center px-2 py-2 my-2 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                <h2 className="mb-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                <h2 className="mb-4 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                     Create new account
                 </h2>
             </div>
 
             <div className="mt-2 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6" onSubmit={handleRegister}>
+                <form className="space-y-6 flex flex-col items-center" onSubmit={handleRegister}>
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">Your Full Name</label>
                         <div className="mt-2">
@@ -103,6 +110,11 @@ const Register = () => {
                     </div>
                 </div>
 
+                <CoverImageUpload 
+                    file={file} setFile={setFile}
+                    className="w-auto items-center justify-center mx-auto inline my-2"
+                    type="profile" />
+
                 {/* Spinner */}
                 <div className="flex justify-center">
                     {loading && <Spinner className="text-slate-900" />}
@@ -110,7 +122,7 @@ const Register = () => {
 
                 {/* Error */}
                 <p className="my-2 capitalize text-center text-red-700">
-                    {error?.response?.data?.detail}
+                    {error?.response?.data?.detail} 
                 </p>
 
                 <div>
@@ -121,7 +133,7 @@ const Register = () => {
                 </div>
                 </form>
 
-                <p className="mt-10 text-center text-sm text-gray-500">
+                <p className="text-center text-sm text-gray-500 my-3">
                     Existing User?
                     <NavLink to="/login" className="font-semibold mx-1 leading-6 text-indigo-600 hover:text-indigo-500">
                         Login
@@ -129,6 +141,7 @@ const Register = () => {
                 </p>
             </div>
         </div>
+        <ToastContainer />
     </>
   )
 }

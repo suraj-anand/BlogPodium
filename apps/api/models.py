@@ -6,4 +6,5 @@ class User(models.Model):
     creation_time = models.DateTimeField(auto_now_add=True)
     name = models.TextField(null=False, blank=False)
     email = models.EmailField(unique=True, null=False, blank=False)
+    profile = models.TextField(null=True, blank=True, default="")
     password = models.TextField(blank=False, null=False)

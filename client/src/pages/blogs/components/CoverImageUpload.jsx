@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import { BlogContext } from '../context/BlogContext';
 
-const CoverImageUpload = ({file, setFile}) => {
+const CoverImageUpload = ({file, setFile, type="cover", className=""}) => {
 
     const onDrop = useCallback(acceptedFiles => {
         const _file = acceptedFiles.at(0);
@@ -20,7 +20,7 @@ const CoverImageUpload = ({file, setFile}) => {
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop, accept: "image"})
       
     return (
-    <>
+    <div className={className}>
     
     {/* If image selected */}
     {
@@ -46,14 +46,14 @@ const CoverImageUpload = ({file, setFile}) => {
                     {
                         isDragActive ?
                         <p>Drop the image here</p> :
-                        <p>Drag 'n' drop the cover image here, or click to select the image</p>
+                        <p>Drag 'n' drop the {type} image here, or click to select the image</p>
                     }
                 </div>
                 </>
         </div>
     }
 
-    </>
+    </div>
     )
 }
 
