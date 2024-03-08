@@ -10,7 +10,6 @@ import { IoMdLogOut } from "react-icons/io";
 import { GiSelfLove } from "react-icons/gi";
 import { FaUserAlt } from "react-icons/fa";
 import { useAxios } from "hooks";
-import { NavLink } from "react-router-dom";
 import "styles/index.css"
 
 export const Offcanvas = ({id}) => {
@@ -96,7 +95,7 @@ export const LogoutBtn = () => {
         <>
         {
             authStatus && 
-            <button className="ms-auto flex gap-2 btn btn-outline-dark" onClick={handleLogout}>
+            <button className="ms-auto flex gap-2 btn btn-outline-dark" onClick={handleLogout} data-bs-dismiss="offcanvas">
                 <IoMdLogOut className="text-2xl font-bold" /> Logout
             </button>
         }
