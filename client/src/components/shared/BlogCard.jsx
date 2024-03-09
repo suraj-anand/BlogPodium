@@ -29,7 +29,6 @@ const BlogCard = ({
 }) => {
 
   const [ showBlogContent, setShowBlogContent ] = useState(false);
-
   return (
     <>
       {/* Profile Image, Author, Posted Time  */}
@@ -37,7 +36,7 @@ const BlogCard = ({
         <ProfileImage imgSrc={profileImageSrc ? `${axios.defaults.baseURL}/api/media/?file=${profileImageSrc}` : ""} />
         <BlogHeader author={author} createdOn={createdOn} />
         <div className="flex gap-3 ms-auto my-auto">
-          { true && <EditBlogButton {...{id, content, title, blogOwnerId, }} />}  {/* Edit Button */}
+          { showEdit && <EditBlogButton {...{id, content, title, blogOwnerId, }} />}  {/* Edit Button */}
           { showLike && <LikeBlog /> } {/* Like Button */}
           { showDelete && <DeleteBlog {...{id, title, blogOwnerId}} /> } {/* Delete Button */}
           { showShare && <ShareBlog id={id} />} {/* Share Button */}

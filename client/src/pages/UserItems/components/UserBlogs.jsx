@@ -41,18 +41,21 @@ const UserBlogs = () => {
                 <>
                 {
                     data.map(blog => {
-                        const { id, content, cover_image, blog_owner, creation_time, profile } = blog;
+                        const { id, content, cover_image, user_id, blog_owner, creation_time, profile } = blog;
                         return (
                             <BlogCard 
                                 id={id}
                                 title={blog?.title}
                                 author={blog_owner}
+                                blogOwnerId={user_id}
                                 content={content}
                                 coverImage={cover_image}
                                 profileImageSrc={profile}
                                 createdOn={creation_time}
-                                showLike={true}
                                 showContent={true}
+                                showLike={true}
+                                showDelete={true}
+                                showEdit={true}
                                 />
                         )
                     })

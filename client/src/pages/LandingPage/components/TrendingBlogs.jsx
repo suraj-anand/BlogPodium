@@ -50,7 +50,6 @@ const TrendingBlogs = () => {
 
       {
         blogs.map( (blog) => {
-          console.log(blog)
           const { id, creation_time, cover_image, title, blog_owner, profile } = blog;
           return (<BlogCard 
             id={id}

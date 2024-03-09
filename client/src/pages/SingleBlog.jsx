@@ -53,6 +53,7 @@ const SingleBlog = () => {
                 showContent={true}
                 showLike={true}
                 showDelete={true}
+                showEdit={true}
                 />
         )
     }
