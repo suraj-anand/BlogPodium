@@ -13,6 +13,7 @@ import Unauthorized from "pages/Unauthorized";
 import WriteBlog from "pages/blogs/WriteBlog";
 import UserItems from "pages/UserItems/UserItems";
 import SingleBlog from "pages/SingleBlog";
+import EditBlog from "pages/blogs/components/EditBlog";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/blog/:blogid" element={<SingleBlog />} />
+          <Route path="/blog/:blogid/edit/" element={<EditBlog />} />
 
           {/* Test */}
           <Route path="/write-blog" element={<WriteBlog />} />

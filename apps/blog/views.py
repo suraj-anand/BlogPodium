@@ -67,6 +67,30 @@ class SingleBlog(APIView):
 
 
     @method_decorator(authenticated_resource)
+    def patch(self, request, blog_id):
+        
+        title = request.data.get("title")
+        content = request.data.get("content")
+
+        user_data = parse_user_session(request)
+        user_id = user_data.get("user_id")
+        blog = Blog.objects.filter(id=blog_id)
+        if len(blog) != 1:
+            return Response({"detail": "Invalid blog id"}, status=status.HTTP_400_BAD_REQUEST)
+        blog = blog[0]
+        blog_data = BlogSerializer(blog).data
+        
+        if blog_data.get("user_created") != user_id:
+            return Response({"detail": "You're not the owner for this blog"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        blog.title = title
+        blog.content = content
+        blog.save()
+        return Response({"detail": "Blog updated"}, status=status.HTTP_200_OK)
+        
+
+
+    @method_decorator(authenticated_resource)
     def delete(self, request, blog_id):
         try:
             user_data = parse_user_session(request)

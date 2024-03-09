@@ -38,13 +38,14 @@ const SingleBlog = () => {
 
     else {
         const {
-            id, title, content, cover_image, creation_time, blog_owner, profile
+            id, title, content, cover_image, creation_time, blog_owner, profile, user_id
         } = data;
         Component = (
             <BlogCard 
                 id={id}
                 title={title}
                 author={blog_owner}
+                blogOwnerId={user_id}
                 content={content}
                 createdOn={creation_time}
                 coverImage={cover_image}

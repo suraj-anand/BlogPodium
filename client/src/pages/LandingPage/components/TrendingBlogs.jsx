@@ -15,7 +15,6 @@ const TrendingBlogs = () => {
     setLoading(true);
     try {
       const response = await axios.get(url);
-      console.log(response.data?.results)
       if (response.data?.results){
         setBlogs(blogs => ([...blogs, ...response.data?.results]))
       }

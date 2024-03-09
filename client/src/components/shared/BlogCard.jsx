@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { formatDistance } from 'date-fns'
 import { IoMdHeartEmpty, IoMdHeart, IoMdArrowRoundBack  } from "react-icons/io";
 import { FaShare } from "react-icons/fa";
+import { BiSolidEdit } from "react-icons/bi";
 import { LiaChevronCircleDownSolid, LiaChevronCircleUpSolid, LiaTrashAltSolid  } from "react-icons/lia";
 import { Fade, Spinner } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,6 +16,7 @@ const BlogCard = ({
   id="",
   profileImageSrc="",
   author="",
+  blogOwnerId="",
   title="",
   content="",
   coverImage,
@@ -23,7 +25,7 @@ const BlogCard = ({
   showContent=false,
   showShare=true,
   showDelete=false,
-  blogOwnerId=""
+  showEdit=false,
 }) => {
 
   const [ showBlogContent, setShowBlogContent ] = useState(false);
@@ -35,8 +37,9 @@ const BlogCard = ({
         <ProfileImage imgSrc={profileImageSrc ? `${axios.defaults.baseURL}/api/media/?file=${profileImageSrc}` : ""} />
         <BlogHeader author={author} createdOn={createdOn} />
         <div className="flex gap-3 ms-auto my-auto">
+          { true && <EditBlogButton {...{id, content, title, blogOwnerId, }} />}  {/* Edit Button */}
           { showLike && <LikeBlog /> } {/* Like Button */}
-          { showDelete && <DeleteBlog title={title} id={id} blogOwnerId={blogOwnerId} /> }
+          { showDelete && <DeleteBlog {...{id, title, blogOwnerId}} /> } {/* Delete Button */}
           { showShare && <ShareBlog id={id} />} {/* Share Button */}
         </div>
       </div>
@@ -198,6 +201,35 @@ function DeleteBlog({id, title, blogOwnerId}) {
       </>
     )
   }
+}
+
+function EditBlogButton({ id, content, title, blogOwnerId }){
+  
+  const navigate = useNavigate();
+  const userId = localStorage.getItem("user_id");
+
+  if (blogOwnerId !== userId){
+    return <></>
+  }
+
+  const handleEditClick = () => {
+    navigate(`/blog/${id}/edit/`, {
+      state: {
+        id: id,
+        title: title,
+        content: content,
+        blogOwnerId: blogOwnerId
+      }
+    })
+  }
+
+  return (
+    <>
+      <button className="btn" onClick={handleEditClick}>
+        <BiSolidEdit size={36} />
+      </button>
+    </>
+  )
 }
 
 export default BlogCard
