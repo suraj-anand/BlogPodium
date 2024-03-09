@@ -8,7 +8,7 @@ const UserProfile = () => {
 
     return (
         <>
-            <Navbar />
+            <Navbar type='back' />
             <UserDetails />
         </>
     )

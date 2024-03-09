@@ -60,7 +60,7 @@ const SingleBlog = () => {
     
     return (
         <>
-            <Navbar />
+            <Navbar type='back' />
             <Offcanvas />
 
             <div className="px-3 my-0">

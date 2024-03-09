@@ -86,7 +86,7 @@ const EditBlog = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar type="back" />
 
       <div className="p-3">
         <input 

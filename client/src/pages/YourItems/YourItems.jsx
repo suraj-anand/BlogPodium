@@ -5,7 +5,7 @@ import YourBlogs from './components/YourBlogs'
 const YourItems = () => {
   return (
     <>
-        <Navbar />
+        <Navbar type='back' />
         <Offcanvas />
 
         <YourBlogs />
