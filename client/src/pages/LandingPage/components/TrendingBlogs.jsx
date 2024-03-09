@@ -36,7 +36,7 @@ const TrendingBlogs = () => {
   }, [])
 
   return (
-    <div className='container my-16'>
+    <div className='container my-48'>
         {/* Header  */}
         <div className="flex align-bottom gap-3">
             <Button color="gray_300" size="7xl" className="w-[76px]">

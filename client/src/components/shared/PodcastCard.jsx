@@ -1,7 +1,10 @@
+import axios from "axios"
 import { Button, Img } from "components"
+import { stringHash } from "utils/Helpers"
+import { DEFAULT_PODCAST_IMAGES as IMAGES } from 'utils/constants'
 
 const PodcastCard = ({
-    imgSrc="assets/img_rectangle_9.png",
+    imgSrc="",
     title="",
     author=""
 }) => {
@@ -13,7 +16,10 @@ const PodcastCard = ({
             {/* Image & Play Button */}
             <div className="h-[207px] w-full mt-[7px] relative">
                 <Img
-                    src="assets/img_rectangle_9.png"
+                    src={ 
+                        imgSrc ? `${axios.defaults.baseURL}/api/media/?file=${imgSrc}` :
+                        `/${IMAGES.at(stringHash(title,IMAGES.length))}`
+                    }
                     alt="image"
                     className="rounded-xl justify-center h-[207px] w-full left-0 bottom-0 right-0 top-0 m-auto object-cover absolute p-2"
                 />

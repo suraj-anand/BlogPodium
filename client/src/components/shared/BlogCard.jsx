@@ -1,16 +1,24 @@
-import { Img, ProfileImage } from "components"
 import { useEffect, useState } from "react";
 import { formatDistance } from 'date-fns'
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+
+// Icons
 import { IoMdHeartEmpty, IoMdHeart, IoMdArrowRoundBack  } from "react-icons/io";
 import { FaShare } from "react-icons/fa";
 import { BiSolidEdit } from "react-icons/bi";
 import { LiaChevronCircleDownSolid, LiaChevronCircleUpSolid, LiaTrashAltSolid  } from "react-icons/lia";
+
+// Components
 import { Fade, Spinner } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import Modal from "components/generic/Modal";
-import { useAxios } from "hooks";
+import { Img, ProfileImage } from "components"
 import Overlay from "components/generic/Overlay";
+
+// Misc
+import { useAxios } from "hooks";
+import { DEFAULT_BLOG_COVER_IMAGES as IMAGES } from 'utils/constants'
+import { stringHash } from "utils/Helpers";
 
 const BlogCard = ({
   id="",
@@ -43,7 +51,7 @@ const BlogCard = ({
         </div>
       </div>
       
-      <BlogCoverImage coverImage={coverImage} /> {/* Cover Image */}
+      <BlogCoverImage title={title} coverImage={coverImage} /> {/* Cover Image */}
 
       {/* Title */}
       <div className={`flex items-center ${showContent ? "justify-between" : "justify-center"}`}>
@@ -74,10 +82,13 @@ function BlogHeader({author, createdOn}){
   )
 }
 
-function BlogCoverImage({coverImage}){
+function BlogCoverImage({title, coverImage}){
   return (<div className="flex align-middle">
     <Img
-        src={coverImage ? `${axios.defaults.baseURL}/api/media/?file=${coverImage}` : ""}
+        src={
+          coverImage ? `${axios.defaults.baseURL}/api/media/?file=${coverImage}` : 
+          `/${IMAGES.at(stringHash(title,IMAGES.length))}`
+        }
         alt="image"
         className="mt-[10px] object-cover rounded-[5px]"
         style={{height: "250px", width: "100%"}}
