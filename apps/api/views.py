@@ -6,13 +6,14 @@ import jwt
 
 from django.http.response import FileResponse
 from django.utils.decorators import method_decorator
+from django.shortcuts import get_object_or_404
 from django.core.files.storage import FileSystemStorage
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
 from .models import User
-from .serializers import UserSerializer
+from .serializers import UserSerializer, SimpleUserSerializer
 from server.settings import JWT_SECRET, BASE_DIR, MEDIA_ROOT
 from .utils import authenticated_resource, parse_user_session
 from . import PROFILE_IMAGE_STORE_PATH, PROFILE_IMAGE_PATH
@@ -141,6 +142,13 @@ class AuthCheckAPI(APIView):
         print(data)
         return Response({"detail": "Authenticated", "user_id": data.get("user_id"), "user_name": data.get("user_name") }, status=status.HTTP_202_ACCEPTED)
 
+
+# User Details
+class UserDetails(APIView):
+    def get(self, request, user_id):
+        user = get_object_or_404(User, id=user_id)        
+        data = SimpleUserSerializer(user).data
+        return Response(data)
 
 # Health Check ROute
 class HeathCheck(APIView):

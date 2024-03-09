@@ -23,7 +23,11 @@ class BlogAPI(APIView):
         paginator = PageNumberPagination()
         paginator.page_size = request.query_params.get("page_size", 1)
 
-        qs = Blog.objects.all().order_by("-creation_time")
+        user_id = request.query_params.get("user_id", None)
+        if user_id:
+            qs = Blog.objects.filter(user_created=user_id).order_by("-creation_time")
+        else:
+            qs = Blog.objects.all().order_by("-creation_time")
         paginated_result = paginator.paginate_queryset(qs , request)
         data = SimpleBlogSerializer(paginated_result, many=True).data
         return paginator.get_paginated_response(blob_parser(data, serializer_type="simple"))

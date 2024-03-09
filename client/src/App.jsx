@@ -11,9 +11,10 @@ import ProtectRoutes from "utils/ProtectRoutes";
 import { AuthProvider } from "context/AuthContext";
 import Unauthorized from "pages/Unauthorized";
 import WriteBlog from "pages/blogs/WriteBlog";
-import UserItems from "pages/UserItems/UserItems";
+import YourItems from "pages/YourItems/YourItems";
 import SingleBlog from "pages/SingleBlog";
 import EditBlog from "pages/blogs/components/EditBlog";
+import UserProfile from "pages/UserProfile/UserProfile";
 
 function App() {
   return (
@@ -27,12 +28,18 @@ function App() {
           {/* Public Routes  */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/blog/:blogid" element={<SingleBlog />} />
-          <Route path="/blog/:blogid/edit/" element={<EditBlog />} />
 
           {/* Test */}
+          <Route path="/user/:userid" element={<UserProfile />} />
+
+          {/* Blog */}
+          <Route path="/blog/:blogid" element={<SingleBlog />} />
+          
+          {/* Protected */}
           <Route path="/write-blog" element={<WriteBlog />} />
-          <Route path="/your-items" element={<UserItems />} />
+          <Route path="/blog/:blogid/edit/" element={<EditBlog />} /> 
+          <Route path="/your-items" element={<YourItems />} />
+
           
           
           {/* Protected Routes */}

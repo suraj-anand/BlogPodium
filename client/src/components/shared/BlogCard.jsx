@@ -33,7 +33,7 @@ const BlogCard = ({
     <>
       {/* Profile Image, Author, Posted Time  */}
       <div className="flex gap-2 mt-4">
-        <ProfileImage imgSrc={profileImageSrc ? `${axios.defaults.baseURL}/api/media/?file=${profileImageSrc}` : ""} />
+        <ProfileImage userid={blogOwnerId} imgSrc={profileImageSrc} />
         <BlogHeader author={author} createdOn={createdOn} />
         <div className="flex gap-3 ms-auto my-auto">
           { showEdit && <EditBlogButton {...{id, content, title, blogOwnerId, }} />}  {/* Edit Button */}
@@ -50,7 +50,7 @@ const BlogCard = ({
         
         <BlogTitle id={id} title={title} />
         
-        <button className="btn" onClick={() => {setShowBlogContent(show => (!show))}}>
+        <button className="hover:text-gray-600_01" onClick={() => {setShowBlogContent(show => (!show))}}>
           {showContent &&  showBlogContent && <LiaChevronCircleUpSolid size={30} /> }
           {showContent &&  !showBlogContent && <LiaChevronCircleDownSolid size={30} /> }
         </button>
@@ -103,7 +103,7 @@ function LikeBlog(){
   }
 
   return (
-    <button onClick={handleLike}>
+    <button onClick={handleLike} className="hover:text-red-500">
       { liked ? <IoMdHeart size={36} className="text-red-500" /> : <IoMdHeartEmpty size={36} /> }
     </button>
   )
@@ -120,7 +120,7 @@ function ShareBlog({id}){
   }
 
   return (
-    <button onClick={handleShare}> <FaShare size={26} /> </button>
+    <button onClick={handleShare}> <FaShare size={26} className="hover:text-blue-400" /> </button>
   )
 }
 
@@ -177,7 +177,7 @@ function DeleteBlog({id, title, blogOwnerId}) {
         }
 
         <button className="btn" data-bs-toggle="modal" data-bs-target="#generic-modal">
-          <LiaTrashAltSolid size={36} className="text-red-700" />
+          <LiaTrashAltSolid size={36} className="hover:text-red-700" />
         </button>
 
         <Modal 
@@ -224,7 +224,7 @@ function EditBlogButton({ id, content, title, blogOwnerId }){
 
   return (
     <>
-      <button className="btn" onClick={handleEditClick}>
+      <button className="btn hover:text-blue-400" onClick={handleEditClick}>
         <BiSolidEdit size={36} />
       </button>
     </>

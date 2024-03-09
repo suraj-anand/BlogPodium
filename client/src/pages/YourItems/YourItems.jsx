@@ -1,16 +1,16 @@
 import Navbar from 'components/shared/Navbar'
 import { Offcanvas } from 'components/shared/Offcanvas'
-import UserBlogs from './components/UserBlogs'
+import YourBlogs from './components/YourBlogs'
 
-const UserItems = () => {
+const YourItems = () => {
   return (
     <>
         <Navbar />
         <Offcanvas />
 
-        <UserBlogs />
+        <YourBlogs />
     </>
   )
 }
 
-export default UserItems
+export default YourItems
