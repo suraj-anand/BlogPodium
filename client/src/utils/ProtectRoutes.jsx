@@ -26,6 +26,8 @@ const ProtectRoutes = () => {
     useEffect(() => {
         const isAuth = data?.detail === "Authenticated" 
         if (status_code === 202 && isAuth) {
+            localStorage.setItem("user_id", data?.user_id);
+            localStorage.setItem("user_name", data?.user_name);
             setAuthStatus(true);
         } else {
             setAuthStatus(false);

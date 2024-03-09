@@ -11,6 +11,7 @@ def blob_parser(blogs: iter, serializer_type="default"):
                 "creation_time": blog.get("creation_time"),
                 "cover_image": blog.get("cover_image"),
                 "title": blog.get("title"),
+                "user_id": user.id,
                 "blog_owner": user.name,
                 "profile": user.profile,
             }
@@ -30,6 +31,7 @@ def add_user_info_to_blog(blog, user_id):
         "title": blog.get("title"),
         "content": blog.get("content"),
         "likes": blog.get("likes"),
+        "user_id": user.id,
         "blog_owner": user.name,
         "profile": user.profile,
     }

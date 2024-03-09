@@ -5,6 +5,6 @@ export function Logout (setAuthStatus, navigate){
         setAuthStatus(false);
     }
     localStorage.clear();
-    sessionStorage.clear();
+    localStorage.clear();
     navigate("/");
 }

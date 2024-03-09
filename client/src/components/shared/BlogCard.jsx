@@ -1,14 +1,15 @@
 import { Img, ProfileImage } from "components"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatDistance } from 'date-fns'
-import { IoMdHeart } from "react-icons/io";
-import { IoMdHeartEmpty } from "react-icons/io";
+import { IoMdHeartEmpty, IoMdHeart, IoMdArrowRoundBack  } from "react-icons/io";
 import { FaShare } from "react-icons/fa";
-import { LiaChevronCircleUpSolid } from "react-icons/lia";
-import { LiaChevronCircleDownSolid } from "react-icons/lia";
-import { Fade } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { LiaChevronCircleDownSolid, LiaChevronCircleUpSolid, LiaTrashAltSolid  } from "react-icons/lia";
+import { Fade, Spinner } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Modal from "components/generic/Modal";
+import { useAxios } from "hooks";
+import Overlay from "components/generic/Overlay";
 
 const BlogCard = ({
   id="",
@@ -19,7 +20,10 @@ const BlogCard = ({
   coverImage,
   createdOn="",
   showLike=false,
-  showContent=false
+  showContent=false,
+  showShare=true,
+  showDelete=false,
+  blogOwnerId=""
 }) => {
 
   const [ showBlogContent, setShowBlogContent ] = useState(false);
@@ -32,7 +36,8 @@ const BlogCard = ({
         <BlogHeader author={author} createdOn={createdOn} />
         <div className="flex gap-3 ms-auto my-auto">
           { showLike && <LikeBlog /> } {/* Like Button */}
-          { <ShareBlog id={id} />} {/* Share Button */}
+          { showDelete && <DeleteBlog title={title} id={id} blogOwnerId={blogOwnerId} /> }
+          { showShare && <ShareBlog id={id} />} {/* Share Button */}
         </div>
       </div>
       
@@ -92,6 +97,7 @@ function LikeBlog(){
 
   function handleLike(){
     setLiked(like => (!like))
+    // add api logic to like
   }
 
   return (
@@ -125,6 +131,73 @@ function Content({content, show}){
         </p>
     </Fade>
   )
+}
+
+
+function DeleteBlog({id, title, blogOwnerId}) {
+  
+  const userId = localStorage.getItem("user_id");
+
+  const navigate = useNavigate();
+  const { loading, error, status_code, call } = useAxios({
+    method: "DELETE",
+    url: `/api/blog/${id}`
+  })
+
+  const handleDelete = () => {
+    call();
+  }
+
+  useEffect(() => {
+    if([200, 201, 202, 204].includes(status_code)){
+      navigate("/");
+    }
+  }, [status_code]);
+
+  if ( blogOwnerId === userId ){
+    return (
+      <>
+        {
+         loading && 
+          <Overlay> 
+            <div className="flex flex-col items-center">
+            <p className="text-lg my-2">Hold on for a moment please, your blog is being deleted.</p>
+            <Spinner />
+            </div>
+          </Overlay>
+        }
+
+        {
+          error &&  
+          <Overlay> 
+              <p className="text-2xl text-red-700">Oops! Something went wrong on blog deletion.</p>
+          </Overlay>
+        }
+
+        <button className="btn" data-bs-toggle="modal" data-bs-target="#generic-modal">
+          <LiaTrashAltSolid size={36} className="text-red-700" />
+        </button>
+
+        <Modal 
+          title={"Blog Delete Confirmation"}
+          closeName="Close"
+          saveName="Delete"
+          saveClass="flex btn-outline-danger"
+          closeClass="flex btn-outline-secondary"
+          saveIcon={<LiaTrashAltSolid size={24} className="text-red-700" />}
+          closeIcon={<IoMdArrowRoundBack size={24} className="text-secodary" />}
+          handleSave={handleDelete}
+          >
+
+          <p className="text-xl">
+            Hey {localStorage.getItem("user_name")} !
+          </p>
+          Are you sure to delete your blog <span className="font-bold">{title} </span>
+
+        </Modal>
+      </>
+    )
+  }
 }
 
 export default BlogCard

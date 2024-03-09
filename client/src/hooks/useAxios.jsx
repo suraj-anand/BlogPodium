@@ -9,41 +9,42 @@ const PUT = "PUT"
 const DELETE = "DELETE"
 const METHODS = [GET, POST, PATCH, PUT, DELETE];
 
+const defaultResponse = {data: [], status: null}
 const useAxios = ({url = "", method="GET", headers={}}) => {
     
     const [loading, setLoading] = useState(false);
-    const [data, setData] = useState([]);
     const [error, setError] = useState(null);
-    const [status_code, setStatusCode] = useState(null); 
+    const [response, setResponse] = useState(defaultResponse);
   
     async function call(payload){
-        setData([])
-        setStatusCode(null);
-        setError(null);
         setLoading(true);
+        setError(null);
+        setResponse(defaultResponse);
         try {
             if (!METHODS.includes(method.toUpperCase())){
                 throw new Error("Invalid method")   
             }
             
-            let response = {};
             if (method.toUpperCase() === GET){
-                response = await axios.get(url, {headers: headers});
+                const response = await axios.get(url, {headers: headers});
+                setResponse(() => (response));
             } 
             else if (method.toUpperCase() === POST) {
-                response = await axios.post(url, {...payload}, {headers: headers});
+                const response = await axios.post(url, {...payload}, {headers: headers});
+                setResponse(() => (response));
             } 
             else if (method.toUpperCase() === PUT) {
-                response = await axios.put(url, payload, {headers: headers});
+                const response = await axios.put(url, payload, {headers: headers});
+                setResponse(() => (response));
             }
             else if (method.toUpperCase() === PATCH) {
-                response = await axios.patch(url, payload, {headers: headers});
+                const response = await axios.patch(url, payload, {headers: headers});
+                setResponse(() => (response));
             }
             else if (method.toUpperCase() === DELETE) {
-                response = await axios.delete(url, {headers: headers});
+                const response = await axios.delete(url, {headers: headers});
+                setResponse(() => (response));
             }
-            setData(response.data);
-            setStatusCode(response.status);
         } catch (error) {
             console.error(error);
             setError(error)
@@ -54,8 +55,8 @@ const useAxios = ({url = "", method="GET", headers={}}) => {
     
     return {
         call,
-        data,
-        status_code,
+        data: response.data,
+        status_code: response.status,
         loading,
         error
     }

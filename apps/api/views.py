@@ -14,7 +14,7 @@ from rest_framework import status
 from .models import User
 from .serializers import UserSerializer
 from server.settings import JWT_SECRET, BASE_DIR, MEDIA_ROOT
-from .utils import authenticated_resource
+from .utils import authenticated_resource, parse_user_session
 from . import PROFILE_IMAGE_STORE_PATH, PROFILE_IMAGE_PATH
 
 # Register Route
@@ -57,9 +57,9 @@ class RegisterAPI(APIView):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             
-            token = jwt.encode({"user_id": user_id}, JWT_SECRET, algorithm="HS256")
+            token = jwt.encode({"user_id": user_id, "user_name": name}, JWT_SECRET, algorithm="HS256")
             request.session["token"] = token
-            return Response({"detail": "User Created", "name": name}, status=status.HTTP_201_CREATED)
+            return Response({"detail": "User Created", "user_name": name, "user_id": user_id}, status=status.HTTP_201_CREATED)
         except Exception as err:
             logging.error(f"Failure on registering user..., Error: {err}")
             return Response(
@@ -93,9 +93,9 @@ class LoginAPI(APIView):
             if not valid:
                 return Response({"detail": "Invalid Credentials"}, status=status.HTTP_401_UNAUTHORIZED)
             
-            token = jwt.encode({"user_id": user_id}, JWT_SECRET, algorithm="HS256")
+            token = jwt.encode({"user_id": user_id, "user_name": name}, JWT_SECRET, algorithm="HS256")
             request.session["token"] = token
-            return Response({"detail": "Success", "name": name}, status=status.HTTP_200_OK)
+            return Response({"detail": "Success", "user_name": name, "user_id": user_id}, status=status.HTTP_200_OK)
         
         except Exception as err:
             logging.error(f"Failure on user sign in, Error: {err}")
@@ -137,7 +137,9 @@ class MediaServeAPI(APIView):
 class AuthCheckAPI(APIView):
     @method_decorator(authenticated_resource)
     def post(self, request):
-        return Response({"detail": "Authenticated"}, status=status.HTTP_202_ACCEPTED)
+        data = parse_user_session(request=request)
+        print(data)
+        return Response({"detail": "Authenticated", "user_id": data.get("user_id"), "user_name": data.get("user_name") }, status=status.HTTP_202_ACCEPTED)
 
 
 # Health Check ROute

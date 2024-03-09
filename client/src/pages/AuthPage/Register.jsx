@@ -12,7 +12,7 @@ const Register = () => {
     
     const navigate = useNavigate();
 
-    const { authStatus, setAuthStatus, setName: _setName } = useContext(AuthContext)
+    const { authStatus, setAuthStatus } = useContext(AuthContext)
     
     // States
     const [name, setName] = useState("");
@@ -33,8 +33,8 @@ const Register = () => {
     
     useEffect(() => {
         if ([200, 201].includes(status_code)) {
-            _setName(data?.name);
-            sessionStorage.setItem("name", data?.name);
+            localStorage.setItem("user_id", data?.user_id);
+            localStorage.setItem("user_name", data?.user_name);
             setAuthStatus(true);
             navigate("/");
         }

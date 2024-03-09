@@ -3,7 +3,7 @@ import { useContext } from "react";
 
 const Greet = () => {
 
-    const { name } = useContext(AuthContext)
+    const user_name = localStorage.getItem("user_name")
     
     function getGreeting(){
         const currentHour = new Date().getHours();
@@ -21,7 +21,7 @@ const Greet = () => {
         <>
         <h1 className="text-center text-6xl font-bold">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-blue-500">
-                {getGreeting()} {name} !!
+                {getGreeting()} {user_name} !!
             </span>
         </h1>
         </>

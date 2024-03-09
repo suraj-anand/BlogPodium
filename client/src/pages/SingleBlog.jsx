@@ -15,7 +15,6 @@ const SingleBlog = () => {
         method: "GET"
     })
 
-    console.log(data);
     useEffect(() => {
         call()
     }, [])
@@ -29,10 +28,11 @@ const SingleBlog = () => {
         );
     }
 
-    else if (error) {
-        if (status_code === 404)
+    else if (error && error?.response?.status === 404 ) {
         Component = (
-            <p className='text-2xl font-semibold text-red-500'>Invalid blog-id.</p>
+            <div className="flex items-center justify-center min-h-[80vh]">
+                <p className='text-2xl font-semibold text-red-500'>Invalid blog-id.</p>
+            </div>
         )
     }
 
@@ -50,6 +50,8 @@ const SingleBlog = () => {
                 coverImage={cover_image}
                 profileImageSrc={profile}
                 showContent={true}
+                showLike={true}
+                showDelete={true}
                 />
         )
     }

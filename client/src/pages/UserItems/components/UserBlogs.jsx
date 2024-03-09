@@ -4,6 +4,7 @@ import BlogCard from "components/shared/BlogCard"
 import { useAxios } from "hooks"
 import { Spinner } from "react-bootstrap"
 import { RxPencil2 } from "react-icons/rx"
+import { CgSmileSad } from "react-icons/cg";
 
 const UserBlogs = () => {
 
@@ -22,9 +23,6 @@ const UserBlogs = () => {
         call()
     }, [])
 
-    useEffect(() => {
-        console.log(data);
-    }, [data])
 
     return (
         <div className="container">
@@ -38,7 +36,9 @@ const UserBlogs = () => {
             </div>
 
             <div className="p-3">
-                { loading && <Spinner /> }
+                { 
+                loading ? <Spinner /> :
+                <>
                 {
                     data.map(blog => {
                         const { id, content, cover_image, blog_owner, creation_time, profile } = blog;
@@ -56,6 +56,14 @@ const UserBlogs = () => {
                                 />
                         )
                     })
+                }
+                {
+                    data.length === 0 && 
+                    <p className="text-xl flex items-center gap-2 justify-start px-3">
+                        <CgSmileSad size={24} className="text-yellow-700" />
+                        Oops! You have got no blogs</p>
+                }
+                </>
                 }
             </div>
         </div>

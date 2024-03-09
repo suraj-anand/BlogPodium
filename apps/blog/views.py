@@ -56,13 +56,25 @@ class BlogAPI(APIView):
 
         return Response({"detail": "Published"}, status=201)
     
-    
-    def delete(self, request):
+
+
+class SingleBlog(APIView):
+    def get(self, request, blog_id):
+        blog = get_object_or_404(Blog, id=blog_id)
+        data = BlogSerializer(blog).data
+        
+        return Response(add_user_info_to_blog(blog=data, user_id=data.get("user_created")))
+
+
+    @method_decorator(authenticated_resource)
+    def delete(self, request, blog_id):
         try:
             user_data = parse_user_session(request)
             user_id = user_data.get("user_id")
-            blog_id = request.query_params.get("blog_id")
-            blog = get_object_or_404(Blog, id=blog_id)
+            blog = Blog.objects.filter(id=blog_id)
+            if len(blog) != 1:
+                return Response({"detail": "Invalid blog id"}, status=status.HTTP_400_BAD_REQUEST)
+            blog = blog[0]
             blog_data = BlogSerializer(blog).data
             
             if blog_data.get("user_created") != user_id:
@@ -75,17 +87,13 @@ class BlogAPI(APIView):
             logging.error(f"Error on blog deletion: {err}")
             return Response({"Error": f"{err}"})
 
-class SingleBlog(APIView):
-    def get(self, request, blog_id):
-        blog = get_object_or_404(Blog, id=blog_id)
-        data = BlogSerializer(blog).data
-        
-        return Response(add_user_info_to_blog(blog=data, user_id=data.get("user_created")))
 
 class UserBlogAPI(APIView):
     @method_decorator(authenticated_resource)
     def get(self, request):
         user_data = parse_user_session(request)
         queryset = Blog.objects.filter(user_created=user_data.get("user_id"))
-        data = BlogSerializer(queryset).data
+        data = BlogSerializer(queryset, many=True).data
+        if not data:
+            return Response([])
         return Response(blob_parser(blogs=data))
