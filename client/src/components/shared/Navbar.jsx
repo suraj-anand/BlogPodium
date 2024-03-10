@@ -3,7 +3,7 @@ import { IoIosSearch } from "react-icons/io";
 import { Offcanvas } from 'components/shared/Offcanvas';
 import Back from 'components/mini/Back';
 
-const Navbar = ({ showOptions=true, type="search" }) => {
+const Navbar = ({ showOptions=true, type="search", handleSearchClick = () => {} }) => {
     return (
         <nav className="navbar my-2 py-3">
             <div className="container">
@@ -30,7 +30,7 @@ const Navbar = ({ showOptions=true, type="search" }) => {
                     <div className="flex-item ms-auto">
                     {
                         type === "search" &&
-                            <button><IoIosSearch fontSize={36} /></button>
+                            <button onClick={handleSearchClick}><IoIosSearch fontSize={36} /></button>
                         }
 
                     {/* Back */}

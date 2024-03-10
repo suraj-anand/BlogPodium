@@ -15,6 +15,7 @@ import YourItems from "pages/YourItems/YourItems";
 import SingleBlog from "pages/SingleBlog";
 import EditBlog from "pages/blogs/components/EditBlog";
 import UserProfile from "pages/UserProfile/UserProfile";
+import SearchPage from "pages/SearchPage";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/write-blog" element={<WriteBlog />} />
           <Route path="/blog/:blogid/edit/" element={<EditBlog />} /> 
           <Route path="/your-items" element={<YourItems />} />
+          <Route path="/search" element={<SearchPage />} />
 
           
           

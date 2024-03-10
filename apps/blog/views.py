@@ -4,12 +4,12 @@ import logging
 
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from django.utils.decorators import method_decorator
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 from apps.api.utils import authenticated_resource, parse_user_session
 from apps.blog import COVER_IMAGE_PATH, COVER_IMAGE_STORE_PATH
@@ -17,15 +17,19 @@ from .helper import blob_parser, add_user_info_to_blog
 from .models import Blog
 from .serializers import BlogSerializer, SimpleBlogSerializer
 
+DEFAULT_PAGE_SIZE = 10
 # Create your views here.
 class BlogAPI(APIView):
     def get(self, request):
         paginator = PageNumberPagination()
-        paginator.page_size = request.query_params.get("page_size", 1)
+        paginator.page_size = request.query_params.get("page_size", DEFAULT_PAGE_SIZE)
 
         user_id = request.query_params.get("user_id", None)
+        query = request.query_params.get("query")
         if user_id:
             qs = Blog.objects.filter(user_created=user_id).order_by("-creation_time")
+        elif query:
+            qs = Blog.objects.filter(Q(title__icontains=query) | Q(content__icontains=query))
         else:
             qs = Blog.objects.all().order_by("-creation_time")
         paginated_result = paginator.paginate_queryset(qs , request)

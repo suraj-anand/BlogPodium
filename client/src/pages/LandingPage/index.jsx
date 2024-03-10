@@ -1,6 +1,5 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { Text, Img, Heading, Button, Input } from "../../components";
 import Navbar from "components/shared/Navbar";
 import Feature from "./components/Feature";
 import LatestPodcasts from "./components/LatestPodcasts";
@@ -9,6 +8,7 @@ import Footer from "components/shared/Footer";
 import { useAxios } from "hooks";
 import { AuthContext } from "context/AuthContext";
 import { Spinner } from "react-bootstrap";
+import Search from "components/shared/Search";
 
 export default function LandingPagePage() {
 
@@ -22,7 +22,9 @@ export default function LandingPagePage() {
       method: "POST"
   });
 
-  const { setAuthStatus } = useContext(AuthContext)
+  const { setAuthStatus } = useContext(AuthContext);
+
+  const [ showSearch, setShowSearch ] = useState(false);
 
 
   useEffect(() => {
@@ -47,7 +49,7 @@ export default function LandingPagePage() {
             <Spinner className='text-blue-600' />
         </div>
     )
-}
+  }
 
   return (
     <>
@@ -56,7 +58,8 @@ export default function LandingPagePage() {
         <meta name="description" content="Web site created using create-react-app" />
       </Helmet>
       
-      <Navbar />
+      <Navbar handleSearchClick={() => {setShowSearch(search => (!search))}}/>
+      <Search show={showSearch} />
       <Feature />
       <LatestPodcasts />
       <TrendingBlogs />
