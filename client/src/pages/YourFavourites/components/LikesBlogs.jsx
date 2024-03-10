@@ -26,11 +26,12 @@ const LikesBlogs = () => {
       </div>
     </div>
 
-    <div className="flex gap-3 p-3">
+    <div className="row justify-center gap-3 p-3">
       {
         data.map(blog => {
           const { id, creation_time, cover_image, title, profile, blog_owner, user_id } = blog;
           return (
+            <>
             <SimpleBlogCard 
               id={id}
               title={title}
@@ -39,12 +40,11 @@ const LikesBlogs = () => {
               user_id={user_id}
               profileImageSrc={profile}
                 />
-          )
+            </>
+            )
         })
       }
-      
     </div>
-
     </>
   )
 }

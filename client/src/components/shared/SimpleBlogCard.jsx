@@ -14,7 +14,7 @@ const SimpleBlogCard = ({
 }) => {
   return (
     <>
-    <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg">
+    <div className="col-12 col-md-6 col-lg-4 max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg">
         <div className="flex flex-col items-start ">
             <div className="flex align-middle">
                 <Img
