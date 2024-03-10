@@ -15,6 +15,7 @@ from apps.api.utils import authenticated_resource, parse_user_session
 from apps.blog import COVER_IMAGE_PATH, COVER_IMAGE_STORE_PATH
 from .helper import blob_parser, add_user_info_to_blog
 from .models import Blog
+from apps.api.models import User
 from .serializers import BlogSerializer, SimpleBlogSerializer
 
 DEFAULT_PAGE_SIZE = 10
@@ -70,7 +71,6 @@ class SingleBlog(APIView):
     def get(self, request, blog_id):
         blog = get_object_or_404(Blog, id=blog_id)
         data = BlogSerializer(blog).data
-        
         return Response(add_user_info_to_blog(blog=data, user_id=data.get("user_created")))
 
 
@@ -118,6 +118,39 @@ class SingleBlog(APIView):
         except Exception as err:
             logging.error(f"Error on blog deletion: {err}")
             return Response({"Error": f"{err}"})
+
+
+class LikeBlogAPI(APIView):
+    
+    @method_decorator(authenticated_resource)
+    def get(self, request):
+        user_data = parse_user_session(request)
+        user_id = user_data.get("user_id")
+        user = User.objects.get(id=user_id)
+        blogs = user.blog_likes.all()
+        data = SimpleBlogSerializer(blogs, many=True).data
+        return Response(blob_parser(data, serializer_type="simple"), status=200)
+    
+    @method_decorator(authenticated_resource)
+    def post(self, request):
+        user_data = parse_user_session(request)
+        user_id = user_data.get("user_id")
+        blog_id = request.data.get("blog_id")
+        action = request.data.get("action", "like")
+
+        blog = Blog.objects.filter(id=blog_id)
+        if len(blog) != 1:
+            return Response({"detail": "Invalid blog id"}, status=status.HTTP_400_BAD_REQUEST)
+        blog = blog[0]
+
+        if action.lower() == "unlike":
+            blog.likes.remove(user_id)
+        else:
+            blog.likes.add(user_id)
+            blog.save()
+
+        return Response({"detail": "done"}, status=status.HTTP_201_CREATED)
+
 
 
 class UserBlogAPI(APIView):

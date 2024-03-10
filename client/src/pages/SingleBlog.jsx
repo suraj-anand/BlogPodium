@@ -38,7 +38,7 @@ const SingleBlog = () => {
 
     else {
         const {
-            id, title, content, cover_image, creation_time, blog_owner, profile, user_id
+            id, title, content, cover_image, creation_time, blog_owner, profile, user_id, likes
         } = data;
         Component = (
             <BlogCard 
@@ -47,6 +47,7 @@ const SingleBlog = () => {
                 author={blog_owner}
                 blogOwnerId={user_id}
                 content={content}
+                likes={likes}
                 createdOn={creation_time}
                 coverImage={cover_image}
                 profileImageSrc={profile}

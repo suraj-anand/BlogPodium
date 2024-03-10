@@ -16,6 +16,7 @@ import SingleBlog from "pages/SingleBlog";
 import EditBlog from "pages/blogs/components/EditBlog";
 import UserProfile from "pages/UserProfile/UserProfile";
 import SearchPage from "pages/SearchPage";
+import YourFacourites from "pages/YourFavourites";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
 
           {/* Test */}
           <Route path="/user/:userid" element={<UserProfile />} />
+          <Route path="/search" element={<SearchPage />} />
 
           {/* Blog */}
           <Route path="/blog/:blogid" element={<SingleBlog />} />
@@ -40,7 +42,7 @@ function App() {
           <Route path="/write-blog" element={<WriteBlog />} />
           <Route path="/blog/:blogid/edit/" element={<EditBlog />} /> 
           <Route path="/your-items" element={<YourItems />} />
-          <Route path="/search" element={<SearchPage />} />
+          <Route path="/your-favourites" element={<YourFacourites />} />
 
           
           

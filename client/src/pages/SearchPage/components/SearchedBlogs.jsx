@@ -59,7 +59,7 @@ const SearchedBlogs = ({  query } ) => {
                     blogOwnerId={user_id}
                     author={blog_owner}
                     profileImageSrc={profile}
-                    showLike={true}
+                    showLike={false}
                 />
                 <div className="my-12"><hr /></div>
                 </div>

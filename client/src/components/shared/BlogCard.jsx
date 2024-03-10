@@ -28,6 +28,7 @@ const BlogCard = ({
   title="",
   content="",
   coverImage,
+  likes=[],
   createdOn="",
   showLike=false,
   showContent=false,
@@ -45,7 +46,7 @@ const BlogCard = ({
         <BlogHeader author={author} createdOn={createdOn} />
         <div className="flex gap-3 ms-auto my-auto">
           { showEdit && <EditBlogButton {...{id, content, title, blogOwnerId, }} />}  {/* Edit Button */}
-          { showLike && <LikeBlog /> } {/* Like Button */}
+          { showLike && <LikeBlog id={id} likes={likes} /> } {/* Like Button */}
           { showDelete && <DeleteBlog {...{id, title, blogOwnerId}} /> } {/* Delete Button */}
           { showShare && <ShareBlog id={id} />} {/* Share Button */}
         </div>
@@ -104,13 +105,28 @@ function BlogTitle({ id, title }){
   )
 }
 
-function LikeBlog(){
+function LikeBlog({ id, likes=[] }){
   
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(() => {
+    const user_id = localStorage.getItem("user_id");
+    return likes.includes(user_id)
+  });
 
-  function handleLike(){
+  async function handleLike(){
+    let action = "like";
+    if (liked) {
+      action = "unlike";
+    }
     setLiked(like => (!like))
     // add api logic to like
+    try {
+      const response = await axios.post("/api/blog/like/", {
+        "blog_id": id,
+        "action": action
+      })
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
