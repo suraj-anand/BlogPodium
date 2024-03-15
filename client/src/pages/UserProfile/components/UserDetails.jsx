@@ -37,7 +37,7 @@ const UserDetails = () => {
         <>
           <ProfileImage size={72} imgSrc={profile} userid={userid}  />
           <p className="text-3xl mt-3">{name}</p>
-          <h5> { creation_time ? formatDistance(new Date(creation_time), new Date(), { addSuffix: true }) : "" } </h5>
+          <h5> Joined: { creation_time ? formatDistance(new Date(creation_time), new Date(), { addSuffix: true }) : "" } </h5>
         </>
       }
     </div>

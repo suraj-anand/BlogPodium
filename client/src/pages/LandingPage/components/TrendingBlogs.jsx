@@ -51,15 +51,20 @@ const TrendingBlogs = () => {
       {
         blogs.map( (blog) => {
           const { id, creation_time, cover_image, title, blog_owner, profile, user_id } = blog;
-          return (<BlogCard 
-            id={id}
-            title={title}
-            createdOn={creation_time}
-            author={blog_owner}
-            blogOwnerId={user_id}
-            profileImageSrc={profile}
-            coverImage={cover_image}
-            />)
+          return (<div className='my-2'>
+            <BlogCard 
+              id={id}
+              title={title}
+              createdOn={creation_time}
+              author={blog_owner}
+              blogOwnerId={user_id}
+              profileImageSrc={profile}
+              coverImage={cover_image}
+              />
+              <div className="my-4">
+                <hr />
+              </div>
+          </div>)
           })
       }
 
