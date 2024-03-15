@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { Spinner } from 'react-bootstrap';
 import { RxPencil2 } from "react-icons/rx";
 
-const TrendingBlogs = () => {
+const TrendingBlogs = ({seperate, className, ...rest}) => {
 
   const [ blogs, setBlogs ] = useState([]); 
   const [ loadMore, setLoadMore ] = useState("");
@@ -36,7 +36,7 @@ const TrendingBlogs = () => {
   }, [])
 
   return (
-    <div className='container my-48'>
+    <div className={`container ${seperate ? "" : "my-48"} ${className ? className : ""}`} {...rest}>
         {/* Header  */}
         <div className="flex align-bottom gap-3">
             <Button color="gray_300" size="7xl" className="w-[76px]">
