@@ -17,7 +17,7 @@ import EditBlog from "pages/blogs/components/EditBlog";
 import UserProfile from "pages/UserProfile/UserProfile";
 import SearchPage from "pages/SearchPage";
 import YourFacourites from "pages/YourFavourites";
-import Podcast from "pages/podcasts/Podcast";
+import Podcast from "pages/podcasts/PodcastPlayer";
 import Blog from "pages/blogs/Blog";
 
 function App() {
