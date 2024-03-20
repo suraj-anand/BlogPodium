@@ -17,6 +17,8 @@ import EditBlog from "pages/blogs/components/EditBlog";
 import UserProfile from "pages/UserProfile/UserProfile";
 import SearchPage from "pages/SearchPage";
 import YourFacourites from "pages/YourFavourites";
+import Podcast from "pages/podcasts/Podcast";
+import Blog from "pages/blogs/Blog";
 
 function App() {
   return (
@@ -34,8 +36,10 @@ function App() {
           {/* Test */}
           <Route path="/user/:userid" element={<UserProfile />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/podcast/:podcastid" element={<Podcast />} />
 
           {/* Blog */}
+          <Route path="/blog/" element={<Blog />} />
           <Route path="/blog/:blogid" element={<SingleBlog />} />
           
           {/* Protected */}
