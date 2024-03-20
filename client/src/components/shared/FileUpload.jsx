@@ -1,12 +1,10 @@
 import { useCallback, useContext, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { RiRefreshLine } from "react-icons/ri";
-import { Img } from '../../../components/generic/Image';
-import 'react-toastify/dist/ReactToastify.css';
+import { Img } from 'components/generic/Image';
 import { toast } from 'react-toastify';
-import { BlogContext } from '../context/BlogContext';
 
-const CoverImageUpload = ({file, setFile, type="cover", className=""}) => {
+const FileUpload = ({file, setFile, type="cover", className="text-blue-900", ...rest}) => {
 
     const onDrop = useCallback(acceptedFiles => {
         const _file = acceptedFiles.at(0);
@@ -42,11 +40,11 @@ const CoverImageUpload = ({file, setFile, type="cover", className=""}) => {
         <div {...getRootProps()} className={`p-3 text-center border-1 my-3 shadow-sm rounded-lg ${isDragActive ? "bg-slate-400 rounded-none" : ""}`}>
                 <>
                 <input {...getInputProps()} />
-                <div className="text-lg text-blue-900 font-bold">
+                <div className="text-lg font-bold">
                     {
                         isDragActive ?
                         <p>Drop the image here</p> :
-                        <p>Drag 'n' drop the {type} image here, or click to select the image</p>
+                        <p>Drag 'n' drop the {type} here, or click to select the {type}</p>
                     }
                 </div>
                 </>
@@ -57,4 +55,4 @@ const CoverImageUpload = ({file, setFile, type="cover", className=""}) => {
     )
 }
 
-export default CoverImageUpload
+export default FileUpload

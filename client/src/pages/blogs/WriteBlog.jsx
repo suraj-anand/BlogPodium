@@ -2,7 +2,7 @@ import { ToastContainer } from 'react-toastify';
 import Navbar from "components/shared/Navbar"
 import { Quill } from "./components/Quill"
 import { Offcanvas } from "components/shared/Offcanvas"
-import CoverImageUpload from "pages/blogs/components/CoverImageUpload"
+import FileUpload from "components/shared/FileUpload"
 import PublishBlog from "./components/PublishBlog";
 import { BlogContextProvider } from "./context/BlogContext";
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -21,7 +21,7 @@ const WriteBlog = () => {
     <Offcanvas />
       <div className="container">
             <TitleInput />
-            <CoverImageUpload file={file} setFile={setFile} />
+            <FileUpload file={file} setFile={setFile} type='cover image'/>
             <Quill />
             <PublishBlog file={file} />
       </div>

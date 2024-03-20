@@ -5,7 +5,7 @@ import { useAxios } from "hooks"
 import Input from "./components/Input"
 import { Spinner } from 'react-bootstrap'
 import { AuthContext } from "context/AuthContext"
-import CoverImageUpload from "pages/blogs/components/CoverImageUpload"
+import FileUpload from "components/shared/FileUpload"
 import { ToastContainer } from 'react-toastify'
 
 const Register = () => {
@@ -110,10 +110,10 @@ const Register = () => {
                     </div>
                 </div>
 
-                <CoverImageUpload 
+                <FileUpload 
                     file={file} setFile={setFile}
                     className="w-auto items-center justify-center mx-auto inline my-2"
-                    type="profile" />
+                    type="profile image" />
 
                 {/* Spinner */}
                 <div className="flex justify-center">

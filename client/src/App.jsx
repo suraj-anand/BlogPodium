@@ -19,6 +19,7 @@ import SearchPage from "pages/SearchPage";
 import YourFacourites from "pages/YourFavourites";
 import Podcast from "pages/podcasts/PodcastPlayer";
 import Blog from "pages/blogs/Blog";
+import UploadPodcast from "pages/podcasts/UploadPodcast";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/user/:userid" element={<UserProfile />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/podcast/:podcastid" element={<Podcast />} />
+          <Route path="/upload-podcast" element={<UploadPodcast />} />
 
           {/* Blog */}
           <Route path="/blog/" element={<Blog />} />
