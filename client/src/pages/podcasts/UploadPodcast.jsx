@@ -5,6 +5,7 @@ import { PodcastContextProvider } from "./context/PodcastContext";
 import TitleInput from './components/TitleInput';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import PodcastUploadBtn from './components/PodcastUploadBtn'
 
 
 const UploadPodcast = () => {
@@ -26,11 +27,16 @@ const UploadPodcast = () => {
 
                 <div className="flex flex-col my-5">
                     <h3 className='text-lg font-bold underline'>Podcast</h3>
-                    <FileUpload file={podcast} setFile={setPodcast} type='podcast' className="text-slate-500"/>
+                    <FileUpload 
+                      file={podcast} setFile={setPodcast} 
+                      type='podcast' 
+                      fileType='podcast' 
+                      allowedFileTypes={["audio", "video"]}
+                      className="text-slate-500"/>
                 </div>
 
                 {/* <Quill /> */}
-                {/* <PublishBlog file={file} /> */}
+                <PodcastUploadBtn  />
         </div>
     </PodcastContextProvider>
       <ToastContainer />

@@ -3,15 +3,25 @@ import { useDropzone } from 'react-dropzone'
 import { RiRefreshLine } from "react-icons/ri";
 import { Img } from 'components/generic/Image';
 import { toast } from 'react-toastify';
+import { FaFile } from "react-icons/fa6";
 
-const FileUpload = ({file, setFile, type="cover", className="text-blue-900", ...rest}) => {
+const FileUpload = ({file, setFile, type="cover", fileType="image", allowedFileTypes=[], className="text-blue-900", ...rest}) => {
 
     const onDrop = useCallback(acceptedFiles => {
         const _file = acceptedFiles.at(0);
-        if (!_file.type.includes("image")) {
-            toast("The selected file is not an image.")
+        if (fileType === "image") {
+            if (!_file.type.includes("image")) {
+                toast("The selected file is not an image.");
+            } else {
+                setFile(_file);
+            }
         } else {
-            setFile(_file);
+            const file_type = _file.type.split("/").at(0);
+            if(allowedFileTypes.includes(file_type)){
+                setFile(_file);
+            }  else {
+                toast(`The selected file is not allowed, Allowed filetypes are ${allowedFileTypes.join(" , ")}.`);
+            }
         }
     }, [])
     
@@ -22,7 +32,7 @@ const FileUpload = ({file, setFile, type="cover", className="text-blue-900", ...
     
     {/* If image selected */}
     {
-        file?.type?.includes("image") &&
+        (fileType === "image" && file?.type?.includes("image")) &&
         <>
         <button className='btn flex ms-auto' title="Change Image" onClick={() => {setFile(null)}}>
             <RiRefreshLine fontSize={24} />
@@ -35,8 +45,27 @@ const FileUpload = ({file, setFile, type="cover", className="text-blue-900", ...
         </>
     }
 
+    {/* If Other fileType is selected */}
     {
-        !file?.type?.includes("image") && 
+        (fileType !== "image" && file) && (
+        <div className="flex flex-col">
+            <div className="flex gap-2 items-center">
+                <FaFile size={56} />
+                <p className='text-lg'>{file.name}</p>
+            </div>
+    
+            <div className="flex">
+                <button className='btn' title={`Change ${fileType}`} onClick={() => {setFile(null)}}>
+                    <RiRefreshLine fontSize={24} />
+                </button>
+            </div>
+        </div>
+        )
+    }
+
+
+    {
+        (!file) && 
         <div {...getRootProps()} className={`p-3 text-center border-1 my-3 shadow-sm rounded-lg ${isDragActive ? "bg-slate-400 rounded-none" : ""}`}>
                 <>
                 <input {...getInputProps()} />
