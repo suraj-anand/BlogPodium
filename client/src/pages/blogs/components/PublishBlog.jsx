@@ -50,7 +50,7 @@ const PublishBlog = ({ file }) => {
       }
 
       {
-        status_code !== 201 &&
+        content.length > 1 && title.length > 1 && status_code !== 201 &&
         <button className="btn btn-outline-dark flex gap-2 p-2 items-center justify-center" onClick={handleBlogPublish}>
           <span>Publish</span>
           <span><IoSend /> </span>
