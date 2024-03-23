@@ -8,6 +8,7 @@ urlpatterns = [
     path("user/<str:user_id>", views.UserDetails.as_view()),
     path("logout/", views.LogoutAPI.as_view()),
     path("media/", views.MediaServeAPI.as_view()),
-    path("blog/", include("apps.blog.urls")),
+    path("blog/", include("apps.blog.urls")), # Blog App
+    path("podcast/", include("apps.podcast.urls")), # Podcast App
     path("ping/", views.HeathCheck.as_view())
 ]
