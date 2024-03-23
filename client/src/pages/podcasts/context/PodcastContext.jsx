@@ -4,7 +4,7 @@ export const PodcastContext = createContext();
 
 export const PodcastContextProvider = ({ children }) => {
     
-    const [title, setTitle] = useState();
+    const [title, setTitle] = useState("");
     
     return (
         <PodcastContext.Provider value={{

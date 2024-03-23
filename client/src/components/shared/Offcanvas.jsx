@@ -9,6 +9,7 @@ import { FaFilePen } from "react-icons/fa6";
 import { IoMdLogOut } from "react-icons/io";
 import { GiSelfLove } from "react-icons/gi";
 import { FaUserAlt } from "react-icons/fa";
+import { SiYoutubemusic } from "react-icons/si";
 import { useAxios } from "hooks";
 import "styles/index.css"
 
@@ -32,7 +33,7 @@ export const Offcanvas = ({id}) => {
             <Option 
                 className=""
                 title={"Upload a Podcast"} 
-                icon={<FaFilePen />}
+                icon={<SiYoutubemusic />}
                 to="/upload-podcast" />
 
             <Option 
@@ -68,9 +69,11 @@ export const Option = ({
             className={`btn ofc-btn w-100 flex items-center my-4 border-1 border-solid border-black hover:bg-gray-400 rounded ${(pathname === to) ? "active" : ""}`}
             data-bs-dismiss="offcanvas"
         >
-            <div className={`flex gap-2 py-2 px-2 capitalize text-xl ${className}`}>
-                    <span className="text-3xl">{icon}</span>
-                    {title}
+            <div className="flex">
+                <span className="text-3xl">{icon}</span>
+            </div>
+            <div className={`flex items-center gap-2 py-2 px-2 capitalize text-xl ${className}`}>
+                {title}
             </div>
         </button>
     )

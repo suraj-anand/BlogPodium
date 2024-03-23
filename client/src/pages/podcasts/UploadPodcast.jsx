@@ -36,7 +36,10 @@ const UploadPodcast = () => {
                 </div>
 
                 {/* <Quill /> */}
-                <PodcastUploadBtn  />
+                <PodcastUploadBtn 
+                  podcast={podcast}
+                  coverImage={coverImage}
+                  />
         </div>
     </PodcastContextProvider>
       <ToastContainer />

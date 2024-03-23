@@ -3,10 +3,12 @@ import { Spinner } from "react-bootstrap";
 import { IoSend } from "react-icons/io5";
 import Back from "components/mini/Back";
 import useAxios from 'hooks/useAxios'
+import { PodcastContext } from "../context/PodcastContext";
 
-const PodcastUploadBtn = ({ file }) => {
+const PodcastUploadBtn = ({ podcast, coverImage }) => {
 
-    
+  const { title } = useContext(PodcastContext)
+
   const {
     call,
     loading,
@@ -26,7 +28,8 @@ const PodcastUploadBtn = ({ file }) => {
     event.target.classList.add("disabled")
     call({
       content, 
-      file,
+      podcast,
+      coverImage,
       title
     })
   }
@@ -49,7 +52,7 @@ const PodcastUploadBtn = ({ file }) => {
       }
 
       {
-        status_code !== 201 &&
+        (title.length > 1 && podcast && status_code !== 201) &&
         <button className="btn btn-outline-dark flex gap-2 p-2 items-center justify-center" onClick={handleBlogPublish}>
           <span>Publish</span>
           <span><IoSend /> </span>
