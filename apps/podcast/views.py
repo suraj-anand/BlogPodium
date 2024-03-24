@@ -27,15 +27,16 @@ class PodcastAPI(APIView):
 
         user_id = request.query_params.get("user_id", None)
         query = request.query_params.get("query")
+        type = request.query_params.get("type")
         if user_id:
             qs = Podcast.objects.filter(user_created=user_id).order_by("-creation_time")
         elif query:
-            qs = Podcast.objects.filter(Q(title__icontains=query) | Q(content__icontains=query))
+            qs = Podcast.objects.filter(Q(title__icontains=query.strip()))
         else:
             qs = Podcast.objects.all().order_by("-creation_time")
         paginated_result = paginator.paginate_queryset(qs , request)
         data = PodcastSerializer(paginated_result, many=True).data
-        return paginator.get_paginated_response(podcast_parser(data))
+        return paginator.get_paginated_response(podcast_parser(data, type))
 
     @method_decorator(authenticated_resource)
     def post(self, request):
@@ -169,4 +170,4 @@ class UserPodcastAPI(APIView):
         data = PodcastSerializer(queryset, many=True).data
         if not data:
             return Response([])
-        return Response(podcast_parser(blogs=data))
+        return Response(podcast_parser(podcasts=data))
