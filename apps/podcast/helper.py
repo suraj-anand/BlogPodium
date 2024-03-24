@@ -20,7 +20,7 @@ def add_user_info_to_podcast(podcast, user_id):
         "cover_image": podcast.get("cover_image"),
         "podcast": podcast.get("podcast"),
         "title": podcast.get("title"),
-        "likes": podcast.get("likes"),
+        "likes": podcast.get("likes", []),
         "type": podcast.get("type"),
         "user_id": user.id,
         "podcast_owner": user.name,

@@ -3,5 +3,5 @@ from .models import Podcast
 
 class PodcastSerializer(ModelSerializer):
     class Meta:
-        fields = ["id", "title", "podcast", "cover_image", "type", "creation_time", "user_created"]
+        fields = "__all__"
         model = Podcast

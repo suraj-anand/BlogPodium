@@ -2,6 +2,7 @@ import { Button } from "components"
 import SimpleBlogCard from "components/shared/SimpleBlogCard"
 import { useAxios } from "hooks"
 import { useEffect } from "react"
+import { Spinner } from "react-bootstrap"
 import { RxPencil2 } from "react-icons/rx"
 
 const LikesBlogs = () => {
@@ -26,6 +27,7 @@ const LikesBlogs = () => {
       </div>
     </div>
 
+    { loading && <Spinner /> }
     <div className="row justify-center gap-3 p-3">
       {
         data.map(blog => {

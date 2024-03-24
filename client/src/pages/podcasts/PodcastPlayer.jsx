@@ -9,7 +9,7 @@ import { Img } from "components";
 import { stringHash } from "utils/Helpers";
 import { DEFAULT_BLOG_COVER_IMAGES as IMAGES } from "utils/constants";
 import { useAxios } from "hooks";
-import Navbar from "./components/Navbar"
+import PodcastNavbar from "./components/PodcastNavbar"
 import "./styles.css"
 
 // Icons
@@ -68,11 +68,13 @@ const PodcastPlayer = ({ showNext=false }) => {
     }
 
     const {
+        id,
         title,
         cover_image,
         podcast_owner,
         type,
         podcast: _podcast,
+        likes
     } = podcast;
 
     const podcast_url = `${axios.defaults.baseURL}/api/media/?file=${_podcast}`
@@ -81,10 +83,12 @@ const PodcastPlayer = ({ showNext=false }) => {
 
     return (
         <>
-        <Navbar 
+        <PodcastNavbar
+            id={id}
+            likes={likes}
             next={next}
             title={
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center mx-auto">
                     <h3 className="text-xl fw-bold ">{title}</h3>
                     <h6 className="italic">By {podcast_owner}</h6>
                 </div>
