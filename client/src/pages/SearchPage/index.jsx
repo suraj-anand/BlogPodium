@@ -3,6 +3,7 @@ import Search from 'components/shared/Search';
 import React, { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import SearchedBlogs from './components/SearchedBlogs';
+import SearchedPodcasts from './components/SearchedPodcasts';
 
 const SearchPage = () => {
 
@@ -21,6 +22,13 @@ const SearchPage = () => {
         type.toLowerCase() === "blog" &&
           <div className="flex flex-col justify-center min-h-[84vh] gap-32 my-5 ">
             <SearchedBlogs query={query} />
+          </div>
+      }
+
+      {
+        type.toLowerCase() === "podcast" &&
+          <div className="flex flex-col justify-center min-h-[84vh] gap-32 my-5 ">
+            <SearchedPodcasts query={query} />
           </div>
       }
       

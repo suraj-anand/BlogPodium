@@ -1,16 +1,27 @@
 import axios from "axios"
 import { Button, Img } from "components"
+import { NavLink } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { stringHash } from "utils/Helpers"
 import { DEFAULT_PODCAST_IMAGES as IMAGES } from 'utils/constants'
 
 const PodcastCard = ({
+    id,
     imgSrc="",
     title="",
-    author=""
+    author="",
+    index,
+    all=[],
 }) => {
-  return (
+
+    const navigate = useNavigate();
+
+    function handlePodcastCardClick(e){
+        navigate(`/podcast/${id}`, {state: { "all": all }})
+    }
+
+    return (
     <div className="col-12 col-md-6 col-lg-4 col-xl-3 my-1 justify-center align-middle flex-nowrap relative">
-        
         {/* Single Card */}
         <div className="bg-slate-200 rounded-xl shadow-lg hover:bg-slate-300 hover:scale-95">
             {/* Image & Play Button */}
@@ -23,8 +34,8 @@ const PodcastCard = ({
                     alt="image"
                     className="rounded-xl justify-center h-[207px] w-full left-0 bottom-0 right-0 top-0 m-auto object-cover absolute p-2"
                 />
-                <Button color="gray_600_01" className="w-[72px] top-[30%] right-0 left-0 m-auto absolute">
-                    <Img src="assets/img_play.svg" />
+                <Button color="gray_600_01" className="w-[72px] top-[30%] right-0 left-0 m-auto absolute" onClick={handlePodcastCardClick}>
+                    <Img src="/assets/img_play.svg" />
                 </Button>
             </div>
 

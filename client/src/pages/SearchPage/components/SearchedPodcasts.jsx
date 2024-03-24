@@ -1,21 +1,21 @@
 import axios from "axios";
 import BlogCard from "components/shared/BlogCard";
-import { useAxios } from "hooks"
+import PodcastCard from "components/shared/PodcastCard";
 import { useEffect, useState } from "react"
 import { Spinner } from "react-bootstrap";
 
-const SearchedBlogs = ({  query } ) => {
+const SearchedPodcasts = ({  query } ) => {
 
-    const [ blogs, setBlogs ] = useState([]); 
+    const [ podcasts, setPodcasts ] = useState([]); 
     const [ loadMore, setLoadMore ] = useState("");
     const [ loading, setLoading ] = useState(false);
   
-    async function fetchBlogs(url=""){
+    async function fetchPodcasts(url=""){
       setLoading(true);
       try {
         const response = await axios.get(url);
         if (response.data?.results){
-          setBlogs(blogs => ([...blogs, ...response.data?.results]))
+          setPodcasts(podcasts => ([...podcasts, ...response.data?.results]))
         }
         setLoadMore(response.data?.next);
       } catch (error) {
@@ -27,44 +27,43 @@ const SearchedBlogs = ({  query } ) => {
   
     function handleLoadMore(){
       const url = loadMore.replace("http:", location.protocol);
-      fetchBlogs(url);
+      fetchPodcasts(url);
     }
   
     useEffect(() => {
-      setBlogs([])
-      fetchBlogs(`/api/blog/?query=${query}`);
+      setPodcasts([])
+      fetchPodcasts(`/api/podcast/?query=${query}`);
     }, [query])
 
     if (loading) {
         return (<Spinner className="d-block mx-auto text-gray-600_01" />)
     }
 
-    if (blogs?.length === 0){
+    if (podcasts?.length === 0){
         return (
             <p className="text-center text-2xl text-gray-500">Oops! No results found</p>
         )
     }
 
     return (
-        <div className="container-fluid">
-        {
-            blogs.map(blog => {
-                const { id, creation_time, cover_image, title, user_id, blog_owner, profile } = blog;
-                return <div className="my-12">
-                    <BlogCard 
-                    id={id}
-                    createdOn={creation_time}
-                    coverImage={cover_image}
-                    title={title}
-                    blogOwnerId={user_id}
-                    author={blog_owner}
-                    profileImageSrc={profile}
-                    showLike={false}
-                />
-                <div className="my-12"><hr /></div>
-                </div>
-            })
-        }
+        <div className="container">
+            
+            <div className="row my-3">
+                {
+                    podcasts.map(podcast => {
+                        const { id, creation_time, cover_image, title, user_id, podcast_owner } = podcast;
+                        return (
+                            <PodcastCard
+                                id={id}
+                                title={title}
+                                author={podcast_owner}
+                                imgSrc={cover_image}
+                            />
+                        )
+                    })
+                }
+            </div>
+
 
         {
             (loadMore) && (
@@ -77,4 +76,4 @@ const SearchedBlogs = ({  query } ) => {
     )
 }
 
-export default SearchedBlogs
+export default SearchedPodcasts

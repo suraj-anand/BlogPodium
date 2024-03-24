@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom"
 import UserBlogs from "./UserBlogs";
+import UserPodcasts from "./UserPodcasts";
 
 const UserDetails = () => {
 
@@ -41,6 +42,7 @@ const UserDetails = () => {
         </>
       }
     </div>
+    <UserPodcasts name={name} />
     <UserBlogs name={name} />
     </>
   )
