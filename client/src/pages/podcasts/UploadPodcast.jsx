@@ -22,7 +22,9 @@ const UploadPodcast = () => {
                 
                 <div className="flex flex-col my-5">
                     <h3 className='text-lg font-bold underline'>Cover Image for your podcast</h3>
-                    <FileUpload file={coverImage} setFile={setCoverImage} type='cover image' />
+                    <FileUpload 
+                        file={coverImage} setFile={setCoverImage} 
+                        type='cover image' />
                 </div>
 
                 <div className="flex flex-col my-5">
@@ -32,7 +34,7 @@ const UploadPodcast = () => {
                       type='podcast' 
                       fileType='podcast' 
                       allowedFileTypes={["audio", "video"]}
-                      className="text-slate-500"/>
+                      className="text-slate-500" />
                 </div>
 
                 {/* <Quill /> */}
@@ -42,7 +44,7 @@ const UploadPodcast = () => {
                   />
         </div>
     </PodcastContextProvider>
-      <ToastContainer />
+    <ToastContainer />
     </>
   )
 }
