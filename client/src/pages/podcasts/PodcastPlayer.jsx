@@ -96,15 +96,19 @@ const PodcastPlayer = ({ showNext=false }) => {
 
 
         {
-            type === "audio" ? 
+            type === "audio" &&
                 <AudioPlayer 
                     cover_image={cover_image}
                     podcast_url={podcast_url}
                     />
-                :
-                null
         }
         
+        {
+            type === "video" &&
+                <VideoPlayer 
+                    podcast_url={podcast_url}
+                    />
+        }
         </>
     )
 }
@@ -171,6 +175,23 @@ function AudioPlayer({
                 </div>
             </div>
 
+        </>
+    )
+}
+
+function VideoPlayer({
+    podcast_url
+}){
+    return (
+        <>
+            <div className="flex items-center justify-center h-[85vh]">
+                <ReactPlayer
+                    className="react-player"
+                    autoPlay={true}
+                    controls={true}
+                    url={podcast_url}                    
+                    />
+            </div>
         </>
     )
 }
