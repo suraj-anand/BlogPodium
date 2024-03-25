@@ -72,6 +72,7 @@ const PodcastPlayer = ({ showNext=false }) => {
         title,
         cover_image,
         podcast_owner,
+        user_id,
         type,
         podcast: _podcast,
         likes
@@ -87,12 +88,15 @@ const PodcastPlayer = ({ showNext=false }) => {
             id={id}
             likes={likes}
             next={next}
-            title={
+            title={title}
+            titleComponent={
                 <div className="flex flex-col items-center mx-auto">
                     <h3 className="text-xl fw-bold ">{title}</h3>
                     <h6 className="italic">By {podcast_owner}</h6>
                 </div>
-            } />
+            } 
+            ownerId={user_id}
+            />
 
 
         {
@@ -174,7 +178,6 @@ function AudioPlayer({
                         />
                 </div>
             </div>
-
         </>
     )
 }
