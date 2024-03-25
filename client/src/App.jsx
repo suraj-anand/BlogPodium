@@ -17,7 +17,8 @@ import EditBlog from "pages/blogs/components/EditBlog";
 import UserProfile from "pages/UserProfile/UserProfile";
 import SearchPage from "pages/SearchPage";
 import YourFacourites from "pages/YourFavourites";
-import Podcast from "pages/podcasts/PodcastPlayer";
+import PodcastPlayer from "pages/podcasts/PodcastPlayer";
+import Podcast from "pages/podcasts/Podcast";
 import Blog from "pages/blogs/Blog";
 import UploadPodcast from "pages/podcasts/UploadPodcast";
 
@@ -34,27 +35,34 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          {/* Test */}
-          <Route path="/user/:userid" element={<UserProfile />} />
           <Route path="/search" element={<SearchPage />} />
-          <Route path="/podcast/:podcastid" element={<Podcast />} />
-          <Route path="/upload-podcast" element={<UploadPodcast />} />
-
+          
           {/* Blog */}
           <Route path="/blog/" element={<Blog />} />
           <Route path="/blog/:blogid" element={<SingleBlog />} />
           
+          {/* Podcast */}
+          <Route path="/podcast/" element={<Podcast />} />
+          <Route path="/podcast/:podcastid" element={<PodcastPlayer />} />
+
+          
           {/* Protected */}
-          <Route path="/write-blog" element={<WriteBlog />} />
-          <Route path="/blog/:blogid/edit/" element={<EditBlog />} /> 
           <Route path="/your-items" element={<YourItems />} />
           <Route path="/your-favourites" element={<YourFacourites />} />
 
           
-          
           {/* Protected Routes */}
           <Route element={<ProtectRoutes />}>
-            <Route path="/secret" element={<Protected />} />
+  
+            {/* Blog */}
+            <Route path="/write-blog" element={<WriteBlog />} />
+            <Route path="/blog/:blogid/edit/" element={<EditBlog />} /> 
+    
+            {/* Podcast */}
+            <Route path="/upload-podcast" element={<UploadPodcast />} />
+
+  
+            <Route path="/user/:userid" element={<UserProfile />} />
           </Route>
 
           {/* 404 - Page Not Found */}

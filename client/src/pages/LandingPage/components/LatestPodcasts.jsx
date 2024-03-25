@@ -1,30 +1,40 @@
+import axios from "axios"
 import { Button, Img } from "components"
 import PodcastCard from "components/shared/PodcastCard"
-import { useAxios } from "hooks"
 import { useEffect, useState } from "react"
 import { Spinner } from "react-bootstrap"
+import { RxCaretDown } from "react-icons/rx"
 
 const LatestPodcasts = () => {
 
-    const {
-        data,
-        loading,
-        call,
-    } = useAxios({
-        method: "GET",
-        url: "/api/podcast/"
-    });
-
+    const [ loading, setLoading ] = useState(false);
     const [ podcasts, setPodcasts ] = useState([]); 
+    const [ loadMore, setLoadMore ] = useState(""); 
+
+
+    async function fetchPodcasts(url="/api/podcast/"){
+        setLoading(true);
+        try {
+          const response = await axios.get(url);
+          if (response.data?.results){
+            setPodcasts(podcasts => ([...podcasts, ...response.data?.results]))
+          }
+          setLoadMore(response.data?.next);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setLoading(false);
+        }
+    }
 
     useEffect(() => {
-        call()
+        fetchPodcasts()
     }, [])
 
-    useEffect(() => {
-        if(data?.results)
-            setPodcasts((prev) => (data?.results.slice(0, 4)))
-    }, [data])
+    function handleLoadMore(){
+        const url = loadMore.replace("http:", location.protocol);
+        fetchPodcasts(url);
+    }
 
 
     return (
@@ -59,6 +69,10 @@ const LatestPodcasts = () => {
                         )
                     })
                 }
+            </div>
+
+            <div className="flex">
+                { loadMore && <button className='flex items-center btn btn-outline-info rounded-lg mx-auto' onClick={handleLoadMore}> Load more <RxCaretDown size={24} /> </button> }
             </div>
         </div>
     )

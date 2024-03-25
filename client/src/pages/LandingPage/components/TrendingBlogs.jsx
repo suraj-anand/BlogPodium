@@ -3,7 +3,7 @@ import { Button, Img } from 'components'
 import BlogCard from 'components/shared/BlogCard';
 import React, { useEffect, useState } from 'react'
 import { Spinner } from 'react-bootstrap';
-import { RxPencil2 } from "react-icons/rx";
+import { RxPencil2, RxCaretDown } from "react-icons/rx";
 
 const TrendingBlogs = ({seperate, className, ...rest}) => {
 
@@ -76,7 +76,7 @@ const TrendingBlogs = ({seperate, className, ...rest}) => {
       }
 
       <div className='text-center my-3'>
-        { loadMore && <button className='btn btn-outline-info rounded-lg' onClick={handleLoadMore}>Load more</button> }
+        { loadMore && <button className='flex items-center btn btn-outline-info rounded-lg mx-auto' onClick={handleLoadMore}> Load more <RxCaretDown size={24} /> </button> }
       </div>
     </div>
   )

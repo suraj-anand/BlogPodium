@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom"
 import { Fade, Spinner } from "react-bootstrap";
 import ReactAudioPlayer from 'react-audio-player';
@@ -14,6 +14,7 @@ import "./styles.css"
 
 // Icons
 import { FaRegCirclePause } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 
 const PodcastPlayer = ({ showNext=false }) => {
@@ -90,9 +91,9 @@ const PodcastPlayer = ({ showNext=false }) => {
             next={next}
             title={title}
             titleComponent={
-                <div className="flex flex-col items-center mx-auto">
+                <div className="flex flex-col items-center mx-auto -z-50">
                     <h3 className="text-xl fw-bold ">{title}</h3>
-                    <h6 className="italic">By {podcast_owner}</h6>
+                    <Link to={`/user/${user_id}`} className="italic z-10">By {podcast_owner}</Link>
                 </div>
             } 
             ownerId={user_id}
@@ -124,7 +125,6 @@ function AudioPlayer({
 }){
     
     const [ pause, setPause ] = useState(false);
-    
     return (
         <>
             {/* Audio Podcast */}
@@ -172,9 +172,9 @@ function AudioPlayer({
                     <ReactPlayer
                         className="react-player"
                         autoPlay={true}
-                        controls={true}
+                        controls
                         playing={!pause}
-                        url={podcast_url}                    
+                        url={podcast_url}           
                         />
                 </div>
             </div>

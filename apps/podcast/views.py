@@ -18,7 +18,7 @@ from .models import Podcast
 from apps.api.models import User
 from .serializers import PodcastSerializer
 
-DEFAULT_PAGE_SIZE = 10
+DEFAULT_PAGE_SIZE = 4
 # Create your views here.
 class PodcastAPI(APIView):
     def get(self, request):

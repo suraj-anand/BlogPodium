@@ -25,12 +25,12 @@ const PodcastNavbar = ({
 
     return (
         <nav className="navbar p-2">
-            <div className="w-100 absolute -z-50 ">
+            <div className="w-100 absolute">
                 {titleComponent}
             </div>
             <div className="container py-2">
                 
-                <div className="flex">
+                <div className="flex z-40">
                     <Link title="play next" to={`/podcast/${next}`}>
                         {next && <PiArrowBendDownRightBold size={36} />}
                     </Link>
