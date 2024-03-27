@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import { Fade, Spinner } from "react-bootstrap";
-import ReactAudioPlayer from 'react-audio-player';
+// import ReactAudioPlayer from 'react-audio-player';
 import _ from "lodash";
 import ReactPlayer from 'react-player/lazy'
 import axios from "axios";
@@ -17,7 +17,7 @@ import { FaRegCirclePause } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
 
-const PodcastPlayer = ({ showNext=false }) => {
+const PodcastPlayer = () => {
     
     const { podcastid } = useParams();
 
@@ -103,6 +103,7 @@ const PodcastPlayer = ({ showNext=false }) => {
         {
             type === "audio" &&
                 <AudioPlayer 
+                    podcastid={podcastid}
                     cover_image={cover_image}
                     podcast_url={podcast_url}
                     />
@@ -121,7 +122,8 @@ const PodcastPlayer = ({ showNext=false }) => {
 
 function AudioPlayer({ 
     cover_image, 
-    podcast_url 
+    podcast_url,
+    podcastid 
 }){
     
     const [ pause, setPause ] = useState(false);
