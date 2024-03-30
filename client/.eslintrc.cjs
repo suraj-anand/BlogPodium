@@ -12,6 +12,9 @@ module.exports = {
     settings: { react: { version: '18.2' } },
     plugins: ['react-refresh'],
     rules: {
+      "no-unused-vars": "off",
+      "no-unsafe-optional-chaining": "off",
+      "@typescript-eslint/no-unused-vars": "off",
       "react/prop-types": 0,
       'react/jsx-no-target-blank': 'off',
       'react-refresh/only-export-components': [

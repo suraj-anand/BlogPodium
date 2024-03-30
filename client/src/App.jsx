@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import {
@@ -6,7 +5,6 @@ import {
   Login,
   Register
 } from './pages'
-import Protected from "pages/Protected";
 import ProtectRoutes from "utils/ProtectRoutes";
 import { AuthProvider } from "context/AuthContext";
 import Unauthorized from "pages/Unauthorized";
