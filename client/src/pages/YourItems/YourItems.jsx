@@ -1,6 +1,7 @@
 import Navbar from 'components/shared/Navbar'
 import { Offcanvas } from 'components/shared/Offcanvas'
 import YourBlogs from './components/YourBlogs'
+import YourPodcasts from './components/YourPodcasts'
 
 const YourItems = () => {
   return (
@@ -9,6 +10,7 @@ const YourItems = () => {
         <Offcanvas />
 
         <YourBlogs />
+        <YourPodcasts />
     </>
   )
 }
