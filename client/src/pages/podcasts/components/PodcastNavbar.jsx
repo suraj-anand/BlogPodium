@@ -4,7 +4,7 @@ import Modal from "components/generic/Modal";
 import Overlay from "components/generic/Overlay";
 import { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
-import { BiSkipNextCircle  } from "react-icons/bi";
+import { BiSkipNextCircle, BiSolidEditAlt  } from "react-icons/bi";
 import { FaShare } from "react-icons/fa";
 import { IoMdArrowRoundBack, IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { PiArrowBendDownRightBold, PiArrowBendUpLeftBold, PiDotsThreeVerticalBold  } from "react-icons/pi";
@@ -50,6 +50,9 @@ const PodcastNavbar = ({
                       <li><hr className="dropdown-divider" /></li>
 
                       { showShare && <SharePodcast id={id} /> }
+                      <li><hr className="dropdown-divider" /></li>
+
+                      { showLike &&  <EditPodcast id={id} podcastOwnerId={ownerId} /> }
                       <li><hr className="dropdown-divider" /></li>
 
                       { showDelete && <DeletePodcast id={id} podcastOwnerId={ownerId} title={title} /> }
@@ -122,6 +125,29 @@ function LikePodcast({ id, likes=[] }){
     )
 }
   
+
+function EditPodcast({ id, podcastOwnerId }){
+
+  const userId = localStorage.getItem("user_id");
+  
+  const navigate = useNavigate();
+  const handleEditClick = () => {
+    navigate(`/podcast/${id}/edit/`)
+  }
+
+  if ( podcastOwnerId === userId ){
+    return (
+      <li onClick={handleEditClick} className="dropdown-item hover:text-green-500">
+        <div className="flex items-center justify-center gap-2 fw-bold">
+          <span><BiSolidEditAlt size={32} /></span>Edit
+        </div>
+      </li>
+    )
+  }
+
+}
+
+
 
 function DeletePodcast({id, title, podcastOwnerId}) {
   

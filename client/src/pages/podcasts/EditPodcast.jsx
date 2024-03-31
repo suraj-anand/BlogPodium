@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ReactQuill from 'react-quill';
 import Navbar from "components/shared/Navbar"
 import Overlay from "components/generic/Overlay";
@@ -10,46 +10,43 @@ import { Spinner } from "react-bootstrap";
 import axios from "axios";
 
 
-const EditBlog = () => {
+const EditPodcast = () => {
 
   const user_id = localStorage.getItem("user_id");
 
   const navigate = useNavigate(); 
-  const { blogid: id } = useParams();
+  const { podcastid: id } = useParams();
 
   const [ fetching, setFetching ] = useState(true);
-  const [ content, setContent ] = useState("");
   const [ title, setTitle ] = useState("");
   
-  const [ blogData, setBlogData ] = useState({});
+  const [ podcastData, setPodcastData ] = useState({});
 
   const {
     call,
     loading,
-    data,
     status_code,
     error
   } = useAxios({
-    url: `/api/blog/${id}/`,
+    url: `/api/podcast/${id}/`,
     method: "PATCH",
     headers: {
       "Content-Type": "multipart/form-data"
     }
   });
 
-  async function fetchBlogDetails(){
+  async function fetchPodcastDetails(){
     setFetching(true);
     try {
-      const response = await axios.get(`/api/blog/${id}/`);
-      const { title: _title, content: _content, user_id: _user_id } = response.data;
+      const response = await axios.get(`/api/podcast/${id}/`);
+      const { title: _title, user_id: _user_id } = response.data;
       setTitle(_title);
-      setContent(_content);
-      setBlogData(() => ({
+      setPodcastData(() => ({
         "owner_id": _user_id,
         "fetchStatus": true
       }))
     } catch (error) {
-      setBlogData(() => ({
+      setPodcastData(() => ({
         "fetchStatus": false
       }))
       console.log(error)
@@ -59,39 +56,21 @@ const EditBlog = () => {
   }
 
   useEffect(() => {
-    fetchBlogDetails()
+    fetchPodcastDetails()
   }, [])
 
   // If updated redirect.
   useEffect(() => {
     if ([200, 201].includes(status_code)){
-      navigate(`/blog/${id}/`);
+      navigate(`/podcast/${id}/`);
     }
   }, [status_code])
-
- 
-  // React Quill Setting
-  const modules = {
-      toolbar: [
-          [{ font: [] }],
-          [{ header: [1, 2, 3, 4, 5, 6, false] }],
-          ["bold", "italic", "underline", "strike"],
-          [{ color: [] }, { background: [] }],
-          [{ script:  "sub" }, { script:  "super" }],
-          ["blockquote", "code-block"],
-          [{ list:  "ordered" }, { list:  "bullet" }],
-          ["link", "image"],
-          ["clean"],
-      ],
-  };
 
   // Update Click Event Handler
   function handleUpdate(){
     const payload = {
       "title": title,
-      "content": content
     }
-
     call(payload);
   }
 
@@ -100,7 +79,7 @@ const EditBlog = () => {
     return (
       <Overlay>
           <div className="flex flex-col items-center">
-          <p className="text-lg my-2">Hold on for a moment please, your blog is being updated.</p>
+          <p className="text-lg my-2">Hold on for a moment please, your podcast is being updated.</p>
             <Spinner />
           </div>
       </Overlay>
@@ -122,24 +101,24 @@ const EditBlog = () => {
     return (
       <Overlay>
         <div className="flex flex-col items-center">
-          <p className="text-lg text-red-400 my-2">Error on Updating the blog.</p>
+          <p className="text-lg text-red-400 my-2">Error on Updating the podcast.</p>
         </div>
     </Overlay>
     )
   }
 
   
-  // If Invalid blogid supplied, display 404 
-  if (!blogData?.fetchStatus){
+  // If Invalid podcastid supplied, display 404 
+  if (!podcastData?.fetchStatus){
     return <Overlay><p className="text-xl">404 | Not found</p></Overlay>
   }
 
-  // client side validation to check user is authorized to edit the blog
-  if ( blogData?.owner_id !== user_id ) {
+  // client side validation to check user is authorized to edit the podcast
+  if ( podcastData?.owner_id !== user_id ) {
     return (
       <Overlay>
         <div className="flex flex-col items-center">
-          <p className="text-lg text-red-400 my-2">Unauthorized to edit this blog.</p>
+          <p className="text-lg text-red-400 my-2">Unauthorized to edit this podcast.</p>
         </div>
       </Overlay>
     )
@@ -151,26 +130,20 @@ const EditBlog = () => {
     <>
       <Navbar type="back" />
 
+        
+        
       <div className="p-3">
+        <p className="my-3 italic text-lg text-blue-900">Note: You can only update the title of the podcast, Delete & Recreate if podcast itself requires the change.</p>
         <input 
           id="title" 
           className='form-control rounded-2xl' 
-          placeholder="Title of your Blog" 
+          placeholder="Title of your Podcast" 
           type="text" 
           name="title" 
           value={title}
           onChange={(e) => {setTitle(e.target.value)}}
           required />
       </div>
-
-      <div className="container-fluid">
-        <ReactQuill theme="snow" 
-          value={content} 
-          onChange={e => {setContent(e)}} 
-          modules={modules}
-          />
-      </div>
-
 
     <div className="flex items-center justify-center my-3">
         <button className="flex items-center gap-1 btn btn-outline-dark" onClick={handleUpdate}>
@@ -181,4 +154,4 @@ const EditBlog = () => {
   )
 }
 
-export default EditBlog;
+export default EditPodcast;

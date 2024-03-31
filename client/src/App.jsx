@@ -19,6 +19,7 @@ import PodcastPlayer from "pages/podcasts/PodcastPlayer";
 import Podcast from "pages/podcasts/Podcast";
 import Blog from "pages/blogs/Blog";
 import UploadPodcast from "pages/podcasts/UploadPodcast";
+import EditPodcast from "pages/podcasts/EditPodcast";
 
 function App() {
   return (
@@ -32,16 +33,19 @@ function App() {
           {/* Public Routes  */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-
-          <Route path="/search" element={<SearchPage />} />
+          <Route path="/search" element={<SearchPage />} /> {/* Search */}
           
           {/* Blog */}
           <Route path="/blog/" element={<Blog />} />
           <Route path="/blog/:blogid" element={<SingleBlog />} />
+          <Route path="/write-blog" element={<WriteBlog />} />
+          <Route path="/blog/:blogid/edit/" element={<EditBlog />} /> 
           
           {/* Podcast */}
           <Route path="/podcast/" element={<Podcast />} />
           <Route path="/podcast/:podcastid" element={<PodcastPlayer />} />
+          <Route path="/upload-podcast" element={<UploadPodcast />} />
+          <Route path="/podcast/:podcastid/edit/" element={<EditPodcast />} />
 
           
           {/* Protected */}
@@ -52,14 +56,8 @@ function App() {
           {/* Protected Routes */}
           <Route element={<ProtectRoutes />}>
   
-            {/* Blog */}
-            <Route path="/write-blog" element={<WriteBlog />} />
-            <Route path="/blog/:blogid/edit/" element={<EditBlog />} /> 
     
             {/* Podcast */}
-            <Route path="/upload-podcast" element={<UploadPodcast />} />
-
-  
             <Route path="/user/:userid" element={<UserProfile />} />
           </Route>
 
