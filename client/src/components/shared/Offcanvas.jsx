@@ -5,7 +5,7 @@ import { IoMdClose } from "react-icons/io";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Logout } from 'utils/Helpers'
 // Icons
-import { FaFilePen } from "react-icons/fa6";
+import { FaFilePen, FaUser } from "react-icons/fa6";
 import { IoMdLogOut } from "react-icons/io";
 import { GiSelfLove } from "react-icons/gi";
 import { FaUserAlt } from "react-icons/fa";
@@ -47,6 +47,12 @@ export const Offcanvas = ({id}) => {
                 title={"Your Favourites"} 
                 icon={<GiSelfLove />}
                 to="/your-favourites" />
+
+            <Option 
+                className=""
+                title={"Profile"} 
+                icon={<FaUser />}
+                to="/my-profile/" />
          </div>
 
          <div className="offcanvas-footer p-3">

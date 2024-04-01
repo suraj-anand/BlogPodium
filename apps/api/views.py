@@ -142,6 +142,54 @@ class AuthCheckAPI(APIView):
         print(data)
         return Response({"detail": "Authenticated", "user_id": data.get("user_id"), "user_name": data.get("user_name") }, status=status.HTTP_202_ACCEPTED)
 
+# Edit profile Routes
+class ChangeProfileAPI(APIView):
+    @method_decorator(authenticated_resource)
+    def post(self, request):
+        data = parse_user_session(request=request)
+        profile = request.data.get("file")
+        user_id = data.get("user_id")
+        
+        # Store New profile
+        new_profile_image_path = ""
+        if profile:
+            fs = FileSystemStorage(location=os.path.join(PROFILE_IMAGE_STORE_PATH, user_id))
+            filename = fs.save(profile.name, profile)
+            new_profile_image_path = os.path.join(PROFILE_IMAGE_PATH, user_id, filename)
+            
+        # Delete existing profile
+        user = User.objects.get(id=user_id)
+        old_profile_image_path = os.path.join(BASE_DIR, MEDIA_ROOT, user.profile)
+        if os.path.exists(old_profile_image_path):
+            os.remove(old_profile_image_path)
+
+        # Update model with new profile image.
+        user.profile = new_profile_image_path
+        user.save()
+        
+        return Response( {"detail": "Updated" }, status=status.HTTP_200_OK)
+
+
+
+class ChangePasswordAPI(APIView):
+    @method_decorator(authenticated_resource)
+    def post(self, request):
+        data = parse_user_session(request=request)
+        user_id = data.get("user_id")
+        password = request.data.get("password")
+        confirm_password = data.get("confirm_password")
+        
+        if password != confirm_password:
+            return Response({"detail": "passwords don't match"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # update password
+        user = User.objects.get(id=user_id)
+        salt = bcrypt.gensalt(10)
+        hash = bcrypt.hashpw(password.encode(), salt=salt).decode()
+        user.password = hash
+        user.save()
+        return Response( {"detail": "Updated" }, status=status.HTTP_200_OK)
+
 
 # User Details
 class UserDetails(APIView):

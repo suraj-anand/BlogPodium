@@ -21,6 +21,8 @@ import Blog from "pages/blogs/Blog";
 import UploadPodcast from "pages/podcasts/UploadPodcast";
 import EditPodcast from "pages/podcasts/EditPodcast";
 import About from "pages/About"
+import AuthorizedRoutes from "utils/AuthorizedRoutes";
+import MyProfile from "pages/MyProfile";
 
 function App() {
   return (
@@ -29,7 +31,6 @@ function App() {
         <Routes>
           
           <Route path="/" element={<LandingPage />} />      
-
 
           {/* Public Routes  */}
           <Route path="/login" element={<Login />} />
@@ -40,26 +41,19 @@ function App() {
           {/* Blog */}
           <Route path="/blog/" element={<Blog />} />
           <Route path="/blog/:blogid" element={<SingleBlog />} />
-          <Route path="/write-blog" element={<WriteBlog />} />
-          <Route path="/blog/:blogid/edit/" element={<EditBlog />} /> 
           
           {/* Podcast */}
           <Route path="/podcast/" element={<Podcast />} />
           <Route path="/podcast/:podcastid" element={<PodcastPlayer />} />
-          <Route path="/upload-podcast" element={<UploadPodcast />} />
-          <Route path="/podcast/:podcastid/edit/" element={<EditPodcast />} />
 
-          
-          {/* Protected */}
-          <Route path="/your-items" element={<YourItems />} />
-          <Route path="/your-favourites" element={<YourFacourites />} />
-
-          
-          {/* Protected Routes */}
-          <Route element={<ProtectRoutes />}>
-  
-    
-            {/* Podcast */}
+          <Route element={<AuthorizedRoutes />}>
+            <Route path="/your-items" element={<YourItems />} />
+            <Route path="/your-favourites" element={<YourFacourites />} />
+            <Route path="/write-blog" element={<WriteBlog />} />
+            <Route path="/blog/:blogid/edit/" element={<EditBlog />} /> 
+            <Route path="/upload-podcast" element={<UploadPodcast />} />
+            <Route path="/podcast/:podcastid/edit/" element={<EditPodcast />} />
+            <Route path="/my-profile/" element={<MyProfile />} />
             <Route path="/user/:userid" element={<UserProfile />} />
           </Route>
 

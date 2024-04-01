@@ -1,4 +1,5 @@
 import { createPortal } from "react-dom"
+import { IoMdClose } from "react-icons/io";
 
 const Modal = ({
     title,
@@ -11,6 +12,8 @@ const Modal = ({
     saveIcon=null,
     handleSave = () => {},
     handleClose = () => {},
+    closeRef=null,
+    saveRef=null,
     children
 }) => {
   
@@ -21,17 +24,17 @@ const Modal = ({
                 <div className="modal-content">
                 <div className="modal-header">
                     <h5 className="modal-title">{title}</h5>
-                    { showClose && <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> }
+                    { showClose && <button type="button" className="ms-auto" data-bs-dismiss="modal" aria-label="Close"><IoMdClose size={24} /></button> }
                 </div>
                 <div className="modal-body">
                     {children}
                 </div>
                 <div className="modal-footer">
-                    <button type="button" className={`btn ${closeClass}`} data-bs-dismiss="modal" onClick={handleClose}>
+                    <button type="button" ref={closeRef} className={`btn ${closeClass}`} data-bs-dismiss="modal" onClick={handleClose}>
                         {closeIcon} {closeName}
                     </button>
                     
-                    <button type="button" className={`btn ${saveClass}`} data-bs-dismiss="modal" onClick={handleSave}>
+                    <button type="button" ref={saveRef} className={`btn ${saveClass}`} data-bs-dismiss="modal" onClick={handleSave}>
                         {saveName} {saveIcon}
                     </button>
                 </div>
