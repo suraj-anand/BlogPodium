@@ -14,12 +14,13 @@ const Modal = ({
     handleClose = () => {},
     closeRef=null,
     saveRef=null,
+    modalId="generic-modal",
     children
 }) => {
   
     return createPortal(
     <>
-        <div className="modal" tabIndex="-1" id="generic-modal">
+        <div className="modal" tabIndex="-1" id={modalId}>
             <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
                 <div className="modal-header">

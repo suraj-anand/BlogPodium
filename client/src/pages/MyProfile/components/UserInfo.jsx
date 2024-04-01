@@ -1,14 +1,13 @@
-import axios from "axios";
 import { ProfileImage } from "components";
-import Modal from "components/generic/Modal";
 import Overlay from "components/generic/Overlay";
-import FileUpload from "components/shared/FileUpload";
 import { formatDistance } from "date-fns";
 import { useAxios } from "hooks"
 import { useEffect, useRef, useState } from "react";
 import { Spinner } from "react-bootstrap";
+import ChangeProfileModal from "./ChangeProfileModal";
+import ChangePassword from "./ChangePassword";
 import { RiRefreshLine } from "react-icons/ri";
-import { ToastContainer, toast } from "react-toastify";
+import { PiDotsThreeVerticalBold, PiPassword } from "react-icons/pi";
 
 const UserInfo = () => {
 
@@ -39,89 +38,40 @@ const UserInfo = () => {
       {
         loading ? <Spinner /> :
         <>
+
+          <div className="container justify-end flex ms-auto gap-5 dropdown">
+            <button type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" >
+                <PiDotsThreeVerticalBold className="fw-bolder text-lg" size={36} />
+            </button>
+
+            <ul className="dropdown-menu">
+              <li data-bs-toggle="modal" data-bs-target="#generic-modal"  className="flex gap-2 items-center dropdown-item hover:text-blue-500">
+                <button className="my-1" title="Change Profile">
+                  <RiRefreshLine size={22} />
+                </button>
+                Change Profile
+              </li>
+              <li><hr className="dropdown-divider" /></li>
+
+              <li data-bs-toggle="modal" data-bs-target="#change-password" className="flex gap-2 items-center dropdown-item hover:text-green-900">
+                <button className="my-1" title="Change Profile">
+                  <PiPassword size={22} />
+                </button>
+                Change Password
+              </li>
+            </ul>
+          </div>
+
           <ProfileImage size={72} imgSrc={profile} userid={userid}  />
-          <button data-bs-toggle="modal" data-bs-target="#generic-modal" className="my-1" title="Change Profile">
-            <RiRefreshLine size={18} />
-          </button>
+
           <p className="text-3xl mt-3">{name}</p>
           <h5> Joined: { creation_time ? formatDistance(new Date(creation_time), new Date(), { addSuffix: true }) : "" } </h5>
         </>
       }
     </div>
     <ChangeProfileModal setReload={setReload} />
+    <ChangePassword setReload={setReload} />
     </>
-  )
-}
-
-function ChangeProfileModal({setReload}){
-
-  const [ file, setFile ] = useState(null);
-  const {
-    call,
-    loading,
-    data,
-    status_code,
-    error
-  } = useAxios({
-    url: `/api/update-profile/`,
-    method: "POST",
-    headers: {
-      "Content-Type": "multipart/form-data"
-    }
-  });
-
-  const saveRef = useRef();
-  const closeRef = useRef();
-  saveRef.current?.removeAttribute("data-bs-dismiss")
-
-  useEffect(() => {
-    const updated = data?.detail === "Updated";
-    if (updated){
-      closeRef.current?.click();
-      setReload((prev) => {return !prev});
-      toast("Updated User Profile");
-    }
-  }, [data])
-  
-  const handleChangeProfile = async (e) => {
-    e.target.classList.add("disabled");
-    try {
-      call({
-        file: file
-      })
-    } catch (error) {
-      console.log(error)
-    } 
-  }
-
-
-  return (
-    <>
-
-      <Modal 
-        title={"Change Profile"}
-        closeClass="btn btn-outline-danger"
-        handleSave={handleChangeProfile}
-        saveName="Update Profile"
-        saveClass={`flex items-center gap-2 btn-outline-primary ${file ? "" : "disabled"}`}
-        saveIcon={<RiRefreshLine />}
-        closeRef={closeRef}
-        saveRef={saveRef}
-      >
-
-        {
-          error && <p className="text-center text-danger fs-5">Profile update failed.</p>
-        }
-
-        {
-          loading && <Spinner className="d-block mx-auto" />
-        }
-        <FileUpload 
-            file={file} setFile={setFile}
-            type="profile image" />
-      </Modal>
-      <ToastContainer />
-    </> 
   )
 }
 

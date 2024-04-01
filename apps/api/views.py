@@ -170,14 +170,16 @@ class ChangeProfileAPI(APIView):
         return Response( {"detail": "Updated" }, status=status.HTTP_200_OK)
 
 
-
+# Change password Routes
 class ChangePasswordAPI(APIView):
     @method_decorator(authenticated_resource)
     def post(self, request):
         data = parse_user_session(request=request)
         user_id = data.get("user_id")
         password = request.data.get("password")
-        confirm_password = data.get("confirm_password")
+        confirm_password = request.data.get("confirm_password")
+        
+        print(password, confirm_password)
         
         if password != confirm_password:
             return Response({"detail": "passwords don't match"}, status=status.HTTP_400_BAD_REQUEST)
