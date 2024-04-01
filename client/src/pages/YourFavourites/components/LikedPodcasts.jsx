@@ -24,9 +24,8 @@ const LikedPodcasts = () => {
         </div>
       </div>
 
-
-
         { loading && <Spinner /> }
+        { data.length === 0 && <p className="p-3 text-xl text-blue-900">You have not liked any podcasts.</p> }
 
         <div className="row">
           {

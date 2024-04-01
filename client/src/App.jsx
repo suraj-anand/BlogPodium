@@ -20,6 +20,7 @@ import Podcast from "pages/podcasts/Podcast";
 import Blog from "pages/blogs/Blog";
 import UploadPodcast from "pages/podcasts/UploadPodcast";
 import EditPodcast from "pages/podcasts/EditPodcast";
+import About from "pages/About"
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/search" element={<SearchPage />} /> {/* Search */}
+          <Route path="/about" element={<About />} /> {/* About Page */}
           
           {/* Blog */}
           <Route path="/blog/" element={<Blog />} />

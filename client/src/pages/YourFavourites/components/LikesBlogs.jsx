@@ -28,6 +28,7 @@ const LikesBlogs = () => {
     </div>
 
     { loading && <Spinner /> }
+    { data.length === 0 && <p className="p-3 text-xl text-blue-900">You have not liked any blogs.</p> }
     <div className="row justify-center gap-3 p-3">
       {
         data.map(blog => {
