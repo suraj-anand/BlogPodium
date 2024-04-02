@@ -66,7 +66,7 @@ export default function ChangePassword({ setReload }){
           }
 
           <input 
-            type="text" 
+            type="password" 
             name="password" 
             id="password"
             className="rounded-lg p-2 form-control"
@@ -76,7 +76,7 @@ export default function ChangePassword({ setReload }){
              />
 
           <input 
-            type="text" 
+            type="password" 
             name="confirm-password" 
             id="password"
             className="my-3 rounded-lg p-2 form-control"
