@@ -193,6 +193,19 @@ class ChangePasswordAPI(APIView):
         return Response( {"detail": "Updated" }, status=status.HTTP_200_OK)
 
 
+# Change password Routes
+class UserBioAPI(APIView):
+    @method_decorator(authenticated_resource)
+    def patch(self, request):
+        data = parse_user_session(request=request)
+        user_id = data.get("user_id")
+        bio = request.data.get("bio")
+        # add bio
+        user = User.objects.get(id=user_id)
+        user.bio = bio
+        user.save()
+        return Response( {"detail": "Updated" }, status=status.HTTP_200_OK)
+
 # User Details
 class UserDetails(APIView):
     def get(self, request, user_id):

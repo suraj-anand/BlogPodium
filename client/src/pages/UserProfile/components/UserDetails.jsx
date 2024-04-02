@@ -20,7 +20,7 @@ const UserDetails = () => {
     method:"GET",
     url: `/api/user/${userid}`
   })
-  const { name, creation_time, profile } = data;
+  const { name, creation_time, profile, bio } = data;
 
   useEffect(() => {
     call()
@@ -39,6 +39,14 @@ const UserDetails = () => {
           <ProfileImage size={72} imgSrc={profile} userid={userid}  />
           <p className="text-3xl mt-3">{name}</p>
           <h5> Joined: { creation_time ? formatDistance(new Date(creation_time), new Date(), { addSuffix: true }) : "" } </h5>
+
+          <div className="container flex justify-center">
+            { 
+              bio && <div className="text-dark my-12 text-lg">
+                <span dangerouslySetInnerHTML={{__html: bio}}></span>
+              </div>
+            }
+          </div>
         </>
       }
     </div>

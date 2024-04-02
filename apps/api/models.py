@@ -8,4 +8,4 @@ class User(models.Model):
     email = models.EmailField(unique=True, null=False, blank=False)
     profile = models.TextField(null=True, blank=True, default="")
     password = models.TextField(blank=False, null=False)
-    # bio = models.TextField(blank=True, null=True, default="")
+    bio = models.TextField(blank=True, null=True, default="")

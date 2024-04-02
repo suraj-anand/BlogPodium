@@ -78,7 +78,7 @@ export default function ChangePassword({ setReload }){
           <input 
             type="password" 
             name="confirm-password" 
-            id="password"
+            id="confirm-password"
             className="my-3 rounded-lg p-2 form-control"
             placeholder="Confirm Password"
             value={confirmPassword}
