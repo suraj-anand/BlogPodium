@@ -15,6 +15,7 @@ from rest_framework import status
 from .models import User
 from .serializers import UserSerializer, SimpleUserSerializer
 from server.settings import JWT_SECRET, BASE_DIR, MEDIA_ROOT
+from .permissions import Authenticated, PostPutDeleteOnlyAuthenticated
 from .utils import authenticated_resource, parse_user_session
 from . import PROFILE_IMAGE_STORE_PATH, PROFILE_IMAGE_PATH
 
@@ -136,6 +137,9 @@ class MediaServeAPI(APIView):
 
 # Auth Check Route
 class AuthCheckAPI(APIView):
+    
+    permission_classes = [Authenticated]
+    
     @method_decorator(authenticated_resource)
     def post(self, request):
         data = parse_user_session(request=request)
@@ -144,6 +148,9 @@ class AuthCheckAPI(APIView):
 
 # Edit profile Routes
 class ChangeProfileAPI(APIView):
+    
+    permission_classes = [Authenticated]
+    
     @method_decorator(authenticated_resource)
     def post(self, request):
         data = parse_user_session(request=request)
@@ -172,6 +179,9 @@ class ChangeProfileAPI(APIView):
 
 # Change password Routes
 class ChangePasswordAPI(APIView):
+    
+    permission_classes = [Authenticated]
+    
     @method_decorator(authenticated_resource)
     def post(self, request):
         data = parse_user_session(request=request)
@@ -195,6 +205,9 @@ class ChangePasswordAPI(APIView):
 
 # Change password Routes
 class UserBioAPI(APIView):
+    
+    permission_classes = [Authenticated]
+    
     @method_decorator(authenticated_resource)
     def patch(self, request):
         data = parse_user_session(request=request)
@@ -215,6 +228,9 @@ class UserDetails(APIView):
 
 # Health Check ROute
 class HeathCheck(APIView):
+
+    permission_classes = [Authenticated]
+
     @method_decorator(authenticated_resource)
     def get(self, request):
         return Response({"message": "pong"})
