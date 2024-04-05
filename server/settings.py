@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "django_filters",
+    "drf_yasg",
 ] + USER_APPS
 
 MIDDLEWARE = [
@@ -290,3 +291,17 @@ MEDIA_ROOT = "media/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Swagger Config
+LOGIN_URL = "/"
+LOGOUT_URL = "/api/logout/"
+JSON_EDITOR = True
+SHOW_REQUEST_HEADERS = True
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+    },
+    'DOC_EXPANSION': 'none',
+    'DEEP_LINKING': True,
+}
