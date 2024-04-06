@@ -1,28 +1,27 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 
 import {
   LandingPage,
   Login,
-  Register
+  Register,
+  Unauthorized,
+  WriteBlog,
+  YourItems,
+  SingleBlog,
+  EditBlog,
+  UserProfile,
+  SearchPage,
+  YourFacourites,
+  PodcastPlayer,
+  Podcast,
+  Blog,
+  UploadPodcast,
+  EditPodcast,
+  About,
+  MyProfile
 } from './pages'
-import ProtectRoutes from "utils/ProtectRoutes";
-import { AuthProvider } from "context/AuthContext";
-import Unauthorized from "pages/Unauthorized";
-import WriteBlog from "pages/blogs/WriteBlog";
-import YourItems from "pages/YourItems/YourItems";
-import SingleBlog from "pages/SingleBlog";
-import EditBlog from "pages/blogs/components/EditBlog";
-import UserProfile from "pages/UserProfile/UserProfile";
-import SearchPage from "pages/SearchPage";
-import YourFacourites from "pages/YourFavourites";
-import PodcastPlayer from "pages/podcasts/PodcastPlayer";
-import Podcast from "pages/podcasts/Podcast";
-import Blog from "pages/blogs/Blog";
-import UploadPodcast from "pages/podcasts/UploadPodcast";
-import EditPodcast from "pages/podcasts/EditPodcast";
-import About from "pages/About"
 import AuthorizedRoutes from "utils/AuthorizedRoutes";
-import MyProfile from "pages/MyProfile";
+import { AuthProvider } from "context/AuthContext";
 
 function App() {
   return (
