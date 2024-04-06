@@ -1,5 +1,7 @@
 # BLOG PODIUM
 
+#### Video Demo:  [Click Here](https://youtu.be/FnNx0iEwhZk)
+
 Welcome to BlogPodium, your one-stop destination for discovering and sharing the best podcasts and blogs across various topics.
 
 We understand the power of storytelling and knowledge sharing, and our platform aims to connect enthusiasts, creators, and learners alike. Whether you're a podcast aficionado, a blogging enthusiast, or someone looking to explore new ideas and perspectives, we've got you covered.
