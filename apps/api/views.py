@@ -184,6 +184,9 @@ class ChangePasswordAPI(APIView):
         if password != confirm_password:
             return Response({"detail": "passwords don't match"}, status=status.HTTP_400_BAD_REQUEST)
         
+        if len(password) < 8:
+            return Response({"detail": "password is short"}, status=status.HTTP_400_BAD_REQUEST)
+        
         # update password
         user = User.objects.get(id=user_id)
         salt = bcrypt.gensalt(10)
