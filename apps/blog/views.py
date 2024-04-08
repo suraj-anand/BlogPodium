@@ -12,6 +12,7 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Q
 
 from apps.api.utils import authenticated_resource, parse_user_session
+from apps.api.permissions import PostOnlyAuthenticated, PutDeleteOnlyAuthenticated, Authenticated
 from apps.blog import COVER_IMAGE_PATH, COVER_IMAGE_STORE_PATH
 from .helper import blob_parser, add_user_info_to_blog
 from .models import Blog
@@ -20,7 +21,10 @@ from .serializers import BlogSerializer, SimpleBlogSerializer
 
 DEFAULT_PAGE_SIZE = 3
 # Create your views here.
-class BlogAPI(APIView):
+class BlogAPI(APIView):    
+    
+    permission_classes = [PostOnlyAuthenticated]
+    
     def get(self, request):
         paginator = PageNumberPagination()
         paginator.page_size = request.query_params.get("page_size", DEFAULT_PAGE_SIZE)
@@ -64,10 +68,11 @@ class BlogAPI(APIView):
         serializer.save()
 
         return Response({"detail": "Published"}, status=201)
-    
-
 
 class SingleBlog(APIView):
+    
+    permission_classes = [PutDeleteOnlyAuthenticated]
+    
     def get(self, request, blog_id):
         blog = get_object_or_404(Blog, id=blog_id)
         data = BlogSerializer(blog).data
@@ -76,7 +81,6 @@ class SingleBlog(APIView):
 
     @method_decorator(authenticated_resource)
     def patch(self, request, blog_id):
-        
         title = request.data.get("title")
         content = request.data.get("content")
 
@@ -96,8 +100,6 @@ class SingleBlog(APIView):
         blog.save()
         return Response({"detail": "Blog updated"}, status=status.HTTP_200_OK)
         
-
-
     @method_decorator(authenticated_resource)
     def delete(self, request, blog_id):
         try:
@@ -121,6 +123,8 @@ class SingleBlog(APIView):
 
 
 class LikeBlogAPI(APIView):
+    
+    permission_classes = [Authenticated]
     
     @method_decorator(authenticated_resource)
     def get(self, request):
@@ -148,12 +152,13 @@ class LikeBlogAPI(APIView):
         else:
             blog.likes.add(user_id)
             blog.save()
-
         return Response({"detail": "done"}, status=status.HTTP_201_CREATED)
 
 
-
 class UserBlogAPI(APIView):
+    
+    permission_classes = [Authenticated]
+    
     @method_decorator(authenticated_resource)
     def get(self, request):
         user_data = parse_user_session(request)
