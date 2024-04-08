@@ -11,18 +11,29 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 import os
+import dotenv
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+dotenv.load_dotenv()
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--&1g7_uxx)o&@61k@@g7d!q*d3@q^oejw*bw@c@havfne^uwv%'
-JWT_SECRET = 'django-insecure--&1g7_uxx)o&@61k@@g7d!q*d3@q^oejw*bw@c@havfne^uwv%'
+if not os.path.exists(os.path.join(BASE_DIR, ".env")):
+    raise Exception(f".env is missing")
+
+SECRET_KEY = os.environ.get("SECRET_KEY")
+JWT_SECRET = os.environ.get("JWT_SECRET")
+
+if SECRET_KEY is None:
+    raise Exception(f"SECRET_KEY is missing in .env")
+
+if JWT_SECRET is None:
+    raise Exception(f"JWT_SECRET is missing in .env")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

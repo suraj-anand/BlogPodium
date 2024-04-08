@@ -19,7 +19,7 @@ from .models import Blog
 from apps.api.models import User
 from .serializers import BlogSerializer, SimpleBlogSerializer
 
-DEFAULT_PAGE_SIZE = 10
+DEFAULT_PAGE_SIZE = 3
 # Create your views here.
 class BlogAPI(APIView):    
     

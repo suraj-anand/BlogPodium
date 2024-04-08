@@ -57,9 +57,9 @@ const BlogCard = ({
       {/* Title */}
       <div className={`flex items-center ${showContent ? "justify-between" : "justify-center"}`}>
         
-        <BlogTitle id={id} title={title} />
+        <BlogTitle id={id} title={title} showContent={showContent} />
         
-        <button className="hover:text-gray-600_01" onClick={() => {setShowBlogContent(show => (!show))}}>
+        <button className="me-5 hover:text-gray-600_01" onClick={() => {setShowBlogContent(show => (!show))}}>
           {showContent &&  showBlogContent && <LiaChevronCircleUpSolid size={30} /> }
           {showContent &&  !showBlogContent && <LiaChevronCircleDownSolid size={30} /> }
         </button>
@@ -97,9 +97,10 @@ function BlogCoverImage({title, coverImage}){
   </div>)
 }
 
-function BlogTitle({ id, title }){
+function BlogTitle({ id, title, showContent }){
+  console.log(showContent)
   return (
-    <div className={`text-gray-600_01 font-bold text-2xl font-merriweather italic mt-2`}> 
+    <div className={`text-gray-600_01 font-bold text-2xl font-merriweather italic mt-2 ${showContent && "container"}`}> 
       <Link to={`/blog/${id}`}>{title}</Link>
     </div>
   )
@@ -154,11 +155,13 @@ function ShareBlog({id}){
 function Content({content, show}){
 
   return (
+    <div className="container">
     <Fade in={show} appear={show} unmountOnExit={show}>
         <p className="my-3 fw-medium ">
           <span dangerouslySetInnerHTML={{__html: content}}></span>
         </p>
     </Fade>
+    </div>
   )
 }
 

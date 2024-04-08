@@ -15,7 +15,7 @@ const TitleInput = () => {
                 name="title" 
                 value={title}
                 onChange={(e) => {setTitle(e.target.value)}}
-                maxLength={30}
+                maxLength={50}
                 required />
         </>
     )
