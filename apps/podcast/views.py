@@ -2,7 +2,7 @@ import os
 import uuid
 import logging
 
-from rest_framework import status
+from rest_framework import status, parsers
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
@@ -12,15 +12,23 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Q
 
 from apps.api.utils import authenticated_resource, parse_user_session
+from apps.api.permissions import Authenticated, PostOnlyAuthenticated, PutDeleteOnlyAuthenticated
 from apps.podcast import COVER_IMAGE_PATH, COVER_IMAGE_STORE_PATH ,PODCAST_PATH, PODCAST_STORE_PATH
 from .helper import podcast_parser, add_user_info_to_podcast
 from .models import Podcast
 from apps.api.models import User
 from .serializers import PodcastSerializer
 
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+
 DEFAULT_PAGE_SIZE = 4
 # Create your views here.
 class PodcastAPI(APIView):
+
+    parser_classes = [parsers.MultiPartParser]
+    permission_classes = [PostOnlyAuthenticated]
+    
     def get(self, request):
         paginator = PageNumberPagination()
         paginator.page_size = request.query_params.get("page_size", DEFAULT_PAGE_SIZE)
@@ -38,7 +46,38 @@ class PodcastAPI(APIView):
         data = PodcastSerializer(paginated_result, many=True).data
         return paginator.get_paginated_response(podcast_parser(data, type))
 
-    @method_decorator(authenticated_resource)
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                "type",
+                openapi.IN_FORM,
+                description="audio/video",
+                type=openapi.TYPE_STRING,
+            ),
+            openapi.Parameter(
+                "title",
+                openapi.IN_FORM,
+                description="title of the podcast",
+                type=openapi.TYPE_STRING,
+            ),
+            openapi.Parameter(
+                "cover_image",
+                openapi.IN_FORM,
+                description="cover_image for the podcast",
+                type=openapi.TYPE_FILE,
+            ),
+            openapi.Parameter(
+                "podcast",
+                openapi.IN_FORM,
+                description="podcast file",
+                type=openapi.TYPE_FILE,
+            )
+        ],
+        responses={
+            status.HTTP_201_CREATED: "Podcast Created",
+            status.HTTP_400_BAD_REQUEST: "Bad Request"
+        },
+    )
     def post(self, request):
         user_data = parse_user_session(request)
         id = f"{uuid.uuid4()}"
@@ -49,7 +88,7 @@ class PodcastAPI(APIView):
         podcast = request.data.get("podcast")
         
         if not podcast or not type:
-            return Response({"detail": "type, podcast is required"}, status=401)
+            return Response({"detail": "type, podcast is required"}, status=400)
 
         cover_image_path = ""
         if cover_image:
@@ -79,6 +118,9 @@ class PodcastAPI(APIView):
 
 
 class SinglePodcast(APIView):
+    
+    permission_classes = [PutDeleteOnlyAuthenticated]
+    
     def get(self, request, podcast_id):
         podcast = get_object_or_404(Podcast, id=podcast_id)
         data = PodcastSerializer(podcast).data
@@ -131,6 +173,8 @@ class SinglePodcast(APIView):
 
 class LikePodcastAPI(APIView):
     
+    permission_classes = [Authenticated]
+    
     @method_decorator(authenticated_resource)
     def get(self, request):
         user_data = parse_user_session(request)
@@ -163,6 +207,7 @@ class LikePodcastAPI(APIView):
 
 
 class UserPodcastAPI(APIView):
+    permission_classes = [Authenticated]
     @method_decorator(authenticated_resource)
     def get(self, request):
         user_data = parse_user_session(request)
